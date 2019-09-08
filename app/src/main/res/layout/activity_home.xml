@@ -26,9 +26,10 @@
             android:layout_height="50dp"/>
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_marginBottom="50dp"
         android:layout_below="@+id/top_bar"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
@@ -220,6 +221,7 @@
                 <TextView
                     android:layout_weight="1"
                     android:layout_marginTop="12dp"
+                    android:textStyle="bold"
                     android:text="Khuyến mãi"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
@@ -240,23 +242,24 @@
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
+
             <androidx.viewpager.widget.ViewPager
-                android:id="@+id/viewPager"
-                android:layout_marginRight="12dp"
-                android:layout_marginLeft="12dp"
+                android:id="@+id/viewpager_image"
                 android:layout_width="match_parent"
-                android:layout_height="130dp"/>
+                android:layout_height="130dp">
+            </androidx.viewpager.widget.ViewPager>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="18dp">
             </LinearLayout>
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         app:labelVisibilityMode="labeled"
-        android:background="#F8F5F5"
+        android:background="@drawable/bg_navigation"
         app:itemIconTint="@color/nav_item_color"
         app:itemTextColor="@color/nav_item_color"
         app:menu="@menu/navigation_menu"
