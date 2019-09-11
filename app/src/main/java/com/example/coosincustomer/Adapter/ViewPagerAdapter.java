@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -22,6 +23,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     public ViewPagerAdapter(Context context) {
         this.context = context;
     }
+
 
     @Override
     public int getCount() {
