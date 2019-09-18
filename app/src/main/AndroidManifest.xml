@@ -11,11 +11,20 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".OrderDungLeActivity"></activity>
+
+
+        <activity
+            android:name=".MapActivity"
+            android:label="@string/title_activity_map"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".OrderSuccessActivity" />
+        <activity android:name=".ThanhtoanActivity" />
+        <activity android:name=".ConfirmActivity" />
+        <activity android:name=".OrderDungLeActivity" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"></activity>
+            android:theme="@style/SplashTheme" />
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait">
@@ -38,10 +47,11 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <dist:module dist:instant="true" />
 

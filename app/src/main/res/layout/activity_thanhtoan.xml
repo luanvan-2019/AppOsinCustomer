@@ -1,9 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:weightSum="13"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ThanhtoanActivity">
+    tools:context=".OrderDungLeActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <androidx.appcompat.widget.Toolbar
+            app:navigationIcon="@drawable/ic_back"
+            android:id="@+id/toolbar_hinhthuc_thanhtoan"
+            android:background="@drawable/bg_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+        </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:text="Hình thức thanh toán"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:id="@+id/toolbar_title_hinhthuc_thanhtoan"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+    </RelativeLayout>
+    <ScrollView
+        android:layout_weight="10"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:id="@+id/title_tientrinh2"
+                android:layout_width="match_parent"
+                android:layout_height="30dp">
+                <TextView
+                    android:textSize="16dp"
+                    android:textColor="#0987DB"
+                    android:text="Thông tin"
+                    android:gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="16dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="#0987DB"
+                    android:text="Xác nhận"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:textSize="16dp"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/enable"
+                    android:text="Thanh toán"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_tientrinh2"
+                android:layout_below="@id/title_tientrinh2"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ic_thongtin"
+                    android:src="@drawable/ic_thongtin_enable"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <View
+                    android:id="@+id/line_thonhtin_to_xacnhan"
+                    android:layout_toRightOf="@+id/ic_thongtin"
+                    android:background="@color/enable"
+                    android:layout_centerVertical="true"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"/>
+                <ImageView
+                    android:id="@+id/ic_xacnhan"
+                    android:layout_toRightOf="@+id/line_thonhtin_to_xacnhan"
+                    android:src="@drawable/ic_xacnhan_enable"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+                <View
+                    android:id="@+id/line_xacnhan_to_thanhtoan"
+                    android:layout_toRightOf="@+id/ic_xacnhan"
+                    android:background="@color/enable"
+                    android:layout_centerVertical="true"
+                    android:layout_width="100dp"
+                    android:layout_height="1dp"/>
+                <ImageView
+                    android:id="@+id/ic_thanh_toan"
+                    android:layout_toRightOf="@id/line_xacnhan_to_thanhtoan"
+                    android:src="@drawable/ic_thanhtoan_enable"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/relative_tientrinh2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/relative_tienmat"
+                    android:paddingLeft="30dp"
+                    android:background="@drawable/bg_layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                    <ImageView
+                        android:id="@+id/img_payment"
+                        android:src="@drawable/ic_payment"
+                        android:layout_centerVertical="true"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"/>
+                    <RelativeLayout
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/img_payment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/label_tienmat"
+                            android:textColor="@color/enable"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:text="Tiền mặt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="Khi nhân viên tới làm"
+                            android:layout_marginTop="8dp"
+                            android:layout_below="@+id/label_tienmat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <RelativeLayout
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <RelativeLayout
+            android:id="@+id/line_bottom_datdungle"
+            android:background="#AFAFAF"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp">
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/line_bottom_datdungle"
+            android:layout_width="match_parent"
+            android:layout_height="45dp">
+            <TextView
+                android:id="@+id/label_sotien_xacnhan_thanhtoan"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:textColor="#000000"
+                android:text="Số tiền"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_centerVertical="true"
+                android:text="(đã gồm phí dụng cụ)"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/label_sotien_xacnhan_thanhtoan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:textSize="16sp"
+                android:textColor="@color/enable"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:text="241,500đ/2.5h"
+                android:id="@+id/id_tong_tien_xacnhan_thanhtoan"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btn_xacnhan_thanhtoan"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+            android:textAllCaps="false"
+            android:text="Xác nhận &amp; Thanh toán"
+            android:background="@drawable/btn_round_coner"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+</LinearLayout>

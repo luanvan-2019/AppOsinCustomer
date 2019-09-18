@@ -1,14 +1,56 @@
 package com.example.coosincustomer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.example.coosincustomer.Fragment.OrderFragment;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 public class OrderSuccessActivity extends AppCompatActivity {
+
+    Button btnDanhSachCaLam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_success);
+
+        //anh xa
+        Toolbar toolbar = findViewById(R.id.toolbar_success);
+        btnDanhSachCaLam = findViewById(R.id.btn_danhsach_calam);
+
+        //toolbar action
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        PushDownAnim.setPushDownAnimTo(btnDanhSachCaLam).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OrderFragment orderFragment = new OrderFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.frame_danhsach_calam, orderFragment).commit();
+            }
+        });
+
+    }
+
+    //toolbar back button
+    @Override
+    public boolean onSupportNavigateUp() {
+        Intent intent = new Intent(OrderSuccessActivity.this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        return true;
     }
 }

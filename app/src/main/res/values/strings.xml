@@ -3,4 +3,52 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="yeu_cau_tra_tien">Vui lòng thanh toán số tiền bên dưới khi nhân viên tới làm tại nhà bạn</string>
+
+    <string name="text_success">CoOsin đang tìm nhân viên\n phù hợp. Vui lòng bật thông\n báo trên điện thoại để nhận\n thông tin về ca làm. Thời\n gian chờ tối đa là 3 tiếng.</string>
+
+    <string name="title_activity_map">MapActivity</string>
+    <string-array name="spiner1">
+        <item>8:00</item>
+        <item>8:30</item>
+        <item>9:00</item>
+        <item>9:30</item>
+        <item>10:00</item>
+    </string-array>
+    <string-array name="spiner2">
+        <item>10:00</item>
+        <item>10:30</item>
+        <item>11:00</item>
+        <item>11:30</item>
+        <item>12:00</item>
+    </string-array>
+    <string-array name="spiner3">
+        <item>13:00</item>
+        <item>13:30</item>
+        <item>14:00</item>
+        <item>14:30</item>
+        <item>15:00</item>
+    </string-array>
+    <string-array name="spiner4">
+        <item>15:00</item>
+        <item>15:30</item>
+        <item>16:00</item>
+        <item>16:30</item>
+        <item>17:00</item>
+    </string-array>
+    <string-array name="spiner5">
+        <item>17:00</item>
+        <item>17:30</item>
+        <item>18:00</item>
+        <item>18:30</item>
+        <item>19:00</item>
+    </string-array>
+    <string-array name="spiner6">
+        <item>19:00</item>
+        <item>19:30</item>
+        <item>20:00</item>
+        <item>20:30</item>
+        <item>21:00</item>
+    </string-array>
 </resources>
