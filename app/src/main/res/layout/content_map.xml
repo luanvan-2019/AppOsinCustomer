@@ -35,6 +35,7 @@
         android:outlineProvider="bounds"
         app:mt_placeholder="Tìm kiếm vị trí"/>
     <Button
+        android:id="@+id/btn_find_nearly_location"
         android:textStyle="bold"
         android:background="@drawable/btn_round_coner"
         android:text="Tìm quanh đây"
