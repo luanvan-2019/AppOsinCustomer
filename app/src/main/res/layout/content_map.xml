@@ -14,17 +14,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <ImageView
-        android:translationY="-18dp"
-        android:src="@drawable/ic_location"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <com.skyfishjy.library.RippleBackground
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/ripple_bg"
+        app:rb_color="#0099CC"
+        app:rb_radius="10dp"
+        app:rb_rippleAmount="4"
+        app:rb_duration="3000"
+        app:rb_scale="6">
+
+        <ImageView
+            android:translationY="-18dp"
+            android:src="@drawable/ic_location"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.skyfishjy.library.RippleBackground>
 
     <com.mancj.materialsearchbar.MaterialSearchBar
         style="@style/MaterialSearchBarLight"
         app:mt_speechMode="false"
-        app:mt_hint="Tìm kiếm vị trí"
+        app:mt_hint="Nhập địa chỉ và chọn một gợi ý..."
         app:mt_maxSuggestionsCount="10"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,15 +44,18 @@
         app:mt_navIconEnabled="true"
         android:elevation="5dp"
         android:outlineProvider="bounds"
-        app:mt_placeholder="Tìm kiếm vị trí"/>
+        app:mt_placeholder="Nhập địa chỉ và chọn một gợi ý..."/>
     <Button
+        android:layout_centerHorizontal="true"
         android:id="@+id/btn_find_nearly_location"
         android:textStyle="bold"
-        android:background="@drawable/btn_round_coner"
-        android:text="Tìm quanh đây"
+        android:textSize="16sp"
+        android:background="@drawable/bg_ui"
+        android:text="Xác nhận vị trí"
+        android:textAllCaps="false"
         android:textColor="@color/white"
         android:layout_margin="16dp"
         android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"/>
 </RelativeLayout>
