@@ -1,5 +1,6 @@
 package com.example.coosincustomer;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -43,12 +44,15 @@ import java.util.Locale;
 
 public class OrderDungLeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-    private EditText date, edtMap;
+    private EditText date, edtMap, edtMaKhuyenMai,edtGhiChu;
     private TextView mTxtSang, mTxtChieu, mTxtToi, mTxtTangGia,mTxtTotalTime,mtxtTongTien;
     private Spinner spinner1,spinner2;
     private Button btnContinueToConfirm;
     private Double totalGia;
     private Integer dongia = 50000;
+    double dungcu = 15500;
+    String buoi = "Sáng", startTime, endTime;
+    int REQUEST_CODE_MAP = 1997;
     DatePickerDialog datePickerDialog;
 
     @Override
@@ -66,6 +70,8 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
         mtxtTongTien = findViewById(R.id.id_tong_tien);
         mTxtTangGia = findViewById(R.id.txt_dichvu_gap);
         edtMap = findViewById(R.id.edt_diadiem);
+        edtMaKhuyenMai = findViewById(R.id.txt_input_ma_khuyenmai);
+        edtGhiChu = findViewById(R.id.txt_input_ghichu);
         mTxtSang.setBackgroundResource(R.drawable.bg_time_lamviec);
         mTxtSang.setTextColor(Color.WHITE);
         Toolbar toolbar = findViewById(R.id.toolbar_datDungle);
@@ -80,7 +86,8 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                         .withListener(new PermissionListener() {
                             @Override
                             public void onPermissionGranted(PermissionGrantedResponse response) {
-                                startActivity(new Intent(OrderDungLeActivity.this, MapActivity.class));
+                                Intent intent = new Intent(OrderDungLeActivity.this, MapActivity.class);
+                                startActivityForResult(intent,REQUEST_CODE_MAP);
                             }
 
                             @Override
@@ -130,8 +137,27 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
         PushDownAnim.setPushDownAnimTo(btnContinueToConfirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(OrderDungLeActivity.this, ConfirmActivity.class);
-                startActivity(intent);
+                if (edtMap.getText().toString().trim().equals("")){
+                    Toast.makeText(OrderDungLeActivity.this,"Bạn chưa chọn địa chỉ!",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    startTime = spinner1.getSelectedItem().toString();
+                    endTime = spinner2.getSelectedItem().toString();
+                    String time = buoi + " (" + startTime + " - " + endTime + ")";
+                    String dongiaString = String.valueOf(dongia);
+                    String phiDungCu = String.valueOf(dungcu);
+                    Intent intent = new Intent(OrderDungLeActivity.this, ConfirmActivity.class);
+                    intent.putExtra("address", edtMap.getText().toString());
+                    intent.putExtra("date", date.getText().toString());
+                    intent.putExtra("ca", time);
+                    intent.putExtra("makhuyenmai", edtMaKhuyenMai.getText().toString());
+                    intent.putExtra("ghichu", edtGhiChu.getText().toString());
+                    intent.putExtra("tongtien", mtxtTongTien.getText());
+                    intent.putExtra("dongia", dongiaString);
+                    intent.putExtra("phidungcu", phiDungCu);
+                    intent.putExtra("totaltime", mTxtTotalTime.getText().toString());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -167,6 +193,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                                 mTxtChieu.setTextColor(Color.WHITE);
                                 mTxtToi.setTextColor(Color.BLACK);
                                 mTxtSang.setTextColor(Color.BLACK);
+                                buoi = "Chiều";
                                 ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(OrderDungLeActivity.this,R.array.spiner3, android.R.layout.simple_spinner_item);
                                 adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spinner1.setAdapter(adapter3);
@@ -185,6 +212,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                                 mTxtToi.setTextColor(Color.WHITE);
                                 mTxtChieu.setTextColor(Color.BLACK);
                                 mTxtSang.setTextColor(Color.BLACK);
+                                buoi = "Tối";
                                 ArrayAdapter<CharSequence> adapter5 = ArrayAdapter.createFromResource(OrderDungLeActivity.this,R.array.spiner5, android.R.layout.simple_spinner_item);
                                 adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                                 spinner1.setAdapter(adapter5);
@@ -260,6 +288,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                 mTxtChieu.setTextColor(Color.BLACK);
                 mTxtChieu.setBackgroundResource(0);
                 mTxtToi.setBackgroundResource(0);
+                buoi = "Sáng";
                 ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(OrderDungLeActivity.this,R.array.spiner1, android.R.layout.simple_spinner_item);
                 adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner1.setAdapter(adapter1);
@@ -279,6 +308,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                 mTxtChieu.setTextColor(Color.WHITE);
                 mTxtChieu.setBackgroundResource(R.drawable.bg_time_lamviec);
                 mTxtToi.setBackgroundResource(0);
+                buoi = "Chiều";
                 ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(OrderDungLeActivity.this,R.array.spiner3, android.R.layout.simple_spinner_item);
                 adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner1.setAdapter(adapter3);
@@ -297,6 +327,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                 mTxtSang.setTextColor(Color.BLACK);
                 mTxtToi.setTextColor(Color.WHITE);
                 mTxtChieu.setTextColor(Color.BLACK);
+                buoi = "Tối";
                 mTxtToi.setBackgroundResource(R.drawable.bg_time_lamviec);
                 ArrayAdapter<CharSequence> adapter5 = ArrayAdapter.createFromResource(OrderDungLeActivity.this,R.array.spiner5, android.R.layout.simple_spinner_item);
                 adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -330,7 +361,6 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
 
         double totalTime = 0;
-        double dungcu = 15500;
         if (spinner1.getSelectedItemPosition() > spinner2.getSelectedItemPosition() ) {
             spinner2.setSelection(spinner1.getSelectedItemPosition());
         }
@@ -371,5 +401,14 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_MAP && resultCode == RESULT_OK && data != null){
+            String address = data.getStringExtra("address");
+            edtMap.setText(address);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

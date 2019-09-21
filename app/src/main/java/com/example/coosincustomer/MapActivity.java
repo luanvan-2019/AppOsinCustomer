@@ -1,6 +1,7 @@
 package com.example.coosincustomer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Address;
@@ -45,6 +46,7 @@ import com.skyfishjy.library.RippleBackground;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -105,6 +107,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         placesClient = Places.createClient(this);
         final AutocompleteSessionToken token = AutocompleteSessionToken.newInstance();
         rippleBg.startRippleAnimation();
+
+        //dialog
+        showAlertDialog();
 
         materialSearchBar.setOnSearchActionListener(new MaterialSearchBar.OnSearchActionListener() {
             @Override
@@ -229,8 +234,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String address = materialSearchBar.getText();
                 if (address.trim().equals("")){
                     Toast.makeText(getApplicationContext(),"Bạn chưa chọn địa chỉ!",Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent();
+                    intent.putExtra("address",address);
+                    setResult(RESULT_OK, intent);
+                    finish();
                 }
-                Log.d("BBB", address);
             }
         });
     }
@@ -287,12 +296,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 try {
                     addresses = geocoder.getFromLocation(latitude,longitude,1);
                     String address = addresses.get(0).getAddressLine(0);
-//                    String area = addresses.get(0).getLocality();
-//                    String city = addresses.get(0).getAdminArea();
-//                    String country = addresses.get(0).getCountryName();
-//                    String postalcode = addresses.get(0).getPostalCode();
                     String fullAddress = address;
-                    Log.d("BBB",fullAddress);
+                    materialSearchBar.setPlaceHolder(fullAddress);
                     materialSearchBar.setText(fullAddress);
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -350,6 +355,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                     }
                 });
+
+    }
+    public void showAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Hướng dẫn");
+        builder.setMessage("Bạn có thể lấy vị trí hiện tại của mình bằng cách nhấn vào biểu tượng góc phải dưới màn hình. Hoặc nhập vị trí khác và chọn một gợi ý !");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Đã hiểu", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
     }
 }
