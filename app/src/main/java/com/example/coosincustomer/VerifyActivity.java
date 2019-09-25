@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.os.SharedMemory;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.coosincustomer.Model.CheckLogined;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -36,7 +41,6 @@ public class VerifyActivity extends AppCompatActivity {
     Button btnLogin;
     String phone_num;
     ProgressBar pgbar_verify;
-    String phone_num_check;
     int randomNumber1;
     int verify_code;
     Connection connect;
@@ -62,6 +66,7 @@ public class VerifyActivity extends AppCompatActivity {
         pgbar_verify.setVisibility(View.GONE);
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         Intent intent = getIntent();
         if (intent != null){
             phone_num = intent.getStringExtra("phone_num");
@@ -70,6 +75,8 @@ public class VerifyActivity extends AppCompatActivity {
 
             Log.d("BBB", ""+ verify_code);
         }
+
+
         CountDown();
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +101,12 @@ public class VerifyActivity extends AppCompatActivity {
                             ResultSet rs = stmt.executeQuery(query);
                             if(rs.next())
                             {
+                                //save data
+                                CheckLogined.saveSharedSetting(VerifyActivity.this,"CoOsin","false");
+                                CheckLogined.SharedPrefesSAVE(getApplicationContext(),phone_num);
+
                                 Intent intent = new Intent(VerifyActivity.this, HomeActivity.class);
+//                                intent.putExtra("phone_num",phone_num);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(intent);
@@ -102,15 +114,20 @@ public class VerifyActivity extends AppCompatActivity {
                             }
                             else
                             {
+                                //save data
+                                CheckLogined.saveSharedSetting(VerifyActivity.this,"phone_num","false");
+                                CheckLogined.SharedPrefesSAVE(getApplicationContext(),phone_num);
+
                                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
                                 Date date = new Date();
                                 String current_date = formatter.format(date);
-                                String query1 = "INSERT INTO CUSTOMER (PHONE_NUM,CREATE_AT) VALUES ('" + phone_num + "','"  + current_date + "')";
+                                String query1 = "INSERT INTO CUSTOMER (PHONE_NUM,FULL_NAME,EMAIL,CREATE_AT,ADDRESS) VALUES ('" + phone_num + "','"+ "" + "','" +"" + "','"  + current_date + "','"+""+"')";
                                 Statement stmt1 = connect.createStatement();
                                 ResultSet rs1 = stmt1.executeQuery(query1);
                                 if(rs1.next())
                                 {
                                     Intent intent = new Intent(VerifyActivity.this, HomeActivity.class);
+//                                    intent.putExtra("phone_num",phone_num);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
@@ -121,10 +138,11 @@ public class VerifyActivity extends AppCompatActivity {
                     }
                     catch (Exception ex)
                     {
-                        Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
-
+//                        Toast.makeText(VerifyActivity.this,"Có lỗi không xác định vui lòng thử lại!",Toast.LENGTH_SHORT).show();
+////                        Intent intent = new Intent(VerifyActivity.this, HomeActivity.class);
+////                        startActivity(intent);
                     }
-                    finish();
+
 
                 }else{
                     Toast.makeText(getApplicationContext(), "Sai mã xác thực!", Toast.LENGTH_LONG).show();

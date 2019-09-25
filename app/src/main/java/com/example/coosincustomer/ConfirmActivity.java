@@ -17,6 +17,7 @@ public class ConfirmActivity extends AppCompatActivity {
     private Button btnXacNhanThanhToan;
     private TextView txtConfirmDiaDiem, txtConfirmDate, txtConfirmCa, txtConfirmMaKM, txtConfirmGhiChu,
             txtConfirmTongTien,txtConfirmTotalTime,txtConfirmDonGia,txtConfirmPhiDC;
+    String confirmDiaDiem,confirmDate,confirmCa,confirmMaKH,confirmGhiChu,confirmTongTien,confirmTotalTime,confirmDongia,confirmDungCu;
 
 
     @Override
@@ -46,16 +47,17 @@ public class ConfirmActivity extends AppCompatActivity {
         //lay du lieu tu Order activity
         Intent intent = getIntent();
         if (intent != null){
-            String confirmDiaDiem = intent.getStringExtra("address");
-            String confirmDate = intent.getStringExtra("date");
-            String confirmCa = intent.getStringExtra("ca");
-            String confirmMaKH = intent.getStringExtra("makhuyenmai");
-            String confirmGhiChu = intent.getStringExtra("ghichu");
-            String confirmTongTien = intent.getStringExtra("tongtien");
-            String confirmTotalTime = intent.getStringExtra("totaltime");
-            String confirmDongia = intent.getStringExtra("dongia").substring(0,2) + "."+intent.getStringExtra("dongia").substring(2)+"đ";
-            String confirmDungCu = intent.getStringExtra("phidungcu").substring(0,2) + "."+intent.getStringExtra("phidungcu").substring(2)+"đ";
+            confirmDiaDiem = intent.getStringExtra("address");
+            confirmDate = intent.getStringExtra("date");
+            confirmCa = intent.getStringExtra("ca");
+            confirmMaKH = intent.getStringExtra("makhuyenmai");
+            confirmGhiChu = intent.getStringExtra("ghichu");
+            confirmTongTien = intent.getStringExtra("tongtien");
+            confirmTotalTime = intent.getStringExtra("totaltime");
+            confirmDongia = intent.getStringExtra("dongia").substring(0,2) + "."+intent.getStringExtra("dongia").substring(2)+"đ";
+            confirmDungCu = intent.getStringExtra("phidungcu").substring(0,2) + "."+intent.getStringExtra("phidungcu").substring(2)+"đ";
             txtConfirmDiaDiem.setText(confirmDiaDiem);
+
             txtConfirmDate.setText(confirmDate);
             txtConfirmCa.setText(confirmCa);
             txtConfirmMaKM.setText(confirmMaKH);
@@ -71,6 +73,11 @@ public class ConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ConfirmActivity.this, ThanhtoanActivity.class);
+                intent.putExtra("address",confirmDiaDiem);
+                intent.putExtra("date",confirmDate);
+                intent.putExtra("ca",confirmCa);
+                intent.putExtra("ghichu",confirmGhiChu);
+                intent.putExtra("tongtien",confirmTongTien);
                 startActivity(intent);
             }
         });

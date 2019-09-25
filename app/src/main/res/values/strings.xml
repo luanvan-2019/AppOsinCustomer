@@ -8,7 +8,7 @@
 
     <string name="text_success">CoOsin đang tìm nhân viên\n phù hợp. Vui lòng bật thông\n báo trên điện thoại để nhận\n thông tin về ca làm. Thời\n gian chờ tối đa là 3 tiếng.</string>
 
-    <string name="google_maps_api">AIzaSyDb8vrfFWCuSNigtxvfM-zC-4MvNQlGIFQ</string>
+    <string name="cap_nhat_thong_tin">Đây là lần đầu tiên bạn đăng nhập, vui lòng cập nhật đầy đủ thông tin để tiếp tục sử dụng dịch vụ.\n\nChỉ cần vài thông tin sẽ không mất nhiều thời gian của bạn !</string>
 
     <string name="title_activity_map">MapActivity</string>
     <string-array name="spiner1">

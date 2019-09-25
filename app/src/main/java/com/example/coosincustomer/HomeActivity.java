@@ -1,6 +1,7 @@
 package com.example.coosincustomer;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -9,9 +10,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +33,12 @@ import com.example.coosincustomer.Fragment.OrderFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,6 +56,9 @@ public class HomeActivity extends AppCompatActivity {
     private DifferenceFragment differenceFragment;
     private FragmentManager mfragmentManager;
     private CardView cardViewDungLe;
+    ImageView imgAccount;
+    String phone_num;
+    Connection connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         mMainNav = findViewById(R.id.main_nav);
         mMainFrame = findViewById(R.id.main_frame);
         viewPager.setAdapter(viewPagerAdapter);
+        imgAccount = findViewById(R.id.avatar_account);
         prepareDots();
 
         //anh xa fragment
@@ -65,6 +80,55 @@ public class HomeActivity extends AppCompatActivity {
         notificationFragment = new NotificationFragment();
         differenceFragment = new DifferenceFragment();
 
+//        //lay so dien thoai da luu khi dang nhap
+        SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
+        phone_num = SP.getString("phone_num",null);
+
+        //manager account
+        PushDownAnim.setPushDownAnimTo(imgAccount).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this,AccountInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //nhan so dien thoai luc dang ky
+//        Intent intent = getIntent();
+//        if (intent != null){
+//            phone_num = intent.getStringExtra("phone_num");
+//
+//        }
+
+        //connect database and check information enough
+        StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        try
+        {
+            com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+            connect =conStr.CONN();        // Connect to database
+            if (connect == null)
+            {
+                Toast.makeText(getApplicationContext(), "Không có kết nối mạng!", Toast.LENGTH_LONG).show();
+            }
+            else
+            {
+                // Change below query according to your own database.
+                String query = "select * from CUSTOMER where PHONE_NUM= '" + phone_num  + "' AND FULL_NAME= '" + "" + "'";
+                Statement stmt = connect.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+                if(rs.next())
+                {
+                    //dialog
+                    showAlertDialog();
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+
+        }
 
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new MyTimerTask(),2000,4000);
@@ -161,5 +225,46 @@ public class HomeActivity extends AppCompatActivity {
             layoutParams.setMargins(4,0,4,0);
             dotsLayout.addView(dots[i],layoutParams);
         }
+    }
+    public void showAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Cập nhật thông tin");
+        builder.setMessage(R.string.cap_nhat_thong_tin);
+        builder.setCancelable(false);
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                Intent intent = new Intent(HomeActivity.this,AccountEditInfoActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận");
+        builder.setMessage("Bạn muốn đóng ứng dụng?");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Ở lại", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

@@ -54,7 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Vui lòng nhập số điện thoại để tiếp tục", Toast.LENGTH_LONG).show();
                     progress_bar.setVisibility(View.GONE);
                 }
-                else {
+                else if (edtInputPhone.getText().toString().length() < 10) {
+                    Toast.makeText(getApplicationContext(), "Số điện thoại không đúng", Toast.LENGTH_LONG).show();
+                    progress_bar.setVisibility(View.GONE);
+                }
+                else{
                         try {
                             String apiKey = "apikey=" + "ySlxYoZ94hk-TeA2bWOq1wqFMzeGzeDMVROBaEo4MN";
                             Random random = new Random();
@@ -81,10 +85,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //return stringBuffer.toString();
                         } catch (Exception e) {
-    //System.out.println("Error SMS "+e);
-    ///return "Error "+e;
-                            Toast.makeText(getApplicationContext(), "Lỗi SMS " + e, Toast.LENGTH_LONG).show();
-                            Toast.makeText(getApplicationContext(), "Lỗi " + e, Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Lỗi gửi tin", Toast.LENGTH_LONG).show();
                         }
                         Intent intent = new Intent(LoginActivity.this, VerifyActivity.class);
                         intent.putExtra("phone_num", edtInputPhone.getText().toString());

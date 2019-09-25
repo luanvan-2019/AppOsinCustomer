@@ -9,13 +9,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.coosincustomer.Fragment.OrderFragment;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 public class OrderSuccessActivity extends AppCompatActivity {
 
+    TextView txtTongTien;
     Button btnDanhSachCaLam;
+    String tongtien;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +28,7 @@ public class OrderSuccessActivity extends AppCompatActivity {
         //anh xa
         Toolbar toolbar = findViewById(R.id.toolbar_success);
         btnDanhSachCaLam = findViewById(R.id.btn_danhsach_calam);
+        txtTongTien = findViewById(R.id.txt_sotien_success);
 
         //toolbar action
         setSupportActionBar(toolbar);
@@ -32,6 +36,12 @@ public class OrderSuccessActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //nhan du lieu tu thanhtoan activity
+        Intent intent = getIntent();
+        if (intent != null){
+            tongtien = intent.getStringExtra("tongtien");
+            txtTongTien.setText(tongtien);
+        }
 
         PushDownAnim.setPushDownAnimTo(btnDanhSachCaLam).setOnClickListener(new View.OnClickListener() {
             @Override

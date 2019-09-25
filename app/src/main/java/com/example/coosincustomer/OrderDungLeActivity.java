@@ -50,7 +50,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
     private Button btnContinueToConfirm;
     private Double totalGia;
     private Integer dongia = 50000;
-    double dungcu = 15500;
+    Integer dungcu = 15500;
     String buoi = "Sáng", startTime, endTime;
     int REQUEST_CODE_MAP = 1997;
     DatePickerDialog datePickerDialog;
