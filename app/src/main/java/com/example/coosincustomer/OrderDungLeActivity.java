@@ -72,13 +72,16 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
         edtMap = findViewById(R.id.edt_diadiem);
         edtMaKhuyenMai = findViewById(R.id.txt_input_ma_khuyenmai);
         edtGhiChu = findViewById(R.id.txt_input_ghichu);
-        mTxtSang.setBackgroundResource(R.drawable.bg_time_lamviec);
-        mTxtSang.setTextColor(Color.WHITE);
         Toolbar toolbar = findViewById(R.id.toolbar_datDungle);
         btnContinueToConfirm = findViewById(R.id.btn_continue_datDungle);
 
+        //default
+        mTxtSang.setBackgroundResource(R.drawable.bg_time_lamviec);
+        mTxtSang.setTextColor(Color.WHITE);
+
+
         //permision map
-        edtMap.setOnClickListener(new View.OnClickListener() {
+        PushDownAnim.setPushDownAnimTo(edtMap).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dexter.withActivity(OrderDungLeActivity.this)

@@ -84,7 +84,7 @@ public class VerifyActivity extends AppCompatActivity {
                 String _edtVerify = edtInputVerify.getText().toString();
                 if (_edtVerify.trim().equals(""))
                     Toast.makeText(getApplicationContext(),"Bạn chưa nhập mã xác thực!", Toast.LENGTH_LONG).show();
-                else if(verify_code == Integer.valueOf(edtInputVerify.getText().toString())){
+                else if(1 == Integer.valueOf(edtInputVerify.getText().toString())){
                     try
                     {
                         com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();

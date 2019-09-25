@@ -4,6 +4,7 @@
     package="com.example.coosincustomer">
 
     <application
+        android:largeHeap="true"
         android:name=".SleepSplashScreen"
         android:allowBackup="true"
         android:icon="@drawable/ic_logo"

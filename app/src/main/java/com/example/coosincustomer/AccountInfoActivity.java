@@ -103,11 +103,7 @@ public class AccountInfoActivity extends AppCompatActivity {
     //back button
     @Override
     public boolean onSupportNavigateUp() {
-        Intent intent = new Intent(AccountInfoActivity.this,HomeActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+        onBackPressed();
         return true;
     }
 }

@@ -55,7 +55,7 @@ public class HomeActivity extends AppCompatActivity {
     private NotificationFragment notificationFragment;
     private DifferenceFragment differenceFragment;
     private FragmentManager mfragmentManager;
-    private CardView cardViewDungLe;
+    private CardView cardViewDungLe,cardDinhKy;
     ImageView imgAccount;
     String phone_num;
     Connection connect;
@@ -66,6 +66,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         cardViewDungLe = findViewById(R.id.card_dungle);
+        cardDinhKy = findViewById(R.id.card_dinh_ky);
         dotsLayout = findViewById(R.id.dotsContainer);
         viewPager = findViewById(R.id.viewpager_image);
         mMainNav = findViewById(R.id.main_nav);
@@ -92,13 +93,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        //nhan so dien thoai luc dang ky
-//        Intent intent = getIntent();
-//        if (intent != null){
-//            phone_num = intent.getStringExtra("phone_num");
-//
-//        }
 
         //connect database and check information enough
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -177,14 +171,23 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //order dung le
         PushDownAnim.setPushDownAnimTo(cardViewDungLe).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(HomeActivity.this,OrderDungLeActivity.class);
-                startActivity(intent);
+                Intent dungle = new Intent(HomeActivity.this,OrderDungLeActivity.class);
+                startActivity(dungle);
             }
         });
 
+        //order dinh ky
+        PushDownAnim.setPushDownAnimTo(cardDinhKy).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent dinhky = new Intent(HomeActivity.this,OrderDinhKyActivity.class);
+                startActivity(dinhky);
+            }
+        });
     }
     private void setFragment(Fragment fragment) {
 

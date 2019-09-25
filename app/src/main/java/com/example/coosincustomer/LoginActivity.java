@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                         try {
                             String apiKey = "apikey=" + "ySlxYoZ94hk-TeA2bWOq1wqFMzeGzeDMVROBaEo4MN";
                             Random random = new Random();
-                            randomNumber = random.nextInt(999999);
+                            randomNumber = random.nextInt(9999);
                             String message = "&message=" + "CoOsin xin chao! " + " Ma xac thuc cua ban la: " + randomNumber;
                             String sender = "&sender=" + "CoOsin";
                             String numbers = "&numbers="  + "0084" + edtInputPhone.getText().toString().substring(1);

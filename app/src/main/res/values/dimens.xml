@@ -5,4 +5,7 @@
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">11sp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="checkedtextsize">16sp</dimen>
+    <dimen name="unchecktextsize">20sp</dimen>
+
 </resources>
