@@ -240,7 +240,6 @@ public class HomeActivity extends AppCompatActivity {
                 dialogInterface.dismiss();
                 Intent intent = new Intent(HomeActivity.this,AccountEditInfoActivity.class);
                 startActivity(intent);
-                finish();
             }
         });
         AlertDialog alertDialog = builder.create();

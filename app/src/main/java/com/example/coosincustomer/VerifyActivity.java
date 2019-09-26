@@ -139,8 +139,10 @@ public class VerifyActivity extends AppCompatActivity {
                     catch (Exception ex)
                     {
 //                        Toast.makeText(VerifyActivity.this,"Có lỗi không xác định vui lòng thử lại!",Toast.LENGTH_SHORT).show();
-////                        Intent intent = new Intent(VerifyActivity.this, HomeActivity.class);
-////                        startActivity(intent);
+                        Intent intent = new Intent(VerifyActivity.this, HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
                     }
 
 

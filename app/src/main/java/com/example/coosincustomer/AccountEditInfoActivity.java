@@ -84,21 +84,20 @@ public class AccountEditInfoActivity extends AppCompatActivity {
                     {
 
                     }
+                    Intent intent1 = new Intent(AccountEditInfoActivity.this,AccountInfoActivity.class);
+                    startActivity(intent1);
+                    finish();
                 }else{
                     Toast.makeText(AccountEditInfoActivity.this,"Địa chỉ email không đúng!",Toast.LENGTH_SHORT).show();
                 }
-                Intent intent1 = new Intent(AccountEditInfoActivity.this,AccountInfoActivity.class);
-                intent1.putExtra("phone_num",phone_num);
-                startActivity(intent1);
-                finish();
             }
         });
     }
-
-//    //back button
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        onBackPressed();
-//        return true;
-//    }
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }

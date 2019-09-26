@@ -85,6 +85,7 @@ public class AccountInfoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AccountInfoActivity.this,AccountUpdateInfoActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
 
