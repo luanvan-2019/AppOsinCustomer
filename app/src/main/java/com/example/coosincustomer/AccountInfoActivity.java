@@ -1,5 +1,6 @@
 package com.example.coosincustomer;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -25,6 +26,7 @@ public class AccountInfoActivity extends AppCompatActivity {
     TextView txtHoTen, txtEmail, txtSDT, txtDiaChi,txtUpdateInfo,txtLOGOUT;
     String phone_num;
     Connection connect;
+    int REQUEST_CODE_UPDATE = 1997;
 
 
     @Override
@@ -85,8 +87,7 @@ public class AccountInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AccountInfoActivity.this,AccountUpdateInfoActivity.class);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent,REQUEST_CODE_UPDATE);
             }
         });
 
@@ -108,5 +109,16 @@ public class AccountInfoActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    //reload lai trang
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_CODE_UPDATE && resultCode == RESULT_OK && data != null){
+            finish();
+            Intent intent = new Intent(AccountInfoActivity.this,AccountInfoActivity.class);
+            startActivity(intent);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

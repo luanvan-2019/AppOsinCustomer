@@ -26,6 +26,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
     String TongTien,DiaChi;
     Connection connect;
     String phone_num;
+    Integer i;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,14 @@ public class ThanhtoanActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        //check da chon hinh thuc thanh toan
+        i = 0;
+
         //thanh toan tien mat click
         PushDownAnim.setPushDownAnimTo(relavetiveTienMat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                i = 1;
                 iconThanhtoan.setImageResource(R.drawable.ic_checked);
                 relavetiveTienMat.setBackgroundResource(R.drawable.bg_layout_licked);
             }
@@ -72,29 +77,33 @@ public class ThanhtoanActivity extends AppCompatActivity {
                 startActivity(intent);
 
                 //cap nhat lai dia chi cho tai khoan
-                try
-                {
-                    com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
-                    connect =conStr.CONN();        // Connect to database
-                    if (connect == null)
+                if (i == 0){
+                    Toast.makeText(getApplicationContext(),"Chưa chọn hình thức thanh toán",Toast.LENGTH_LONG).show();
+                }else {
+                    try
                     {
-                        Toast.makeText(getApplicationContext(), "Không có kết nối mạng!", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        //lay so dien thoai da luu khi dang nhap
-                        SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
-                        phone_num = SP.getString("phone_num",null);
+                        com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                        connect =conStr.CONN();        // Connect to database
+                        if (connect == null)
+                        {
+                            Toast.makeText(getApplicationContext(), "Không có kết nối mạng!", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            //lay so dien thoai da luu khi dang nhap
+                            SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
+                            phone_num = SP.getString("phone_num",null);
 
-                        String query = "UPDATE CUSTOMER SET ADDRESS = N'" + DiaChi +"' WHERE PHONE_NUM='"+phone_num+"'";
-                        Statement stmt = connect.createStatement();
-                        stmt.executeQuery(query);
-                        connect.close();
+                            String query = "UPDATE CUSTOMER SET ADDRESS = N'" + DiaChi +"' WHERE PHONE_NUM='"+phone_num+"'";
+                            Statement stmt = connect.createStatement();
+                            stmt.executeQuery(query);
+                            connect.close();
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
+                    catch (Exception ex)
+                    {
 //                    Toast.makeText(ThanhtoanActivity.this,"Có lỗi không xác định vui lòng thử lại!",Toast.LENGTH_SHORT).show();
+                    }
                 }
                 finish();
             }

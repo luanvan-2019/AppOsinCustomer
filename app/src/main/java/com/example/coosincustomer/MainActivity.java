@@ -9,21 +9,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button _btnLoginPhone;
-    Button _btnLoginFace;
+    ImageView imgLoginPhone, imgLoginFacebook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        _btnLoginPhone = findViewById(R.id.btn_login_phone);
-        _btnLoginFace = findViewById(R.id.btn_login_face);
+        imgLoginPhone = findViewById(R.id.btn_login_phone);
+        imgLoginFacebook = findViewById(R.id.btn_login_face);
 
-        _btnLoginPhone.setOnClickListener(new View.OnClickListener() {
+        PushDownAnim.setPushDownAnimTo(imgLoginPhone).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, LoginPhoneActivity.class);
@@ -31,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        _btnLoginFace.setOnClickListener(new View.OnClickListener() {
+        PushDownAnim.setPushDownAnimTo(imgLoginFacebook).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SignupActivity.class);

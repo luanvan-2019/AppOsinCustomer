@@ -62,7 +62,8 @@ public class AccountEditInfoActivity extends AppCompatActivity {
                 String email = edtUpdateEmail.getText().toString();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 if (full_name.trim().equals("") || email.trim().equals("")){
-                    Toast.makeText(AccountEditInfoActivity.this,"Vui lòng nhập đầy đủ thông tin!",Toast.LENGTH_SHORT).show();
+                    edtUpdateFullname.setError("Chưa nhập họ và tên");
+                    edtUpdateEmail.setError("Chưa nhập email");
                 }else if (email.trim().matches(emailPattern)){
                     try
                     {

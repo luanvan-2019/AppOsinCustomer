@@ -1,6 +1,7 @@
 package com.example.coosincustomer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginPhoneActivity extends AppCompatActivity {
 
-    private Spinner spinner;
+//    private Spinner spinner;
     private EditText editText;
 
     @Override
@@ -23,15 +24,21 @@ public class LoginPhoneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_phone);
 
-        spinner = findViewById(R.id.spinnerCountries);
-        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames));
+        //back button
+        Toolbar toolbar = findViewById(R.id.toolbar_login);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+//        spinner = findViewById(R.id.spinnerCountries);
+//        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CountryData.countryNames));
 
         editText = findViewById(R.id.editTextPhone);
 
         findViewById(R.id.buttonContinue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
+//                String code = CountryData.countryAreaCodes[spinner.getSelectedItemPosition()];
 
                 String number = editText.getText().toString().trim();
 
@@ -41,7 +48,7 @@ public class LoginPhoneActivity extends AppCompatActivity {
                     return;
                 }
 
-                String phonenumber = "+" + code + number;
+                String phonenumber = "+" + "84" + number;
 
                 Intent intent = new Intent(LoginPhoneActivity.this, OTPActivity.class);
                 intent.putExtra("phonenumber", phonenumber);
@@ -64,5 +71,11 @@ public class LoginPhoneActivity extends AppCompatActivity {
 
             startActivity(intent);
         }
+    }
+    //back button
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

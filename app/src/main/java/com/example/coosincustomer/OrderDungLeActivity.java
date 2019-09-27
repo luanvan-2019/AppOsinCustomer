@@ -141,7 +141,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View view) {
                 if (edtMap.getText().toString().trim().equals("")){
-                    Toast.makeText(OrderDungLeActivity.this,"Bạn chưa chọn địa chỉ!",Toast.LENGTH_SHORT).show();
+                    edtMap.setError("Chưa chọn địa chỉ!");
                 }
                 else {
                     startTime = spinner1.getSelectedItem().toString();

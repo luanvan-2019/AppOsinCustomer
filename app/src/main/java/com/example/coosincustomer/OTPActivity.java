@@ -5,10 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coosincustomer.Model.CheckLogined;
@@ -20,6 +22,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,7 +38,8 @@ public class OTPActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressBar progressBar;
     private EditText editText;
-    String phone_num;
+    private TextView txtRepVerify,countdown;
+    String phone_num,phonenumber;
     Connection connect;
 
     @Override
@@ -48,11 +52,28 @@ public class OTPActivity extends AppCompatActivity {
 
         progressBar = findViewById(R.id.progressbar);
         editText = findViewById(R.id.editTextCode);
+        txtRepVerify = findViewById(R.id.txt_resend);
+        countdown = findViewById(R.id.count_down);
 
-        String phonenumber = getIntent().getStringExtra("phonenumber");
+        phonenumber = getIntent().getStringExtra("phonenumber");
         phone_num = getIntent().getStringExtra("phone_num");
         sendVerificationCode(phonenumber);
-        Log.d("BBB",phonenumber);
+
+        //huy ma xac thuc sau 2phut
+        CountDownCancelCode();
+
+        //dem nguoc thoi gian khi gui lai ma
+        CountDown();
+
+        //gui lai ma
+        PushDownAnim.setPushDownAnimTo(txtRepVerify).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CountDown();
+                sendVerificationCode(phonenumber);
+                Toast.makeText(getApplicationContext(),"Đã gửi lại mã xác thực đến "+phone_num,Toast.LENGTH_LONG).show();
+            }
+        });
 
         findViewById(R.id.buttonSignIn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +83,7 @@ public class OTPActivity extends AppCompatActivity {
 
                 if ((code.isEmpty() || code.length() < 6)){
 
-                    editText.setError("Enter code...");
+                    editText.setError("Chưa nhập mã hoặc mã không hợp lệ!");
                     editText.requestFocus();
                     return;
                 }
@@ -134,7 +155,7 @@ public class OTPActivity extends AppCompatActivity {
                             }
 
                         } else {
-                            Toast.makeText(OTPActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Toast.makeText(OTPActivity.this, "Mã xác thực không chính xác!", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -172,8 +193,42 @@ public class OTPActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(FirebaseException e) {
-            Toast.makeText(OTPActivity.this, e.getMessage(),Toast.LENGTH_LONG).show();
+            Toast.makeText(OTPActivity.this, "Không thể gửi mã xác thực vui lòng kiểm tra lại số điện thoại!",Toast.LENGTH_LONG).show();
 
         }
     };
+
+    public void CountDown(){
+        //countdown
+        txtRepVerify.setEnabled(false);
+        txtRepVerify.setTextColor(getResources().getColor(R.color.disable));
+        new CountDownTimer(60000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                countdown.setText("(" + millisUntilFinished / 1000+"s)");
+            }
+
+            public void onFinish() {
+                txtRepVerify.setTextColor(getResources().getColor(R.color.enable));
+                txtRepVerify.setEnabled(true);
+                countdown.setText("");
+            }
+        }.start();
+    }
+
+    public void CountDownCancelCode(){
+        //countdown
+        txtRepVerify.setEnabled(false);
+        txtRepVerify.setTextColor(getResources().getColor(R.color.disable));
+        new CountDownTimer(60000*2, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            public void onFinish() {
+                verificationid = "999999";
+            }
+        }.start();
+    }
 }

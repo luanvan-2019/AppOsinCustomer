@@ -10,6 +10,8 @@
 
     <string name="cap_nhat_thong_tin">Đây là lần đầu tiên bạn đăng nhập, vui lòng cập nhật đầy đủ thông tin để tiếp tục sử dụng dịch vụ.\n\nChỉ cần vài thông tin sẽ không mất nhiều thời gian của bạn !</string>
 
+    <string name="guilai"><u>Gửi lại</u></string>
+
     <string name="title_activity_map">MapActivity</string>
     <string-array name="spiner1">
         <item>8:00</item>

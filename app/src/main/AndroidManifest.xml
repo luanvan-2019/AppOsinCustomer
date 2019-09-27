@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".OTPActivity"></activity>
-        <activity android:name=".LoginPhoneActivity" />
+        <activity android:name=".LoginPhoneActivity"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
         <activity android:name=".AccountUpdateInfoActivity" />
         <activity android:name=".AccountEditInfoActivity" />
         <activity android:name=".AccountInfoActivity" />

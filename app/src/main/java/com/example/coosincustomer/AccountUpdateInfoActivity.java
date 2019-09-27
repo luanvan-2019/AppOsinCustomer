@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -37,6 +38,13 @@ public class AccountUpdateInfoActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btn_save);
         progressBar = findViewById(R.id.ProgressBar_update_tt);
         progressBar.setVisibility(View.GONE);
+
+        //toolbar action
+        Toolbar toolbar = findViewById(R.id.toolbar_update_info);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         //database
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -70,27 +78,35 @@ public class AccountUpdateInfoActivity extends AppCompatActivity {
                                 String query = "UPDATE CUSTOMER SET FULL_NAME=N'"+ full_name + "'WHERE PHONE_NUM='"+phone_num+"'";
                                 Statement stmt = connect.createStatement();
                                 stmt.executeQuery(query);
+                                finish();
                             }else if(full_name.trim().equals("") && !email.trim().equals("")) {
                                 if (email.trim().matches(emailPattern)){
                                     // Change below query according to your own database.
                                     String query = "UPDATE CUSTOMER SET EMAIL='"+ email + "'WHERE PHONE_NUM='"+phone_num+"'";
                                     Statement stmt = connect.createStatement();
                                     stmt.executeQuery(query);
-                                }else Toast.makeText(AccountUpdateInfoActivity.this,"Địa chỉ email không đúng!",Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }else edtUpdateEmail.setError("Địa chỉ email không đúng");
                             }
                             else {
 //                                 Change below query according to your own database.
                             String query = "UPDATE CUSTOMER SET FULL_NAME=N'"+ full_name + "',EMAIL='"+ email +"'WHERE PHONE_NUM='"+ phone_num+"'";
                             Statement stmt = connect.createStatement();
                             stmt.executeQuery(query);
+                            finish();
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        Toast.makeText(AccountUpdateInfoActivity.this,"Cập nhật thông tin thành công!",Toast.LENGTH_SHORT).show();
+                        Toast toast = Toast.makeText(getApplicationContext(),"Cập nhật thông tin thành cônggit ", Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+                        Intent intent = new Intent();
+                        intent.putExtra("a",full_name);
+                        setResult(RESULT_OK, intent);
+                        finish();
                     }
-                    finish();
                 }
             }
         });
