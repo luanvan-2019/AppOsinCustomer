@@ -102,7 +102,7 @@ public class VerifyActivity extends AppCompatActivity {
                             if(rs.next())
                             {
                                 //save data
-                                CheckLogined.saveSharedSetting(VerifyActivity.this,"CoOsin","false");
+//                                CheckLogined.saveSharedSetting(VerifyActivity.this,"CoOsin","false");
                                 CheckLogined.SharedPrefesSAVE(getApplicationContext(),phone_num);
 
                                 Intent intent = new Intent(VerifyActivity.this, HomeActivity.class);
@@ -115,7 +115,7 @@ public class VerifyActivity extends AppCompatActivity {
                             else
                             {
                                 //save data
-                                CheckLogined.saveSharedSetting(VerifyActivity.this,"phone_num","false");
+//                                CheckLogined.saveSharedSetting(VerifyActivity.this,"phone_num","false");
                                 CheckLogined.SharedPrefesSAVE(getApplicationContext(),phone_num);
 
                                 DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

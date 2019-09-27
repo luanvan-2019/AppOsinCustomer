@@ -67,13 +67,13 @@ public class AccountUpdateInfoActivity extends AppCompatActivity {
                         {
                             if (!full_name.trim().equals("") && email.trim().equals("")){
                                 // Change below query according to your own database.
-                                String query = "UPDATE CUSTOMER SET FULL_NAME=N'"+ full_name + "'";
+                                String query = "UPDATE CUSTOMER SET FULL_NAME=N'"+ full_name + "'WHERE PHONE_NUM='"+phone_num+"'";
                                 Statement stmt = connect.createStatement();
                                 stmt.executeQuery(query);
                             }else if(full_name.trim().equals("") && !email.trim().equals("")) {
                                 if (email.trim().matches(emailPattern)){
                                     // Change below query according to your own database.
-                                    String query = "UPDATE CUSTOMER SET EMAIL='"+ email + "'";
+                                    String query = "UPDATE CUSTOMER SET EMAIL='"+ email + "'WHERE PHONE_NUM='"+phone_num+"'";
                                     Statement stmt = connect.createStatement();
                                     stmt.executeQuery(query);
                                 }else Toast.makeText(AccountUpdateInfoActivity.this,"Địa chỉ email không đúng!",Toast.LENGTH_SHORT).show();

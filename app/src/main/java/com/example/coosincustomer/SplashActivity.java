@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.coosincustomer.Model.CheckLogined;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -21,17 +22,27 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     public void CheckUser(){
-        Boolean check = Boolean.valueOf(CheckLogined.readSharedSetting(SplashActivity.this,"CoOsin","true"));
-//        SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
-//        String a = SP.getString("phone_num",null);
-        Intent introIntent = new Intent(SplashActivity.this,MainActivity.class);
-        introIntent.putExtra("phone_num",check);
-
-        if (check) {
-            startActivity(introIntent);
+//        Boolean check = Boolean.valueOf(CheckLogined.readSharedSetting(SplashActivity.this,"CoOsin","true"));
+////        SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
+////        String a = SP.getString("phone_num",null);
+//        Intent introIntent = new Intent(SplashActivity.this,MainActivity.class);
+//        introIntent.putExtra("phone_num",check);
+//
+//        if (check) {
+//            startActivity(introIntent);
+//        }
+//        else {
+//            Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
+//            startActivity(intent);
+//        }
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Intent intent = new Intent(this, HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
         else {
-            Intent intent = new Intent(SplashActivity.this,HomeActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
     }

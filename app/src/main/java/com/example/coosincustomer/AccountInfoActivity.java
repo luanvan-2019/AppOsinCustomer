@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.coosincustomer.Model.CheckLogined;
+import com.google.firebase.auth.FirebaseAuth;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.sql.Connection;
@@ -92,11 +93,12 @@ public class AccountInfoActivity extends AppCompatActivity {
         PushDownAnim.setPushDownAnimTo(txtLOGOUT).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckLogined.saveSharedSetting(AccountInfoActivity.this,"CoOsin","true");
+//                CheckLogined.saveSharedSetting(AccountInfoActivity.this,"CoOsin","true");
                 CheckLogined.SharedPrefesSAVE(getApplicationContext(),"");
                 Intent logOut = new Intent(AccountInfoActivity.this,MainActivity.class);
                 logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 logOut.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                FirebaseAuth.getInstance().signOut();
                 startActivity(logOut);
             }
         });

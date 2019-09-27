@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.auth.api.phone.SmsRetriever;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
