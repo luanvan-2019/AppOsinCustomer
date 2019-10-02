@@ -180,7 +180,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                         if (i1 == 12) i1 = 1;
                         else i1 = i1+1;
                         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-                        Date d_name = new Date(i,i1,i2-3);
+                        Date d_name = new Date(i,i1,i2-4);
                         String dayOfTheWeek = sdf.format(d_name);
                         if (day == i2){
                             date.setText("Hôm nay"+", "+i2+"/"+i1+"/"+i);

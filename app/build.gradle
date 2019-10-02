@@ -63,5 +63,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
     implementation 'com.googlecode.libphonenumber:libphonenumber:8.9.7'
     implementation 'com.google.firebase:firebase-database:19.1.0'
+
+    implementation 'com.wdullaer:materialdatetimepicker:3.6.4'
 }
 apply plugin: 'com.google.gms.google-services'

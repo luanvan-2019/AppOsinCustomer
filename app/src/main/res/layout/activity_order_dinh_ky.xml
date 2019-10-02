@@ -292,7 +292,8 @@
                         android:id="@+id/txt_date_start"
                         android:textColor="@color/enable"
                         android:layout_toRightOf="@+id/icedit"
-                        android:text="Hôm nay, 20/11/2019"
+                        android:textStyle="bold"
+                        android:text="Chọn ngày bắt đầu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                 </RelativeLayout>

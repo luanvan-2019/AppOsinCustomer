@@ -99,7 +99,7 @@ public class AccountUpdateInfoActivity extends AppCompatActivity {
                     }
                     catch (Exception ex)
                     {
-                        Toast toast = Toast.makeText(getApplicationContext(),"Cập nhật thông tin thành cônggit ", Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(),"Cập nhật thông tin thành công", Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
                         Intent intent = new Intent();
