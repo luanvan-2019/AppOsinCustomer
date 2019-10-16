@@ -78,6 +78,10 @@ public class ConfirmActivity extends AppCompatActivity {
                 intent.putExtra("ca",confirmCa);
                 intent.putExtra("ghichu",confirmGhiChu);
                 intent.putExtra("tongtien",confirmTongTien);
+                intent.putExtra("makhuyenmai",confirmMaKH);
+                intent.putExtra("totalPrice",getIntent().getIntExtra("totalgia",0));
+                intent.putExtra("orderType",1);
+
                 startActivity(intent);
             }
         });

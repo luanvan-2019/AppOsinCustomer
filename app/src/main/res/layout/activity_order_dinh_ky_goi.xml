@@ -30,7 +30,7 @@
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
     </RelativeLayout>
     <ScrollView
-        android:layout_weight="10"
+        android:layout_weight="10.5"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <RelativeLayout
@@ -503,7 +503,7 @@
 
 
     <RelativeLayout
-        android:layout_weight="2"
+        android:layout_weight="1.5"
         android:layout_width="match_parent"
         android:layout_height="0dp">
         <RelativeLayout
@@ -511,31 +511,6 @@
             android:background="#AFAFAF"
             android:layout_width="match_parent"
             android:layout_height="0.1dp">
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_below="@+id/line_bottom_datdungle"
-            android:layout_width="match_parent"
-            android:layout_height="45dp">
-            <TextView
-                android:id="@+id/label_sotien_datdungle"
-                android:layout_centerVertical="true"
-                android:textSize="16dp"
-                android:textColor="#000000"
-                android:text="Số tiền"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:text="2,000,000 đ"
-                android:layout_alignParentRight="true"
-                android:textSize="16sp"
-                android:textColor="@color/enable"
-                android:textStyle="bold"
-                android:layout_centerVertical="true"
-                android:id="@+id/id_tong_tien"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
         </RelativeLayout>
         <Button
             android:id="@+id/btn_continue_toConfirm_dinhky"

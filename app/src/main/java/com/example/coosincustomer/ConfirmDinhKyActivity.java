@@ -57,7 +57,7 @@ public class ConfirmDinhKyActivity extends AppCompatActivity {
 
         //settext
         txtAddress.setText(address);
-        txtLichLamViec.setText(thu+"("+startTime+" - "+endtime+")");
+        txtLichLamViec.setText("Thứ: "+thu+" ("+startTime+" - "+endtime+")");
         txtCa.setText(ca);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String tongTien = decimalFormat.format(tongtien);
@@ -70,7 +70,15 @@ public class ConfirmDinhKyActivity extends AppCompatActivity {
         PushDownAnim.setPushDownAnimTo(btnToThanhToan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent toThanhToan = new Intent(ConfirmDinhKyActivity.this, ThanhToanDinhKyActivity.class);
+                Intent toThanhToan = new Intent(ConfirmDinhKyActivity.this, ThanhtoanActivity.class);
+                toThanhToan.putExtra("address",address);
+                toThanhToan.putExtra("schedule",thu);
+                toThanhToan.putExtra("timeWork",ca);
+                toThanhToan.putExtra("dateStart",startTime);
+                toThanhToan.putExtra("dateEnd",endtime);
+                toThanhToan.putExtra("note",ghichu);
+                toThanhToan.putExtra("totalPrice",tongtien);
+                toThanhToan.putExtra("orderType",2);
                 startActivity(toThanhToan);
             }
         });

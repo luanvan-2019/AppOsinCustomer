@@ -1,11 +1,11 @@
 package com.example.coosincustomer.Model;
 
-public class ListOrder {
+public class ListOrderTVS {
 
     private String status, date, ca, diadiem;
     private int gia,mahoadon;
 
-    public ListOrder(String status, String date, String ca, String diadiem, int mahoadon, int gia) {
+    public ListOrderTVS(String status, String date, String ca, String diadiem, int mahoadon, int gia) {
         this.status = status;
         this.date = date;
         this.ca = ca;

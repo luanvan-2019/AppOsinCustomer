@@ -3,6 +3,7 @@ package com.example.coosincustomer;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -81,6 +82,15 @@ public class ThanhToanDinhKyActivity extends AppCompatActivity {
                 relavetiveTienMat.setBackgroundResource(R.drawable.bg_layout1);
                 iconThanhToanMoMo.setImageResource(R.drawable.ic_momo);
                 relativeLayoutMoMo.setBackgroundResource(R.drawable.bg_layout1);
+            }
+        });
+
+        //thanh toan
+        PushDownAnim.setPushDownAnimTo(btnXacnhanThanhtoan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent thanhtoan = new Intent(ThanhToanDinhKyActivity.this,MoMoActivity.class);
+                startActivity(thanhtoan);
             }
         });
     }

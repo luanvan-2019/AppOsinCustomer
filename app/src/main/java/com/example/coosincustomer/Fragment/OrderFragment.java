@@ -5,19 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.coosincustomer.Adapter.OrderListAdapter;
 import com.example.coosincustomer.Adapter.OrderPagerAdapter;
-import com.example.coosincustomer.Adapter.ViewPagerAdapter;
-import com.example.coosincustomer.Model.ListOrder;
 import com.example.coosincustomer.R;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 public class OrderFragment extends Fragment {
 
@@ -43,7 +37,23 @@ public class OrderFragment extends Fragment {
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
 
-        OrderPagerAdapter adapter = new OrderPagerAdapter(getFragmentManager());
+//        String check = getArguments().getString("check");
+        try {
+            if (getArguments().getString("check") != null){
+                Toolbar toolbar = view.findViewById(R.id.toolbar_order_fragment);
+                toolbar.setNavigationIcon(R.drawable.ic_back);
+                toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getActivity().onBackPressed();
+                    }
+                });
+            }
+        }catch(Exception ex){
+
+        }
+
+        OrderPagerAdapter adapter = new OrderPagerAdapter(getChildFragmentManager());
         adapter.addFragment(new FragmentDungle(),"Dùng lẻ");
         adapter.addFragment(new Fragment_dungdk(),"Dùng định kỳ");
         adapter.addFragment(new Fragment_tongvs(),"Tổng vệ sinh");

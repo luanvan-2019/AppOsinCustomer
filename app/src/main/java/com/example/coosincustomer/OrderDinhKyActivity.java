@@ -1,30 +1,27 @@
 package com.example.coosincustomer;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.Manifest;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -33,13 +30,13 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 public class OrderDinhKyActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,DatePickerDialog.OnDateSetListener {
 
@@ -87,7 +84,6 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
         simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
         calendar = Calendar.getInstance();
-
         Year = calendar.get(Calendar.YEAR) ;
         Month = calendar.get(Calendar.MONTH);
         Day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -104,11 +100,14 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
             public void onClick(View view) {
                 if (edtMap.getText().toString().trim().equals("")){
                     edtMap.setError("Bạn chưa chọn địa chỉ!");
+                    edtMap.requestFocus();
                     Toast.makeText(getApplicationContext(),"Bạn chưa chọn địa chỉ!",Toast.LENGTH_LONG).show();
                 }
                 else if (Thu2.equals("") && Thu3.equals("") && Thu4.equals("") && Thu5.equals("")
                         && Thu6.equals("") && Thu7.equals("") && ChuNhat.equals("")){
                     Toast.makeText(getApplicationContext(),"Bạn chưa chọn lịch làm việc!",Toast.LENGTH_LONG).show();
+                }else if (dateStart.getText().toString().trim().equals("Chọn ngày bắt đầu")){
+                    Toast.makeText(getApplicationContext(),"Bạn chưa chọn ngày bắt đầu!",Toast.LENGTH_LONG).show();
                 }
                 else {
                     buoi1Thang = buoi1Tuan *4;
@@ -374,6 +373,9 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
+        TextView textView = (TextView)adapterView.getChildAt(0);
+        textView.setTextColor(getResources().getColor(R.color.enable));
+
         if (spinner1.getSelectedItemPosition() > spinner2.getSelectedItemPosition() ) {
             spinner2.setSelection(spinner1.getSelectedItemPosition());
         }
@@ -473,32 +475,32 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
 
             if(isChecked) {
                 if(buttonView==checkBoxT2) {
-                    Thu2 = "Hai,";
+                    Thu2 = "Hai, ";
                     T2 = 2;
                     buoi1Tuan++;
                 }
                 if(buttonView==checkBoxT3) {
-                    Thu3 = "Ba,";
+                    Thu3 = "Ba, ";
                     T3 = 3;
                     buoi1Tuan++;
                 }
                 if(buttonView==checkBoxT4) {
-                    Thu4 = "Tư,";
+                    Thu4 = "Tư, ";
                     T4 = 4;
                     buoi1Tuan++;
                 }
                 if(buttonView==checkBoxT5) {
-                    Thu5 = "Năm,";
+                    Thu5 = "Năm, ";
                     T5= 5;
                     buoi1Tuan++;
                 }
                 if(buttonView==checkBoxT6) {
-                    Thu6 = "Sáu,";
+                    Thu6 = "Sáu, ";
                     T6=6;
                     buoi1Tuan++;
                 }
                 if(buttonView==checkBoxT7) {
-                    Thu7 = "Bảy,";
+                    Thu7 = "Bảy, ";
                     T7=7;
                     buoi1Tuan++;
                 }
@@ -544,7 +546,7 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
                     buoi1Tuan--;
                 }
             }
-            lichLamViec = "Thứ: "+ Thu2 + Thu3 + Thu4 + Thu5 + Thu6 + Thu7 + ChuNhat;
+            lichLamViec = Thu2 + Thu3 + Thu4 + Thu5 + Thu6 + Thu7 + ChuNhat;
         }
     }
 }

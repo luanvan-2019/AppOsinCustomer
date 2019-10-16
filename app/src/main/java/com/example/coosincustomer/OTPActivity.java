@@ -2,6 +2,7 @@ package com.example.coosincustomer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -59,6 +60,13 @@ public class OTPActivity extends AppCompatActivity {
         phone_num = getIntent().getStringExtra("phone_num");
         sendVerificationCode(phonenumber);
 
+        //back button
+        Toolbar toolbar = findViewById(R.id.toolbar_otp);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         //huy ma xac thuc sau 2phut
         CountDownCancelCode();
 
@@ -87,6 +95,7 @@ public class OTPActivity extends AppCompatActivity {
                     editText.requestFocus();
                     return;
                 }
+                progressBar.setVisibility(View.VISIBLE);
                 verifyCode(code);
 
             }
@@ -156,6 +165,7 @@ public class OTPActivity extends AppCompatActivity {
 
                         } else {
                             Toast.makeText(OTPActivity.this, "Mã xác thực không chính xác!", Toast.LENGTH_LONG).show();
+                            progressBar.setVisibility(View.GONE);
                         }
                     }
 
@@ -214,6 +224,13 @@ public class OTPActivity extends AppCompatActivity {
                 countdown.setText("");
             }
         }.start();
+    }
+
+    //back button
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     public void CountDownCancelCode(){

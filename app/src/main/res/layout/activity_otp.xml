@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".LoginPhoneActivity">
+    tools:context=".OTPActivity">
 
 
     <RelativeLayout
@@ -16,7 +16,7 @@
         android:layout_height="0dp">
         <androidx.appcompat.widget.Toolbar
             app:navigationIcon="@drawable/ic_back"
-            android:id="@+id/toolbar_login"
+            android:id="@+id/toolbar_otp"
             android:background="@drawable/bg_gradient"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">

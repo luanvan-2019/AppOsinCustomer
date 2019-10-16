@@ -14,11 +14,13 @@ import android.widget.TextView;
 import com.example.coosincustomer.Fragment.OrderFragment;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.text.DecimalFormat;
+
 public class OrderSuccessActivity extends AppCompatActivity {
 
     TextView txtTongTien;
     Button btnDanhSachCaLam;
-    String tongtien;
+    Integer tongtien;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,10 @@ public class OrderSuccessActivity extends AppCompatActivity {
         //nhan du lieu tu thanhtoan activity
         Intent intent = getIntent();
         if (intent != null){
-            tongtien = intent.getStringExtra("tongtien");
-            txtTongTien.setText(tongtien);
+            tongtien = intent.getIntExtra("tongtien",0);
+            DecimalFormat decimalFormat = new DecimalFormat("#,###");
+            String tongTienString = decimalFormat.format(tongtien);
+            txtTongTien.setText(tongTienString+" đ");
         }
 
         PushDownAnim.setPushDownAnimTo(btnDanhSachCaLam).setOnClickListener(new View.OnClickListener() {
@@ -48,6 +52,11 @@ public class OrderSuccessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 OrderFragment orderFragment = new OrderFragment();
                 FragmentManager fragmentManager = getSupportFragmentManager();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("check", "check");
+                orderFragment.setArguments(bundle);
+
                 fragmentManager.beginTransaction().addToBackStack(null).replace(R.id.frame_danhsach_calam, orderFragment).commit();
             }
         });
@@ -62,5 +71,13 @@ public class OrderSuccessActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(OrderSuccessActivity.this, HomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 }

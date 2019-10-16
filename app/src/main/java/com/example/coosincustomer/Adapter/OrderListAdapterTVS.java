@@ -10,31 +10,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coosincustomer.Model.ListOrder;
+import com.example.coosincustomer.Model.ListOrderTVS;
 import com.example.coosincustomer.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderListHolder> {
+public class OrderListAdapterTVS extends RecyclerView.Adapter<OrderListAdapterTVS.OrderListHolder> {
 
-    ArrayList<ListOrder> mangOrder;
+    ArrayList<ListOrderTVS> mangOrder;
 
-    public OrderListAdapter(ArrayList<ListOrder> mangOrder) {
+    public OrderListAdapterTVS(ArrayList<ListOrderTVS> mangOrder) {
         this.mangOrder = mangOrder;
     }
 
     @NonNull
     @Override
-    public OrderListAdapter.OrderListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OrderListAdapterTVS.OrderListHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater layoutInflater= LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_list_order,null);
+        View view = layoutInflater.inflate(R.layout.item_list_order_tvs,null);
         return new OrderListHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull OrderListAdapter.OrderListHolder holder, int position) {
-        ListOrder listOrder = mangOrder.get(position);
+    public void onBindViewHolder(@NonNull OrderListAdapterTVS.OrderListHolder holder, int position) {
+        ListOrderTVS listOrder = mangOrder.get(position);
         holder.txtStatus.setText(listOrder.getStatus());
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String totalGiaString = decimalFormat.format(listOrder.getGia());

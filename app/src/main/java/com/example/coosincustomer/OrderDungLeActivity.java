@@ -48,10 +48,10 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
     private TextView mTxtSang, mTxtChieu, mTxtToi, mTxtTangGia,mTxtTotalTime,mtxtTongTien;
     private Spinner spinner1,spinner2;
     private Button btnContinueToConfirm;
-    private Double totalGia;
+//    private Double totalGia;
     private Integer dongia = 50000;
-    Integer dungcu = 15500;
-    String buoi = "Sáng", startTime, endTime;
+    Integer dungcu = 15500,totalGia;
+    String buoi = "Sáng", startTime, endTime,datee;
     int REQUEST_CODE_MAP = 1997;
     DatePickerDialog datePickerDialog;
 
@@ -152,6 +152,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                     Intent intent = new Intent(OrderDungLeActivity.this, ConfirmActivity.class);
                     intent.putExtra("address", edtMap.getText().toString());
                     intent.putExtra("date", date.getText().toString());
+                    intent.putExtra("datee", datee);
                     intent.putExtra("ca", time);
                     intent.putExtra("makhuyenmai", edtMaKhuyenMai.getText().toString());
                     intent.putExtra("ghichu", edtGhiChu.getText().toString());
@@ -159,6 +160,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                     intent.putExtra("dongia", dongiaString);
                     intent.putExtra("phidungcu", phiDungCu);
                     intent.putExtra("totaltime", mTxtTotalTime.getText().toString());
+                    intent.putExtra("totalgia",totalGia);
                     startActivity(intent);
                 }
             }
@@ -182,6 +184,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
                         Date d_name = new Date(i,i1,i2-4);
                         String dayOfTheWeek = sdf.format(d_name);
+                        datee = i2+"/"+i1+"/"+i;
                         if (day == i2){
                             date.setText("Hôm nay"+", "+i2+"/"+i1+"/"+i);
                             mTxtTangGia.setText("Giá tăng do đặt dịch vụ gấp!");
@@ -351,6 +354,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String tomorrowAsString = dateFormat.format(tomorrow);
         date.setText("Ngày mai"+", "+tomorrowAsString);
+        datee = tomorrowAsString;
     }
 
     //back button
@@ -362,6 +366,9 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int i, long l) {
+
+        TextView textView = (TextView)parent.getChildAt(0);
+        textView.setTextColor(getResources().getColor(R.color.enable));
 
         double totalTime = 0;
         if (spinner1.getSelectedItemPosition() > spinner2.getSelectedItemPosition() ) {
@@ -389,7 +396,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
         if (spinner1.getSelectedItemPosition() == 3 ) {
             if (spinner2.getSelectedItemPosition() == 4) totalTime = 2.5;
         }
-        totalGia =  dongia * totalTime + dungcu;
+        totalGia = (int)  (dongia * totalTime + dungcu);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String totalGiaString = decimalFormat.format(totalGia);
 

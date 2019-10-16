@@ -111,6 +111,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/relative_to_tienmat"
                 android:layout_marginTop="20dp"
                 android:layout_below="@+id/relative_tientrinh2"
                 android:layout_width="match_parent"
@@ -122,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="100dp">
                     <ImageView
-                        android:id="@+id/img_payment"
+                        android:id="@+id/img_payment_tienmat"
                         android:src="@drawable/ic_payment"
                         android:layout_centerVertical="true"
                         android:layout_width="60dp"
@@ -130,7 +131,7 @@
                     <RelativeLayout
                         android:layout_marginLeft="30dp"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/img_payment"
+                        android:layout_toRightOf="@id/img_payment_tienmat"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
                         <TextView
@@ -146,6 +147,92 @@
                             android:text="Khi nhân viên tới làm"
                             android:layout_marginTop="8dp"
                             android:layout_below="@+id/label_tienmat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_to_momo"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/relative_to_tienmat"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/relative_momo"
+                    android:paddingLeft="30dp"
+                    android:background="@drawable/bg_layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                    <ImageView
+                        android:id="@+id/img_payment_momo"
+                        android:src="@drawable/ic_momo"
+                        android:layout_centerVertical="true"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"/>
+                    <RelativeLayout
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/img_payment_momo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/label_momo"
+                            android:textColor="@color/enable"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:text="Ví MoMo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="Qua ứng dụng MoMo"
+                            android:layout_marginTop="8dp"
+                            android:layout_below="@+id/label_momo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/relative_to_momo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <RelativeLayout
+                    android:id="@+id/relative_paypal"
+                    android:paddingLeft="30dp"
+                    android:background="@drawable/bg_layout1"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp">
+                    <ImageView
+                        android:id="@+id/img_payment_paypal"
+                        android:src="@drawable/ic_paypal"
+                        android:layout_centerVertical="true"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"/>
+                    <RelativeLayout
+                        android:layout_marginLeft="30dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/img_payment_paypal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/label_paypal"
+                            android:textColor="@color/enable"
+                            android:textStyle="bold"
+                            android:textSize="18dp"
+                            android:text="PayPal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:textStyle="bold"
+                            android:text="Qua cổng thanh toán PayPal"
+                            android:layout_marginTop="8dp"
+                            android:layout_below="@+id/label_paypal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>
                     </RelativeLayout>

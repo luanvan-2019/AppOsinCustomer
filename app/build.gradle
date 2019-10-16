@@ -65,5 +65,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:19.1.0'
 
     implementation 'com.wdullaer:materialdatetimepicker:3.6.4'
+
+    //momo
+    implementation 'com.github.momodevelopment:androidsdkV2.2:2.3'
 }
 apply plugin: 'com.google.gms.google-services'

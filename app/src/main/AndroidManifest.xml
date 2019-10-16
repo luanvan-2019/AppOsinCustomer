@@ -12,7 +12,13 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ThanhToanDinhKyActivity"></activity>
+        <activity android:name=".ConfirmNauAnActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".OrderNauAnActivity" />
+        <activity android:name=".MoMoActivity" />
+        <activity android:name=".ConfirmTongVeSinhActivity" />
+        <activity android:name=".OrderTongVeSinhActivity" />
+        <activity android:name=".ThanhToanDinhKyActivity" />
         <activity android:name=".ConfirmDinhKyActivity" />
         <activity android:name=".OrderDinhKyGoiActivity" />
         <activity android:name=".OTPActivity" />
@@ -61,11 +67,11 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/ApiKey" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <dist:module dist:instant="true" />
 

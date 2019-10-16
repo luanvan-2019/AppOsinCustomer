@@ -36,16 +36,65 @@
             <TextView
                 android:layout_marginTop="5dp"
                 android:layout_below="@+id/status_list_order"
+                android:id="@+id/label_start"
+                android:textStyle="bold"
+                android:text="Bắt đầu:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/label_start"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/status_list_order"
                 android:id="@+id/date_order"
                 android:text="12/09/2019"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/date_order"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/status_list_order"
+                android:id="@+id/label_end"
+                android:textStyle="bold"
+                android:text="Kết thúc:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/label_end"
+                android:layout_marginTop="5dp"
+                android:layout_below="@+id/status_list_order"
+                android:id="@+id/date_end"
+                android:text="12/09/2019"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/label_schedule"
+                android:layout_marginTop="5dp"
+                android:textStyle="italic|bold"
+                android:layout_below="@+id/date_order"
+                android:text="Lịch:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/schedule_order"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:textStyle="italic"
+                android:layout_toRightOf="@id/label_schedule"
+                android:layout_below="@+id/date_order"
+                android:text="cdscsdc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginLeft="10dp"
                 android:id="@+id/ca_order"
+                android:layout_toRightOf="@id/schedule_order"
                 android:layout_marginTop="5dp"
                 android:textStyle="italic"
                 android:layout_below="@+id/date_order"
-                android:text="Ca sáng (08:00 - 11:30)"
+                android:text="dvfdvdv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <ImageView
