@@ -48,6 +48,8 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
     private TextView mTxtSang, mTxtChieu, mTxtToi, mTxtTangGia,mTxtTotalTime,mtxtTongTien;
     private Spinner spinner1,spinner2;
     private Button btnContinueToConfirm;
+    Double latitude = null;
+    Double longitude = null;
 //    private Double totalGia;
     private Integer dongia = 50000;
     Integer dungcu = 15500,totalGia;
@@ -74,6 +76,8 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
         edtGhiChu = findViewById(R.id.txt_input_ghichu);
         Toolbar toolbar = findViewById(R.id.toolbar_datDungle);
         btnContinueToConfirm = findViewById(R.id.btn_continue_datDungle);
+
+        mTxtTangGia.setVisibility(View.GONE);
 
         //default
         mTxtSang.setBackgroundResource(R.drawable.bg_time_lamviec);
@@ -118,6 +122,8 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                                 token.continuePermissionRequest();
                             }
                         }).check();
+                Log.d("BBB",latitude+"");
+                Log.d("BBB",longitude+"");
             }
         });
 
@@ -161,6 +167,8 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                     intent.putExtra("phidungcu", phiDungCu);
                     intent.putExtra("totaltime", mTxtTotalTime.getText().toString());
                     intent.putExtra("totalgia",totalGia);
+                    intent.putExtra("latitude",latitude);
+                    intent.putExtra("longitude",longitude);
                     startActivity(intent);
                 }
             }
@@ -187,7 +195,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                         datee = i2+"/"+i1+"/"+i;
                         if (day == i2){
                             date.setText("Hôm nay"+", "+i2+"/"+i1+"/"+i);
-                            mTxtTangGia.setText("Giá tăng do đặt dịch vụ gấp!");
+                            mTxtTangGia.setVisibility(View.VISIBLE);
                             dongia = dongia + 10000;
                             String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
                             Integer currentTimeInt = Integer.valueOf(currentTime.substring(0,2));
@@ -230,7 +238,11 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
 
                             }
                             if (currentTimeInt > 17 ) {
+                                i2 = i2 +1;
                                 date.setText("Ngày mai"+", "+i2+"/"+i1+"/"+i);
+                                mTxtTangGia.setVisibility(View.GONE);
+                                dongia = dongia - 10000;
+                                i2 = i2 -1;
                             }
                         }
                         if (day+1 == i2) {
@@ -403,9 +415,9 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
         String totalTimeString = Double.toString(totalTime);
         if (totalTimeString.substring(2,3).equals("0")){
             mTxtTotalTime.setText(totalTimeString.substring(0,1)+"h");
-            mtxtTongTien.setText(totalGiaString+"đ");
         }
         else mTxtTotalTime.setText(totalTimeString+"h");
+        mtxtTongTien.setText(totalGiaString+"đ");
     }
 
     @Override
@@ -417,6 +429,8 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE_MAP && resultCode == RESULT_OK && data != null){
             String address = data.getStringExtra("address");
+            latitude = data.getDoubleExtra("latitude",0);
+            longitude = data.getDoubleExtra("longitude",0);
             edtMap.setText(address);
         }
         super.onActivityResult(requestCode, resultCode, data);

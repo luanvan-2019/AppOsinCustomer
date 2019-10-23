@@ -10,7 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coosincustomer.Model.ListOrder;
+import com.example.coosincustomer.Model.OnItemClickListener;
 import com.example.coosincustomer.R;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -18,6 +20,11 @@ import java.util.ArrayList;
 public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.OrderListHolder> {
 
     ArrayList<ListOrder> mangOrder;
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener){
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     public OrderListAdapter(ArrayList<ListOrder> mangOrder) {
         this.mangOrder = mangOrder;
@@ -35,6 +42,9 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
     @Override
     public void onBindViewHolder(@NonNull OrderListAdapter.OrderListHolder holder, int position) {
         ListOrder listOrder = mangOrder.get(position);
+        if (listOrder.getStatus().trim().equals("Đang tìm kiếm NV")){
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_text_orange);
+        }
         holder.txtStatus.setText(listOrder.getStatus());
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String totalGiaString = decimalFormat.format(listOrder.getGia());
@@ -42,7 +52,7 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
         holder.txtCa.setText(listOrder.getCa());
         holder.txtDate.setText(listOrder.getDate());
         holder.txtDiadiem.setText(listOrder.getDiadiem());
-        holder.txtMahoadon.setText("Mã hóa đơn: "+listOrder.getMahoadon()+"");
+        holder.txtMahoadon.setText("MĐH: DL"+listOrder.getMahoadon()+"");
 
     }
 
@@ -64,6 +74,20 @@ public class OrderListAdapter extends RecyclerView.Adapter<OrderListAdapter.Orde
             txtDiadiem = itemView.findViewById(R.id.diadiem);
             txtMahoadon = itemView.findViewById(R.id.ma_hoadon);
             gia = itemView.findViewById(R.id.gia);
+
+            PushDownAnim.setPushDownAnimTo(itemView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickListener.onClick(view, getLayoutPosition());
+                }
+            });
+            PushDownAnim.setPushDownAnimTo(itemView).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mOnItemClickListener.onLongClick(view, getLayoutPosition());
+                    return true;
+                }
+            });
         }
     }
 }

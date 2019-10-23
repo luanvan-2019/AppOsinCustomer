@@ -67,7 +67,8 @@ public class ConfirmActivity extends AppCompatActivity {
             txtConfirmTotalTime.setText(confirmTotalTime);
             txtConfirmPhiDC.setText(confirmDungCu);
         }
-
+        Log.d("BBB",getIntent().getDoubleExtra("latitude",0)+"");
+        Log.d("BBB",getIntent().getDoubleExtra("logitude",0)+"");
         //button xac nhan & thanh toan
         PushDownAnim.setPushDownAnimTo(btnXacNhanThanhToan).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +82,9 @@ public class ConfirmActivity extends AppCompatActivity {
                 intent.putExtra("makhuyenmai",confirmMaKH);
                 intent.putExtra("totalPrice",getIntent().getIntExtra("totalgia",0));
                 intent.putExtra("orderType",1);
-
+                intent.putExtra("totalTime",confirmTotalTime);
+                intent.putExtra("latitude",getIntent().getDoubleExtra("latitude",0));
+                intent.putExtra("longitude",getIntent().getDoubleExtra("longitude",0));
                 startActivity(intent);
             }
         });

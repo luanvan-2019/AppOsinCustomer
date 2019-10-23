@@ -173,7 +173,7 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
                             public void onPermissionDenied(PermissionDeniedResponse response) {
                                 if (response.isPermanentlyDenied()){
                                     AlertDialog.Builder builder = new AlertDialog.Builder(OrderDinhKyActivity.this) ;
-                                    builder.setTitle("Permission Denied").setMessage("Permission to access device location is permanently denied. You need to go to setting to allow the permission.  ")
+                                    builder.setTitle("Quyền vị trí đã bị từ chối").setMessage("Ứng dụng không có quyền truy cập vào vị trí. Vui lòng vào phần cài đặt của thiết bị cấp quyền để tiếp tục !")
                                             .setNegativeButton("Cancel",null)
                                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                 @Override

@@ -298,11 +298,14 @@
             <TextView
                 android:textSize="15dp"
                 android:textColor="#FF5722"
+                android:text="  Giá tăng do đặt dịch vụ gấp"
+                android:drawableStart="@drawable/ic_error"
                 android:id="@+id/txt_dichvu_gap"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_below="@+id/relative_select_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_error" />
             <RelativeLayout
                 android:id="@+id/relative_khuyen_mai"
                 android:layout_below="@+id/txt_dichvu_gap"
@@ -376,6 +379,7 @@
                     android:gravity="center_vertical"
                     android:textColor="#0C0C0C"
                     android:textSize="16dp"
+                    android:inputType="textCapCharacters"
                     android:id="@+id/txt_input_ghichu"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>

@@ -45,7 +45,7 @@ public class OrderListAdapterDK extends RecyclerView.Adapter<OrderListAdapterDK.
         holder.txtDateEnd.setText(listOrder.getDateEnd());
         holder.txtschedule.setText(listOrder.getLich());
         holder.txtDiadiem.setText(listOrder.getDiadiem());
-        holder.txtMahoadon.setText("Mã hóa đơn: "+listOrder.getMahoadon()+"");
+        holder.txtMahoadon.setText("MĐH: DK"+listOrder.getMahoadon()+"");
 
     }
 

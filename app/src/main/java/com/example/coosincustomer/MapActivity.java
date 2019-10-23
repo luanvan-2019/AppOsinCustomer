@@ -245,6 +245,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }else {
                     Intent intent = new Intent();
                     intent.putExtra("address",address);
+                    intent.putExtra("latitude",latitude);
+                    intent.putExtra("longitude",longitude);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
@@ -363,21 +365,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         }
                     }
                 });
-
-    }
-    public void showAlertDialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Hướng dẫn");
-        builder.setMessage("Bạn có thể lấy vị trí hiện tại của mình bằng cách nhấn vào biểu tượng góc phải dưới màn hình. Hoặc nhập vị trí khác và chọn một gợi ý !");
-        builder.setCancelable(false);
-        builder.setNegativeButton("Đã hiểu", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
 
     }
 }

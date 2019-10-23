@@ -1,9 +1,11 @@
 package com.example.coosincustomer;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -94,13 +96,8 @@ public class AccountInfoActivity extends AppCompatActivity {
         PushDownAnim.setPushDownAnimTo(txtLOGOUT).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                CheckLogined.saveSharedSetting(AccountInfoActivity.this,"CoOsin","true");
-                CheckLogined.SharedPrefesSAVE(getApplicationContext(),"");
-                Intent logOut = new Intent(AccountInfoActivity.this,MainActivity.class);
-                logOut.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                logOut.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                FirebaseAuth.getInstance().signOut();
-                startActivity(logOut);
+
+                showAlertDialog();
             }
         });
     }
@@ -120,5 +117,32 @@ public class AccountInfoActivity extends AppCompatActivity {
             startActivity(intent);
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void showAlertDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Xác nhận");
+        builder.setMessage("Bạn có muốn đăng xuất tài khoản?");
+        builder.setCancelable(false);
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                Intent intent = new Intent(AccountInfoActivity.this, MainActivity.class);
+                CheckLogined.SharedPrefesSAVE(getApplicationContext(),"");
+                FirebaseAuth.getInstance().signOut();
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+        builder.setPositiveButton("Hủy", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

@@ -3,6 +3,13 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.coosincustomer">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".SleepSplashScreen"
         android:allowBackup="true"
@@ -12,8 +19,13 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConfirmNauAnActivity"
-            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".CanceledActivity" />
+        <activity android:name=".CancelOrderActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".DetailOrderActivity" />
+        <activity
+            android:name=".ConfirmNauAnActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".OrderNauAnActivity" />
         <activity android:name=".MoMoActivity" />
         <activity android:name=".ConfirmTongVeSinhActivity" />
@@ -36,7 +48,9 @@
         <activity android:name=".OrderSuccessActivity" />
         <activity android:name=".ThanhtoanActivity" />
         <activity android:name=".ConfirmActivity" />
-        <activity android:name=".OrderDungLeActivity" />
+        <activity
+            android:name=".OrderDungLeActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SplashActivity"
             android:screenOrientation="portrait"
@@ -67,11 +81,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/ApiKey" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <dist:module dist:instant="true" />
 

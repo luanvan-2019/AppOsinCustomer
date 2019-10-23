@@ -57,7 +57,7 @@ public class ConfirmDinhKyActivity extends AppCompatActivity {
 
         //settext
         txtAddress.setText(address);
-        txtLichLamViec.setText("Thứ: "+thu+" ("+startTime+" - "+endtime+")");
+        txtLichLamViec.setText("Ngày làm : "+thu+" ("+startTime+" - "+endtime+")");
         txtCa.setText(ca);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String tongTien = decimalFormat.format(tongtien);

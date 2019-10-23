@@ -4,7 +4,18 @@ package com.example.coosincustomer.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
@@ -12,25 +23,9 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
-import android.os.StrictMode;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.example.coosincustomer.AccountEditInfoActivity;
 import com.example.coosincustomer.AccountInfoActivity;
 import com.example.coosincustomer.Adapter.ViewPagerAdapter;
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import com.example.coosincustomer.HomeActivity;
 import com.example.coosincustomer.OrderDinhKyActivity;
 import com.example.coosincustomer.OrderDungLeActivity;
 import com.example.coosincustomer.OrderNauAnActivity;
@@ -38,7 +33,11 @@ import com.example.coosincustomer.OrderTongVeSinhActivity;
 import com.example.coosincustomer.R;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -98,7 +97,7 @@ public class HomeFragment extends Fragment {
             connect =conStr.CONN();        // Connect to database
             if (connect == null)
             {
-                Toast.makeText(getActivity(), "Không có kết nối mạng!", Toast.LENGTH_LONG).show();
+               checkConnectDialog();
             }
             else
             {
@@ -219,8 +218,15 @@ public class HomeFragment extends Fragment {
     }
 
     public void showAlertDialog(){
+        TextView title = new TextView(this.getContext());
+        title.setText("CẬP NHẬT THÔNG TIN");
+        title.setPadding(10, 40, 10, 10);
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(18);
+        title.setTextColor(Color.RED);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
-        builder.setTitle("Cập nhật thông tin");
+        builder.setCustomTitle(title);
         builder.setMessage(R.string.cap_nhat_thong_tin);
         builder.setCancelable(false);
         builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
@@ -233,5 +239,46 @@ public class HomeFragment extends Fragment {
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+        Button b = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setBackground(getResources().getDrawable(R.drawable.btn_round_coner));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER;
+        layoutParams.setMargins(20,20,20,20);
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setLayoutParams(layoutParams);
+
+        TextView messageText = alertDialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
+    }
+    public void checkConnectDialog(){
+        TextView title = new TextView(this.getContext());
+        title.setText("THÔNG BÁO");
+        title.setPadding(10, 40, 10, 10);
+        title.setGravity(Gravity.CENTER);
+        title.setTextSize(20);
+        title.setTextColor(Color.RED);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
+        builder.setCustomTitle(title);
+        builder.setMessage("Không có kết nối mạng !");
+        builder.setCancelable(false);
+        builder.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        Button b = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        b.setBackground(getResources().getDrawable(R.drawable.btn_round_coner));
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER;
+        layoutParams.setMargins(20,20,20,20);
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.WHITE);
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setLayoutParams(layoutParams);
+
+        TextView messageText = alertDialog.findViewById(android.R.id.message);
+        messageText.setGravity(Gravity.CENTER);
     }
 }

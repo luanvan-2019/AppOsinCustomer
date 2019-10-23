@@ -43,7 +43,7 @@ public class OrderListAdapterTVS extends RecyclerView.Adapter<OrderListAdapterTV
         holder.txtCa.setText(listOrder.getCa());
         holder.txtDate.setText(listOrder.getDate());
         holder.txtDiadiem.setText(listOrder.getDiadiem());
-        holder.txtMahoadon.setText("Mã hóa đơn: "+listOrder.getMahoadon()+"");
+        holder.txtMahoadon.setText("MĐH: TVS"+listOrder.getMahoadon()+"");
 
     }
 

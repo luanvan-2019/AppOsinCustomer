@@ -1,5 +1,13 @@
 package com.example.coosincustomer;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.FrameLayout;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,13 +15,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.FrameLayout;
 import com.example.coosincustomer.Fragment.DifferenceFragment;
 import com.example.coosincustomer.Fragment.FavoriteFragment;
 import com.example.coosincustomer.Fragment.HomeFragment;
@@ -31,6 +32,8 @@ public class HomeActivity extends AppCompatActivity {
     private NotificationFragment notificationFragment;
     private DifferenceFragment differenceFragment;
     private FragmentManager mfragmentManager;
+    ProgressDialog loading;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +65,6 @@ public class HomeActivity extends AppCompatActivity {
                         setFragment(homeFragment);
                         return true;
                     case R.id.nav_ordered :
-                        new MyTask();
                         setFragment(orderFragment);
                         return true;
                     case R.id.nav_favorite :
@@ -105,37 +107,38 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_MAIN);
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-    class MyTask extends AsyncTask<Void, Void, Void> {
-
-        ProgressDialog Asycdialog = new ProgressDialog(HomeActivity.this);
-
-        @Override
-        protected void onPreExecute() {
-
-            super.onPreExecute();
-            Asycdialog.setMessage("Loading...");
-            Asycdialog.show();
-        }
-
-        @Override
-        protected Void doInBackground(Void... arg0) {
-
-            // do the task you want to do. This will be executed in background.
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void result) {
-
-            super.onPostExecute(result);
-            Asycdialog.dismiss();
-        }
-    }
+//    class MyTask extends AsyncTask<Void, Void, Void> {
+//
+//        @Override
+//        protected void onPreExecute() {
+//
+//            super.onPreExecute();
+//            loading = new ProgressDialog(HomeActivity.this);
+//            loading.setMessage("Vui lòng đợi...");
+//            loading.setCancelable(false);
+//            loading.show();
+//        }
+//
+//        @Override
+//        protected Void doInBackground(Void... arg0) {
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Void result) {
+//
+//            super.onPostExecute(result);
+//
+//            loading.dismiss();
+//        }
+//    }
 
 }

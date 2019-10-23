@@ -32,11 +32,16 @@ public class ThanhtoanActivity extends AppCompatActivity {
     Connection connect;
     String phone_num;
     Integer i;
+    Double latitude = null;
+    Double longitude = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thanhtoan);
+
+        Log.d("BBB",getIntent().getDoubleExtra("latitude",0)+"");
+        Log.d("BBB",getIntent().getDoubleExtra("logitude",0)+"");
 
         //anh xa
         Toolbar toolbar = findViewById(R.id.toolbar_hinhthuc_thanhtoan);
@@ -47,6 +52,11 @@ public class ThanhtoanActivity extends AppCompatActivity {
         relativeLayoutMoMo = findViewById(R.id.relative_momo);
         relativeLayoutPaypal = findViewById(R.id.relative_paypal);
         btnXacnhanThanhtoan = findViewById(R.id.btn_xacnhan_thanhtoan);
+
+        latitude = getIntent().getDoubleExtra("latitude",0);
+        longitude = getIntent().getDoubleExtra("longitude",0);
+        Log.d("BBB",latitude+"");
+        Log.d("BBB",longitude+"");
 
         //lay so dien thoai da luu khi dang nhap
         SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
@@ -73,7 +83,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
                 iconThanhtoanTienMat.setImageResource(R.drawable.ic_checked);
                 relavetiveTienMat.setBackgroundResource(R.drawable.bg_layout_licked);
                 iconThanhToanMoMo.setImageResource(R.drawable.ic_momo);
-                relavetiveTienMat.setBackgroundResource(R.drawable.bg_layout1);
+                relativeLayoutMoMo.setBackgroundResource(R.drawable.bg_layout1);
                 iconThanhToanPaypal.setImageResource(R.drawable.ic_paypal);
                 relativeLayoutPaypal.setBackgroundResource(R.drawable.bg_layout1);
             }
@@ -134,12 +144,13 @@ public class ThanhtoanActivity extends AppCompatActivity {
 
                             if (getIntent().getIntExtra("orderType",0) == 1){
                                 query = "INSERT INTO ORDER_SINGLE " +
-                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_WORK,NOTE_ORDER,SALE_CODE,TOTAL_PRICE,CREATE_AT,PAYMENT_TYPE,PAYMENT_STATUS,SEEN)" +
+                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_WORK,NOTE_ORDER,SALE_CODE,TOTAL_PRICE,CREATE_AT,PAYMENT_TYPE,PAYMENT_STATUS,SEEN,TOTAL_TIME,LATITUDE,LONGITUDE)" +
                                         "VALUES('"+phone_num+"',N'"+getIntent().getStringExtra("address")+"',N'"+getIntent().getStringExtra("date")
-                                        +"',N'"+getIntent().getStringExtra("ca")+"','"+getIntent().getStringExtra("ghichu")+"','"+
+                                        +"',N'"+getIntent().getStringExtra("ca")+"',N'"+getIntent().getStringExtra("ghichu")+"','"+
                                         getIntent().getStringExtra("makhuyenmai")+"',"+getIntent().getIntExtra("totalPrice",0)+",'"+
-                                        create_at+"',N'"+paymentType+"',"+0+","+0+")";
+                                        create_at+"',N'"+paymentType+"',"+0+","+0+",'"+getIntent().getStringExtra("totalTime")+"',"+latitude+","+longitude+")";
                             }
+
 
                             if (getIntent().getIntExtra("orderType",0) == 2){
                                 query = "INSERT INTO ORDER_MULTI " +
@@ -168,6 +179,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
                                         getIntent().getStringExtra("fruit")+"','"+getIntent().getStringExtra("market")+"','"+getIntent().getIntExtra("marketPrice",0)+"','','"+
                                         getIntent().getIntExtra("totalPrice",0)+"',N'"+getIntent().getStringExtra("note")+"','"+create_at+"',N'"+paymentType+"',"+0+","+0+")";
                             }
+                            Log.d("BBB",query);
                             Statement stmt = connect.createStatement();
                             stmt.executeQuery(query);
                             connect.close();
