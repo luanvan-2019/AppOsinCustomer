@@ -30,7 +30,6 @@
         <activity android:name=".MoMoActivity" />
         <activity android:name=".ConfirmTongVeSinhActivity" />
         <activity android:name=".OrderTongVeSinhActivity" />
-        <activity android:name=".ThanhToanDinhKyActivity" />
         <activity android:name=".ConfirmDinhKyActivity" />
         <activity android:name=".OrderDinhKyGoiActivity" />
         <activity android:name=".OTPActivity" />

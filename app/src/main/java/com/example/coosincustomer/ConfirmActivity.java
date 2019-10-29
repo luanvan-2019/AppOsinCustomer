@@ -68,7 +68,7 @@ public class ConfirmActivity extends AppCompatActivity {
             txtConfirmPhiDC.setText(confirmDungCu);
         }
         Log.d("BBB",getIntent().getDoubleExtra("latitude",0)+"");
-        Log.d("BBB",getIntent().getDoubleExtra("logitude",0)+"");
+        Log.d("BBB",getIntent().getDoubleExtra("longitude",0)+"");
         //button xac nhan & thanh toan
         PushDownAnim.setPushDownAnimTo(btnXacNhanThanhToan).setOnClickListener(new View.OnClickListener() {
             @Override

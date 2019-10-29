@@ -1,5 +1,6 @@
 package com.example.coosincustomer.Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,8 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coosincustomer.Adapter.OrderListAdapter;
 import com.example.coosincustomer.Adapter.OrderListAdapterDK;
+import com.example.coosincustomer.DetailOrderActivity;
 import com.example.coosincustomer.Model.ListOrder;
 import com.example.coosincustomer.Model.ListOrderDK;
+import com.example.coosincustomer.Model.OnItemClickListener;
 import com.example.coosincustomer.R;
 
 import java.sql.Connection;
@@ -37,11 +40,12 @@ public class Fragment_dungdk extends Fragment {
     ArrayList<String> address = new ArrayList<String>();
     ArrayList<String> dateStart = new ArrayList<String>();
     ArrayList<String> time = new ArrayList<String>();
+    ArrayList<String> status = new ArrayList<String>();
     ArrayList<String> dateEnd = new ArrayList<String>();
     ArrayList<String> schedule = new ArrayList<String>();
     ArrayList<Integer> price = new ArrayList<Integer>();
     ArrayList<Integer> id = new ArrayList<Integer>();
-    String[] addressArr,dateStartArr,dateEndArr,timeArr,scheduleArr;
+    String[] addressArr,dateStartArr,dateEndArr,timeArr,scheduleArr,statusArr;
     Integer[] priceArr,idArr;
 
     public Fragment_dungdk() {
@@ -67,6 +71,7 @@ public class Fragment_dungdk extends Fragment {
         time.clear();
         price.clear();
         id.clear();
+        status.clear();
         try
         {
             com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
@@ -90,11 +95,14 @@ public class Fragment_dungdk extends Fragment {
                     time.add(rs.getString("TIME_WORK"));
                     price.add(rs.getInt("TOTAL_PRICE"));
                     id.add(rs.getInt("ID"));
+                    status.add(rs.getString("ORDER_STATUS"));
                 }
                 addressArr = new String[address.size()];
                 addressArr = address.toArray(addressArr);
                 dateStartArr = new String[dateStart.size()];
                 dateStartArr = dateStart.toArray(dateStartArr);
+                statusArr = new String[status.size()];
+                statusArr = status.toArray(statusArr);
                 dateEndArr = new String[dateEnd.size()];
                 dateEndArr = dateEnd.toArray(dateEndArr);
                 timeArr = new String[time.size()];
@@ -106,7 +114,7 @@ public class Fragment_dungdk extends Fragment {
                 idArr = new Integer[id.size()];
                 idArr = id.toArray(idArr);
                 for (int i = 0; i < address.size();i++){
-                    listOrders.add(new ListOrderDK("Đang tìm kiếm NV",dateStartArr[i],dateEndArr[i],scheduleArr[i],timeArr[i],addressArr[i],
+                    listOrders.add(new ListOrderDK(statusArr[i],dateStartArr[i],dateEndArr[i],scheduleArr[i],timeArr[i],addressArr[i],
                             priceArr[i],idArr[i]));
                 }
             }
@@ -119,6 +127,23 @@ public class Fragment_dungdk extends Fragment {
         orderListAdapter = new OrderListAdapterDK(listOrders);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.setAdapter(orderListAdapter);
+
+        if (recyclerView.getAdapter() != null) {
+            ((OrderListAdapterDK) recyclerView.getAdapter()).setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onClick(View v, @NonNull int position) {
+                    Intent detail = new Intent(getActivity(), DetailOrderActivity.class);
+                    detail.putExtra("idOrder",idArr[position]);
+                    detail.putExtra("orderType","Định kỳ");
+                    startActivity(detail);
+                }
+
+                @Override
+                public void onLongClick(View v, @NonNull int position) {
+
+                }
+            });
+        }
 
         return view;
     }

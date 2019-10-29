@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coosincustomer.Model.ListOrder;
 import com.example.coosincustomer.Model.ListOrderDK;
+import com.example.coosincustomer.Model.OnItemClickListener;
 import com.example.coosincustomer.R;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -19,6 +21,12 @@ import java.util.ArrayList;
 public class OrderListAdapterDK extends RecyclerView.Adapter<OrderListAdapterDK.OrderListHolder> {
 
     ArrayList<ListOrderDK> mangOrder;
+
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener){
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     public OrderListAdapterDK(ArrayList<ListOrderDK> mangOrder) {
         this.mangOrder = mangOrder;
@@ -68,6 +76,20 @@ public class OrderListAdapterDK extends RecyclerView.Adapter<OrderListAdapterDK.
             gia = itemView.findViewById(R.id.gia);
             txtDateEnd = itemView.findViewById(R.id.date_end);
             txtschedule = itemView.findViewById(R.id.schedule_order);
+
+            PushDownAnim.setPushDownAnimTo(itemView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickListener.onClick(view, getLayoutPosition());
+                }
+            });
+            PushDownAnim.setPushDownAnimTo(itemView).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mOnItemClickListener.onLongClick(view, getLayoutPosition());
+                    return true;
+                }
+            });
         }
     }
 }

@@ -56,6 +56,8 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
     Calendar calendar;
     String address, day, time,khauVi="Bắc",traiCay="Không",diCho="Không",somonString="2";
     Button btnToConfirm;
+    Double latitude = null;
+    Double longitude = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +216,8 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
                 toCofirm.putExtra("nguoilamdicho",diCho);
                 toCofirm.putExtra("tiendicho",tiendicho);
                 toCofirm.putExtra("tongtien",tongtien);
+                toCofirm.putExtra("latitude",latitude);
+                toCofirm.putExtra("longitude",longitude);
                 startActivity(toCofirm);
             }
         });
@@ -369,6 +373,8 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE_MAP && resultCode == RESULT_OK && data != null){
             address = data.getStringExtra("address");
+            latitude = data.getDoubleExtra("latitude",0);
+            longitude = data.getDoubleExtra("longitude",0);
             edtMap.setText(address);
         }
         super.onActivityResult(requestCode, resultCode, data);

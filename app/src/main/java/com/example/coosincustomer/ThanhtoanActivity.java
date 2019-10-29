@@ -40,8 +40,6 @@ public class ThanhtoanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thanhtoan);
 
-        Log.d("BBB",getIntent().getDoubleExtra("latitude",0)+"");
-        Log.d("BBB",getIntent().getDoubleExtra("logitude",0)+"");
 
         //anh xa
         Toolbar toolbar = findViewById(R.id.toolbar_hinhthuc_thanhtoan);
@@ -154,32 +152,31 @@ public class ThanhtoanActivity extends AppCompatActivity {
 
                             if (getIntent().getIntExtra("orderType",0) == 2){
                                 query = "INSERT INTO ORDER_MULTI " +
-                                        "(USER_ORDER,ADDRESS_ORDER,SCHEDULE,TIME_WORK,DATE_START,DATE_END,NOTE_ORDER,SALE_CODE,TOTAL_PRICE,CREATE_AT,PAYMENT_TYPE,PAYMENT_STATUS,SEEN)" +
+                                        "(USER_ORDER,ADDRESS_ORDER,SCHEDULE,TIME_WORK,DATE_START,DATE_END,NOTE_ORDER,SALE_CODE,TOTAL_PRICE,CREATE_AT,PAYMENT_TYPE,PAYMENT_STATUS,SEEN,LATITUDE,LONGITUDE,TOTAL_TIME,TOTAL_BUOI)" +
                                         "VALUES('"+phone_num+"',N'"+getIntent().getStringExtra("address")+"',N'"+getIntent().getStringExtra("schedule")+"'," +
                                         "N'"+getIntent().getStringExtra("timeWork")+"','"+getIntent().getStringExtra("dateStart")+"','"+getIntent().getStringExtra("dateEnd")+"'," +
                                         "'"+getIntent().getStringExtra("note")+"','',"+getIntent().getIntExtra("totalPrice",0)+",'"+create_at+"'," +
-                                        "N'"+paymentType+"',"+0+","+0+")";
+                                        "N'"+paymentType+"',"+0+","+0+","+latitude+","+longitude+",'"+getIntent().getStringExtra("totalTime")+"',"+getIntent().getIntExtra("totalBuoi",0)+")";
                             }
 
                             if (getIntent().getIntExtra("orderType",0) == 3){
                                 query = "INSERT INTO ORDER_OVERVIEW " +
-                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_START,AREA_TYPE,NOTE_ORDER,SALE_CODE,TOTAL_PRICE,CREATE_AT,PAYMENT_TYPE,PAYMENT_STATUS,SEEN)" +
+                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_START,AREA_TYPE,NOTE_ORDER,SALE_CODE,TOTAL_PRICE,CREATE_AT,PAYMENT_TYPE,PAYMENT_STATUS,SEEN,LATITUDE,LONGITUDE)" +
                                         "VALUES('"+phone_num+"',N'"+getIntent().getStringExtra("address")+"',N'"+getIntent().getStringExtra("dateWork")+"'," +
                                         "'"+getIntent().getStringExtra("timeStart")+"',"+getIntent().getIntExtra("areaType",0)+",N'"+getIntent().getStringExtra("note")+"',''," +
-                                        "'"+getIntent().getIntExtra("totalPrice",0)+"','"+create_at+"',N'"+paymentType+"',"+0+","+0+")";
+                                        "'"+getIntent().getIntExtra("totalPrice",0)+"','"+create_at+"',N'"+paymentType+"',"+0+","+0+","+latitude+","+longitude+")";
                             }
 
                             if (getIntent().getIntExtra("orderType",0) == 4){
                                 query = "INSERT INTO ORDER_COOK " +
-                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_WORK,PEOPLE_AMOUNT,DISH_AMOUNT,DISH_NAME,TASTE,FRUIT,MARKET,MAX_MARKET_PRICE,SALE_CODE,TOTAL_PRICE,NOTE_ORDER,CREATE_AT,PAYMENT_TYPE" +
+                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_WORK,PEOPLE_AMOUNT,DISH_AMOUNT,DISH_NAME,TASTE,FRUIT,MARKET,MAX_MARKET_PRICE,SALE_CODE,TOTAL_PRICE,NOTE_ORDER,CREATE_AT,PAYMENT_TYPE,LATITUDE,LONGITUDE" +
                                         ",PAYMENT_STATUS,SEEN)" +
                                         "VALUES('"+phone_num+"',N'"+getIntent().getStringExtra("address")+"',N'"+getIntent().getStringExtra("dateWork")+"'," +
                                         "'"+getIntent().getStringExtra("timeWork")+"','"+getIntent().getStringExtra("peopleAmount")+"','"+
                                         getIntent().getStringExtra("dishAmount")+"','"+getIntent().getStringExtra("dishName")+"','"+getIntent().getStringExtra("taste")+"','"+
                                         getIntent().getStringExtra("fruit")+"','"+getIntent().getStringExtra("market")+"','"+getIntent().getIntExtra("marketPrice",0)+"','','"+
-                                        getIntent().getIntExtra("totalPrice",0)+"',N'"+getIntent().getStringExtra("note")+"','"+create_at+"',N'"+paymentType+"',"+0+","+0+")";
+                                        getIntent().getIntExtra("totalPrice",0)+"',N'"+getIntent().getStringExtra("note")+"','"+create_at+"',N'"+paymentType+"',"+0+","+0+","+latitude+","+longitude+")";
                             }
-                            Log.d("BBB",query);
                             Statement stmt = connect.createStatement();
                             stmt.executeQuery(query);
                             connect.close();

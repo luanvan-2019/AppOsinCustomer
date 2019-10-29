@@ -65,6 +65,8 @@ public class ConfirmNauAnActivity extends AppCompatActivity {
                 toThanhToan.putExtra("marketPrice",getIntent().getIntExtra("tiendicho",0));
                 toThanhToan.putExtra("totalPrice",tongtien);
                 toThanhToan.putExtra("note",getIntent().getStringExtra("ghichu"));
+                toThanhToan.putExtra("latitude",getIntent().getDoubleExtra("latitude",0));
+                toThanhToan.putExtra("longitude",getIntent().getDoubleExtra("longitude",0));
                 startActivity(toThanhToan);
             }
         });

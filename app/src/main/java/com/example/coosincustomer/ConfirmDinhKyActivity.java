@@ -60,7 +60,7 @@ public class ConfirmDinhKyActivity extends AppCompatActivity {
         txtLichLamViec.setText("Ngày làm : "+thu+" ("+startTime+" - "+endtime+")");
         txtCa.setText(ca);
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String tongTien = decimalFormat.format(tongtien);
+        final String tongTien = decimalFormat.format(tongtien);
         txtTongTien.setText(tongTien+" đ");
         txtTongTienBottom.setText(tongTien+" đ");
         txtGio1buoi.setText(sogiolam+"h/buổi");
@@ -79,6 +79,10 @@ public class ConfirmDinhKyActivity extends AppCompatActivity {
                 toThanhToan.putExtra("note",ghichu);
                 toThanhToan.putExtra("totalPrice",tongtien);
                 toThanhToan.putExtra("orderType",2);
+                toThanhToan.putExtra("totalTime",sogiolam+"h");
+                toThanhToan.putExtra("totalBuoi",sobuoilam);
+                toThanhToan.putExtra("latitude",getIntent().getDoubleExtra("latitude",0));
+                toThanhToan.putExtra("longitude",getIntent().getDoubleExtra("longitude",0));
                 startActivity(toThanhToan);
             }
         });

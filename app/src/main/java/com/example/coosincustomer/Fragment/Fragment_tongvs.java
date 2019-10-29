@@ -1,7 +1,9 @@
 package com.example.coosincustomer.Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.coosincustomer.Adapter.OrderListAdapter;
+import com.example.coosincustomer.Adapter.OrderListAdapterDK;
 import com.example.coosincustomer.Adapter.OrderListAdapterTVS;
-import com.example.coosincustomer.Model.ListOrder;
+import com.example.coosincustomer.DetailOrderActivity;
 import com.example.coosincustomer.Model.ListOrderTVS;
+import com.example.coosincustomer.Model.OnItemClickListener;
 import com.example.coosincustomer.R;
 
 import java.sql.Connection;
@@ -36,9 +39,10 @@ public class Fragment_tongvs extends Fragment {
     ArrayList<String> address = new ArrayList<String>();
     ArrayList<String> date = new ArrayList<String>();
     ArrayList<String> time = new ArrayList<String>();
+    ArrayList<String> status = new ArrayList<String>();
     ArrayList<Integer> price = new ArrayList<Integer>();
     ArrayList<Integer> id = new ArrayList<Integer>();
-    String[] addressArr,dateArr,timeArr;
+    String[] addressArr,dateArr,timeArr,statusArr;
     Integer[] priceArr,idArr;
 
     public Fragment_tongvs() {
@@ -84,11 +88,10 @@ public class Fragment_tongvs extends Fragment {
                     time.add(rs.getString("TIME_START"));
                     price.add(rs.getInt("TOTAL_PRICE"));
                     id.add(rs.getInt("ID"));
-//                    txtHoTen.setText(rs.getString("FULL_NAME"));
-//                    txtDiaChi.setText(rs.getString("ADDRESS"));
-//                    txtSDT.setText(rs.getString("PHONE_NUM"));
-//                    txtEmail.setText(rs.getString("EMAIL"));
+                    status.add(rs.getString("ORDER_STATUS"));
                 }
+                statusArr = new String[status.size()];
+                statusArr = status.toArray(statusArr);
                 addressArr = new String[address.size()];
                 addressArr = address.toArray(addressArr);
                 dateArr = new String[date.size()];
@@ -100,7 +103,7 @@ public class Fragment_tongvs extends Fragment {
                 idArr = new Integer[id.size()];
                 idArr = id.toArray(idArr);
                 for (int i = 0; i < address.size();i++){
-                    listOrders.add(new ListOrderTVS("Đang tìm kiếm NV",dateArr[i],timeArr[i],addressArr[i],
+                    listOrders.add(new ListOrderTVS(statusArr[i],dateArr[i],timeArr[i],addressArr[i],
                             idArr[i],priceArr[i]));
                 }
             }
@@ -112,6 +115,23 @@ public class Fragment_tongvs extends Fragment {
         orderListAdapter = new OrderListAdapterTVS(listOrders);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.setAdapter(orderListAdapter);
+
+        if (recyclerView.getAdapter() != null) {
+            ((OrderListAdapterTVS) recyclerView.getAdapter()).setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onClick(View v, @NonNull int position) {
+                    Intent detail = new Intent(getActivity(), DetailOrderActivity.class);
+                    detail.putExtra("idOrder",idArr[position]);
+                    detail.putExtra("orderType","Tổng vệ sinh");
+                    startActivity(detail);
+                }
+
+                @Override
+                public void onLongClick(View v, @NonNull int position) {
+
+                }
+            });
+        }
 
         return view;
     }

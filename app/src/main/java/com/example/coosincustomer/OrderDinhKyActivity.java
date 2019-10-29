@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -52,6 +53,8 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
     private Integer dongia = 50000;
     Integer dungcu = 15500;
     private Double totalGia;
+    Double latitude = null;
+    Double longitude = null;
     double totalTime = 0;
     DatePickerDialog datePickerDialog;
     Calendar calendar;
@@ -152,6 +155,8 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
                     toChooseGoi.putExtra("address",edtMap.getText().toString());
                     toChooseGoi.putExtra("ca",time);
                     toChooseGoi.putExtra("ghichu",ghichu);
+                    toChooseGoi.putExtra("latitude",latitude);
+                    toChooseGoi.putExtra("longitude",longitude);
                     startActivity(toChooseGoi);
                 }
             }
@@ -359,6 +364,9 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
         if (requestCode == REQUEST_CODE_MAP && resultCode == RESULT_OK && data != null){
             String address = data.getStringExtra("address");
             edtMap.setText(address);
+            latitude = data.getDoubleExtra("latitude",0);
+            longitude = data.getDoubleExtra("longitude",0);
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -409,6 +417,9 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
         String totalGiaString = decimalFormat.format(totalGia);
         gia1buoi = Integer.valueOf(totalGiaString);
         gio1buoi = Double.toString(totalTime);
+        if (gio1buoi.substring(2,3).equals("0")){
+            gio1buoi =gio1buoi.substring(0,1);
+        }
     }
 
     @Override

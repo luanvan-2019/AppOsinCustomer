@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coosincustomer.Model.ListOrder;
 import com.example.coosincustomer.Model.ListOrderTVS;
+import com.example.coosincustomer.Model.OnItemClickListener;
 import com.example.coosincustomer.R;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -19,6 +21,11 @@ import java.util.ArrayList;
 public class OrderListAdapterTVS extends RecyclerView.Adapter<OrderListAdapterTVS.OrderListHolder> {
 
     ArrayList<ListOrderTVS> mangOrder;
+    private OnItemClickListener mOnItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener mOnItemClickListener){
+        this.mOnItemClickListener = mOnItemClickListener;
+    }
 
     public OrderListAdapterTVS(ArrayList<ListOrderTVS> mangOrder) {
         this.mangOrder = mangOrder;
@@ -36,6 +43,9 @@ public class OrderListAdapterTVS extends RecyclerView.Adapter<OrderListAdapterTV
     @Override
     public void onBindViewHolder(@NonNull OrderListAdapterTVS.OrderListHolder holder, int position) {
         ListOrderTVS listOrder = mangOrder.get(position);
+        if (listOrder.getStatus().trim().equals("Đang tìm kiếm NV")){
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_text_orange);
+        }
         holder.txtStatus.setText(listOrder.getStatus());
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String totalGiaString = decimalFormat.format(listOrder.getGia());
@@ -65,6 +75,20 @@ public class OrderListAdapterTVS extends RecyclerView.Adapter<OrderListAdapterTV
             txtDiadiem = itemView.findViewById(R.id.diadiem);
             txtMahoadon = itemView.findViewById(R.id.ma_hoadon);
             gia = itemView.findViewById(R.id.gia);
+
+            PushDownAnim.setPushDownAnimTo(itemView).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mOnItemClickListener.onClick(view, getLayoutPosition());
+                }
+            });
+            PushDownAnim.setPushDownAnimTo(itemView).setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    mOnItemClickListener.onLongClick(view, getLayoutPosition());
+                    return true;
+                }
+            });
         }
     }
 }

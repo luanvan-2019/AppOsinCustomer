@@ -1,21 +1,13 @@
 package com.example.coosincustomer;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +18,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.textfield.TextInputLayout;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -122,8 +118,6 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                                 token.continuePermissionRequest();
                             }
                         }).check();
-                Log.d("BBB",latitude+"");
-                Log.d("BBB",longitude+"");
             }
         });
 
@@ -432,6 +426,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
             latitude = data.getDoubleExtra("latitude",0);
             longitude = data.getDoubleExtra("longitude",0);
             edtMap.setText(address);
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

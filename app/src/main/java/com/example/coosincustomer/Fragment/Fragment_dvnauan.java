@@ -1,5 +1,6 @@
 package com.example.coosincustomer.Fragment;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,8 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coosincustomer.Adapter.OrderListAdapter;
 import com.example.coosincustomer.Adapter.OrderListAdapterCOOK;
+import com.example.coosincustomer.DetailOrderActivity;
 import com.example.coosincustomer.Model.ListOrder;
 import com.example.coosincustomer.Model.ListOrderCOOK;
+import com.example.coosincustomer.Model.OnItemClickListener;
 import com.example.coosincustomer.R;
 
 import java.sql.Connection;
@@ -36,9 +39,10 @@ public class Fragment_dvnauan extends Fragment {
     ArrayList<String> address = new ArrayList<String>();
     ArrayList<String> date = new ArrayList<String>();
     ArrayList<String> time = new ArrayList<String>();
+    ArrayList<String> status = new ArrayList<String>();
     ArrayList<Integer> price = new ArrayList<Integer>();
     ArrayList<Integer> id = new ArrayList<Integer>();
-    String[] addressArr,dateArr,timeArr;
+    String[] addressArr,dateArr,timeArr,statusArr;
     Integer[] priceArr,idArr;
 
     public Fragment_dvnauan() {
@@ -84,11 +88,10 @@ public class Fragment_dvnauan extends Fragment {
                     time.add(rs.getString("TIME_WORK"));
                     price.add(rs.getInt("TOTAL_PRICE"));
                     id.add(rs.getInt("ID"));
-//                    txtHoTen.setText(rs.getString("FULL_NAME"));
-//                    txtDiaChi.setText(rs.getString("ADDRESS"));
-//                    txtSDT.setText(rs.getString("PHONE_NUM"));
-//                    txtEmail.setText(rs.getString("EMAIL"));
+                    status.add(rs.getString("STATUS_ORDER"));
                 }
+                statusArr = new String[status.size()];
+                statusArr = status.toArray(statusArr);
                 addressArr = new String[address.size()];
                 addressArr = address.toArray(addressArr);
                 dateArr = new String[date.size()];
@@ -100,7 +103,7 @@ public class Fragment_dvnauan extends Fragment {
                 idArr = new Integer[id.size()];
                 idArr = id.toArray(idArr);
                 for (int i = 0; i < address.size();i++){
-                    listOrders.add(new ListOrderCOOK("Đang tìm kiếm NV",dateArr[i],timeArr[i],addressArr[i],
+                    listOrders.add(new ListOrderCOOK(statusArr[i],dateArr[i],timeArr[i],addressArr[i],
                             idArr[i],priceArr[i]));
                 }
             }
@@ -112,6 +115,23 @@ public class Fragment_dvnauan extends Fragment {
         orderListAdapter = new OrderListAdapterCOOK(listOrders);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         recyclerView.setAdapter(orderListAdapter);
+
+        if (recyclerView.getAdapter() != null) {
+            ((OrderListAdapterCOOK) recyclerView.getAdapter()).setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onClick(View v, @NonNull int position) {
+                    Intent detail = new Intent(getActivity(), DetailOrderActivity.class);
+                    detail.putExtra("idOrder",idArr[position]);
+                    detail.putExtra("orderType","Nấu ăn");
+                    startActivity(detail);
+                }
+
+                @Override
+                public void onLongClick(View v, @NonNull int position) {
+
+                }
+            });
+        }
 
         return view;
     }

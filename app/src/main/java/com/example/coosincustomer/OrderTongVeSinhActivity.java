@@ -53,6 +53,8 @@ public class OrderTongVeSinhActivity extends AppCompatActivity implements Adapte
     String address, day, time, dientich,tonggio,tongnguoi;
     Spinner spinner;
     Integer totalGiaTongVS,totalTime,phiDungCu = 50000,gia80m2=650000, gia100m2=800000,gia150m2=1120000;
+    Double latitude = null;
+    Double longitude = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +207,8 @@ public class OrderTongVeSinhActivity extends AppCompatActivity implements Adapte
                     toCofirm.putExtra("tongnguoi",tongnguoi);
                     toCofirm.putExtra("tonggio",tonggio);
                     toCofirm.putExtra("phidungcu",phiDungCu);
+                    toCofirm.putExtra("latitude",latitude);
+                    toCofirm.putExtra("longitude",longitude);
                     startActivity(toCofirm);
                 }
             }
@@ -243,7 +247,6 @@ public class OrderTongVeSinhActivity extends AppCompatActivity implements Adapte
             tonggio = "4h";
             tongnguoi = "3";
         }
-//        Toast.makeText(getApplicationContext(), "Selected User: "+users[i] ,Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -292,6 +295,9 @@ public class OrderTongVeSinhActivity extends AppCompatActivity implements Adapte
         if (requestCode == REQUEST_CODE_MAP && resultCode == RESULT_OK && data != null){
             address = data.getStringExtra("address");
             edtMap.setText(address);
+            latitude = data.getDoubleExtra("latitude",0);
+            longitude = data.getDoubleExtra("longitude",0);
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

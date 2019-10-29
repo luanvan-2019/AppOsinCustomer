@@ -28,7 +28,7 @@ import java.util.List;
 public class CancelOrderActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
     Integer checked=1,idOrder;
-    RelativeLayout relHuyLuonCa,relLamBu,relNgayBu;
+    RelativeLayout relHuyLuonCa,relLamBu,relNgayBu,rel_nghihomnay,rel_selectCancel;
     ImageView imgCheck1,imgCheck2;
     Button btnConfirmCancel;
     EditText edtDate;
@@ -36,7 +36,7 @@ public class CancelOrderActivity extends AppCompatActivity implements DatePicker
     Calendar calendar;
     SimpleDateFormat simpleDateFormat;
     int Year, Month, Day;
-    String oldDate;
+    String oldDate,orderType;
     Connection connect;
 
     @Override
@@ -58,11 +58,19 @@ public class CancelOrderActivity extends AppCompatActivity implements DatePicker
         btnConfirmCancel= findViewById(R.id.btn_confirm_cancel);
         edtDate = findViewById(R.id.edt_date);
         relNgayBu = findViewById(R.id.relative_ngay_bu);
+        rel_selectCancel = findViewById(R.id.rel_select_cancel);
+        rel_nghihomnay = findViewById(R.id.rel_nghihomnay);
 
         relNgayBu.setVisibility(View.GONE);
 
         oldDate = getIntent().getStringExtra("oldDate");
         idOrder = getIntent().getIntExtra("idOrder",0);
+        orderType = getIntent().getStringExtra("orderType");
+
+        if (orderType.trim().equals("Định kỳ")){
+            rel_selectCancel.setVisibility(View.GONE);
+        }
+        else rel_nghihomnay.setVisibility(View.GONE);
 
         PushDownAnim.setPushDownAnimTo(relHuyLuonCa).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,43 +96,48 @@ public class CancelOrderActivity extends AppCompatActivity implements DatePicker
             public void onClick(View view) {
                 com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
                 connect =conStr.CONN();
-                if (checked == 1){
-                    try {
-                        // Connect to database
-                        if (connect == null){Toast.makeText(getApplicationContext(),"Không có kết nối mạng!",Toast.LENGTH_LONG).show();}
-                        else {
-                            String query = "UPDATE ORDER_SINGLE SET STATUS_ORDER=N'Đã hủy', USER_SUBMIT='',DATE_SUBMIT='' WHERE ID="+idOrder+"";
-                            Statement stmt = connect.createStatement();
-                            stmt.executeQuery(query);
-                            connect.close();
+                if (!orderType.trim().equals("Định kỳ")){
+                    if (checked == 1){
+                        try {
+                            // Connect to database
+                            if (connect == null){Toast.makeText(getApplicationContext(),"Không có kết nối mạng!",Toast.LENGTH_LONG).show();}
+                            else {
+                                String query = "UPDATE ORDER_SINGLE SET STATUS_ORDER=N'Đã hủy', USER_SUBMIT='',DATE_SUBMIT='' WHERE ID="+idOrder+"";
+                                Statement stmt = connect.createStatement();
+                                stmt.executeQuery(query);
+                                connect.close();
+                            }
+                        }
+                        catch (Exception ex){
+
+                        }
+                        Intent intent = new Intent(CancelOrderActivity.this,CanceledActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        try {
+                            // Connect to database
+                            if (connect == null){Toast.makeText(getApplicationContext(),"Không có kết nối mạng!",Toast.LENGTH_LONG).show();}
+                            if (edtDate.getText().toString().equals("")){
+                                Toast.makeText(getApplicationContext(),"Bạn chưa chọn ngày làm bù!",Toast.LENGTH_LONG).show();
+                            }
+                            else {
+                                String query = "UPDATE ORDER_SINGLE SET DATE_WORK='"+edtDate.getText().toString()+"' WHERE ID="+idOrder+"";
+                                Statement stmt = connect.createStatement();
+                                stmt.executeQuery(query);
+                                connect.close();
+                            }
+                        }
+                        catch (Exception ex){
+
                         }
                     }
-                    catch (Exception ex){
-
-                    }
-                    Intent intent = new Intent(CancelOrderActivity.this,CanceledActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
-                }else {
-                    try {
-                        // Connect to database
-                        if (connect == null){Toast.makeText(getApplicationContext(),"Không có kết nối mạng!",Toast.LENGTH_LONG).show();}
-                        else {
-                            String query = "UPDATE ORDER_SINGLE SET DATE_WORK='"+edtDate.getText().toString()+"' WHERE ID="+idOrder+"";
-                            Statement stmt = connect.createStatement();
-                            stmt.executeQuery(query);
-                            connect.close();
-                        }
-                    }
-                    catch (Exception ex){
-
-                    }
-                    Intent intent = new Intent(CancelOrderActivity.this,HomeActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                    finish();
                 }
+                Intent intent = new Intent(CancelOrderActivity.this,HomeActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
             }
         });
 

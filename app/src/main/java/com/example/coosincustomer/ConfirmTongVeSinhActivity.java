@@ -87,6 +87,8 @@ public class ConfirmTongVeSinhActivity extends AppCompatActivity {
                 toThanhToan.putExtra("note",ghichu);
                 toThanhToan.putExtra("totalPrice",tongtien);
                 toThanhToan.putExtra("orderType",3);
+                toThanhToan.putExtra("latitude",getIntent().getDoubleExtra("latitude",0));
+                toThanhToan.putExtra("longitude",getIntent().getDoubleExtra("longitude",0));
                 startActivity(toThanhToan);
             }
         });

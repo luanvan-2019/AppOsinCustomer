@@ -192,49 +192,125 @@
                     android:id="@+id/relative_staff_submit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <ImageView
-                        android:id="@+id/avatar_customer"
-                        android:layout_centerHorizontal="true"
-                        android:src="@drawable/ic_avatar_staff"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:textStyle="bold"
-                        android:textColor="@color/enable"
-                        android:id="@+id/txt_staff_name"
-                        android:text="ĐÀO MINH THÁI"
-                        android:textSize="16sp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_below="@+id/avatar_customer"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
                     <RelativeLayout
-                        android:id="@+id/relative_staff_phone"
+                        android:id="@+id/rel_staff_list_submit"
                         android:gravity="center_horizontal"
-                        android:layout_below="@+id/txt_staff_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
-                        <TextView
-                            android:layout_marginTop="5dp"
-                            android:id="@+id/label_phone_num"
-                            android:text="Số điện thoại:"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                        <TextView
-                            android:textStyle="bold"
-                            android:id="@+id/txt_staff_phone"
-                            android:layout_marginTop="5dp"
-                            android:layout_toRightOf="@+id/label_phone_num"
-                            android:layout_marginLeft="10dp"
-                            android:textColor="@color/enable"
-                            android:text="0921895314"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
+                        <RelativeLayout
+                            android:id="@+id/rel_staff1"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/avatar_customer"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/ic_avatar_staff"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:textStyle="bold"
+                                android:textColor="@color/enable"
+                                android:id="@+id/txt_staff_name"
+                                android:text="Đào Minh Thái"
+                                android:textSize="14sp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_below="@+id/avatar_customer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <RelativeLayout
+                                android:id="@+id/relative_staff_phone"
+                                android:layout_below="@+id/txt_staff_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textStyle="bold"
+                                    android:id="@+id/txt_staff_phone"
+                                    android:layout_marginTop="5dp"
+                                    android:textColor="@color/enable"
+                                    android:gravity="center"
+                                    android:text="0921895314"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_marginLeft="15dp"
+                            android:id="@+id/rel_staff2"
+                            android:layout_toRightOf="@id/rel_staff1"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/avatar_customer2"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/ic_avatar_staff_disable"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:textStyle="bold"
+                                android:id="@+id/txt_staff_name2"
+                                android:text="Đang tìm"
+                                android:textSize="14sp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_below="@+id/avatar_customer2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <RelativeLayout
+                                android:id="@+id/relative_staff_phone2"
+                                android:layout_below="@+id/txt_staff_name2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textStyle="bold"
+                                    android:id="@+id/txt_staff_phone2"
+                                    android:layout_marginTop="5dp"
+                                    android:textColor="@color/enable"
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+                        <RelativeLayout
+                            android:layout_marginLeft="15dp"
+                            android:id="@+id/rel_staff3"
+                            android:layout_toRightOf="@id/rel_staff2"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:id="@+id/avatar_customer3"
+                                android:layout_centerHorizontal="true"
+                                android:src="@drawable/ic_avatar_staff_disable"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <TextView
+                                android:textStyle="bold"
+                                android:id="@+id/txt_staff_name3"
+                                android:text="Đang tìm"
+                                android:textSize="14sp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_below="@+id/avatar_customer3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+                            <RelativeLayout
+                                android:id="@+id/relative_staff_phone3"
+                                android:layout_below="@+id/txt_staff_name3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:textStyle="bold"
+                                    android:id="@+id/txt_staff_phone3"
+                                    android:layout_marginTop="5dp"
+                                    android:textColor="@color/enable"
+                                    android:gravity="center"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"/>
+                            </RelativeLayout>
+                        </RelativeLayout>
+
                     </RelativeLayout>
                     <RelativeLayout
                         android:layout_marginTop="15dp"
                         android:gravity="center_horizontal"
-                        android:layout_below="@+id/relative_staff_phone"
+                        android:layout_below="@+id/rel_staff_list_submit"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
                         <LinearLayout
@@ -379,36 +455,41 @@
                     android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <ImageView
-                    android:layout_toLeftOf="@+id/relative_date_work"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp"
-                    android:id="@+id/ic_calendar"
-                    android:src="@drawable/ic_calendar"
-                    android:layout_below="@+id/txt_order_type"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
-                <RelativeLayout
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/relative_date_work"
-                    android:layout_marginRight="10dp"
-                    android:layout_below="@+id/txt_order_type"
+                <LinearLayout
+                    android:id="@+id/lin_thu"
+                    android:weightSum="2"
                     android:layout_toLeftOf="@+id/view_center"
-                    android:layout_width="wrap_content"
+                    android:layout_below="@+id/txt_order_type"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:id="@+id/txt_thu"
-                        android:textColor="@color/quantum_black_100"
-                        android:text="Thứ năm"
+                    <ImageView
+                        android:layout_weight="0.5"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/ic_calendar"
+                        android:src="@drawable/ic_calendar"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"/>
+                    <RelativeLayout
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1.5"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/relative_date_work"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/txt_ngay"
-                        android:layout_below="@+id/txt_thu"
-                        android:text="12/12/2012"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txt_thu"
+                            android:textColor="@color/quantum_black_100"
+                            android:text="Thứ năm"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/txt_ngay"
+                            android:layout_below="@+id/txt_thu"
+                            android:text="12/12/2012"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </RelativeLayout>
+                </LinearLayout>
                 <View
                     android:id="@+id/view_center"
                     android:background="#B6B6B6"
@@ -437,7 +518,6 @@
                     <TextView
                         android:id="@+id/txt_buoi"
                         android:textColor="@color/quantum_black_100"
-                        android:text="Thứ năm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
@@ -450,7 +530,7 @@
                 <RelativeLayout
                     android:id="@+id/line"
                     android:layout_marginTop="20dp"
-                    android:layout_below="@+id/relative_time_work"
+                    android:layout_below="@+id/lin_thu"
                     android:background="#B6B6B6"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"/>
@@ -536,7 +616,7 @@
                 <TextView
                     android:layout_marginLeft="20dp"
                     android:textSize="16sp"
-                    android:text="Số buổi"
+                    android:text="Tổng buổi"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
@@ -555,9 +635,73 @@
                     android:background="#B6B6B6"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"/>
+                <RelativeLayout
+                    android:id="@+id/ko_co_id"
+                    android:layout_below="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:id="@+id/rel_sobuoicon"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:textSize="16sp"
+                            android:text="Số buổi còn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="20dp"
+                            android:id="@+id/txt_sobuoicon"
+                            android:layout_alignParentRight="true"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:text="1 buổi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View
+                            android:id="@+id/line11"
+                            android:layout_marginTop="15dp"
+                            android:layout_below="@+id/txt_sobuoicon"
+                            android:background="#B6B6B6"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                    </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rel_dientich"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_marginLeft="20dp"
+                            android:textSize="16sp"
+                            android:text="Diện tích"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="20dp"
+                            android:id="@+id/txt_dientich"
+                            android:layout_alignParentRight="true"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:text="1 buổi"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                        <View
+                            android:id="@+id/line12"
+                            android:layout_marginTop="15dp"
+                            android:layout_below="@+id/txt_dientich"
+                            android:background="#B6B6B6"
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"/>
+                    </RelativeLayout>
+                </RelativeLayout>
                 <TextView
                     android:layout_marginLeft="20dp"
-                    android:layout_below="@+id/line1"
+                    android:layout_below="@+id/ko_co_id"
                     android:layout_marginTop="15dp"
                     android:textSize="16sp"
                     android:text="Số giờ/buổi"
@@ -567,7 +711,7 @@
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="15dp"
                     android:id="@+id/txt_sogio"
-                    android:layout_below="@+id/line1"
+                    android:layout_below="@+id/ko_co_id"
                     android:layout_alignParentRight="true"
                     android:textStyle="bold"
                     android:textSize="16sp"

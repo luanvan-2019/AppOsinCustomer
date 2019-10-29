@@ -40,85 +40,101 @@
         android:layout_height="0dp"
         android:padding="15dp">
         <RelativeLayout
-            android:id="@+id/relative_dat_lan_sau"
+            android:id="@+id/rel_select_cancel"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/ic_check_dat_luc_khac"
-                android:src="@drawable/ic_checked"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
+            android:layout_height="match_parent">
             <RelativeLayout
-                android:paddingLeft="20dp"
-                android:layout_toRightOf="@+id/ic_check_dat_luc_khac"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txt_dat_luc_khac"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:text="Đặt dịch vụ vào lúc khác"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_below="@+id/txt_dat_luc_khac"
-                    android:text="Ca làm sẽ bị hủy, bạn phải đặt lại khi đặt lần sau."
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/relative_dat_bu"
-            android:layout_marginTop="20dp"
-            android:layout_below="@+id/relative_dat_lan_sau"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/ic_check_dat_bu_ngay_khac"
-                android:src="@drawable/ic_checkbox_uncheck_circle"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
-            <RelativeLayout
-                android:paddingLeft="20dp"
-                android:layout_toRightOf="@+id/ic_check_dat_bu_ngay_khac"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txt_dat_bu_ngay_khac"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:text="Làm bù vào ngày khác"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <TextView
-                    android:layout_below="@+id/txt_dat_bu_ngay_khac"
-                    android:text="Chọn một ngày làm khác để thay thế."
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </RelativeLayout>
-        </RelativeLayout>
-        <RelativeLayout
-            android:id="@+id/relative_ngay_bu"
-            android:layout_below="@+id/relative_dat_bu"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:hint="Chọn ngày khác..."
+                android:id="@+id/relative_dat_lan_sau"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:focusable="false"
-                    android:id="@+id/edt_date"
-                    android:ems="10"
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/ic_check_dat_luc_khac"
+                    android:src="@drawable/ic_checked"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
+                <RelativeLayout
+                    android:paddingLeft="20dp"
+                    android:layout_toRightOf="@+id/ic_check_dat_luc_khac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txt_dat_luc_khac"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:text="Đặt dịch vụ vào lúc khác"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_below="@+id/txt_dat_luc_khac"
+                        android:text="Ca làm sẽ bị hủy, bạn phải đặt lại khi đặt lần sau."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relative_dat_bu"
+                android:layout_marginTop="20dp"
+                android:layout_below="@+id/relative_dat_lan_sau"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/ic_check_dat_bu_ngay_khac"
+                    android:src="@drawable/ic_checkbox_uncheck_circle"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
+                <RelativeLayout
+                    android:paddingLeft="20dp"
+                    android:layout_toRightOf="@+id/ic_check_dat_bu_ngay_khac"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/txt_dat_bu_ngay_khac"
+                        android:textColor="#000000"
+                        android:textSize="16sp"
+                        android:text="Làm bù vào ngày khác"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                    <TextView
+                        android:layout_below="@+id/txt_dat_bu_ngay_khac"
+                        android:text="Chọn một ngày làm khác để thay thế."
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relative_ngay_bu"
+                android:layout_below="@+id/relative_dat_bu"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:hint="Chọn ngày khác..."
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:focusable="false"
+                        android:id="@+id/edt_date"
+                        android:ems="10"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </RelativeLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rel_nghihomnay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="Ca làm hôm nay sẽ được nghỉ, số buổi làm còn lại sẽ được giữ nguyên."
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
         </RelativeLayout>
 
     </RelativeLayout>

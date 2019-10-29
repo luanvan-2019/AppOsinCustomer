@@ -92,6 +92,8 @@ public class OrderDinhKyGoiActivity extends AppCompatActivity {
                     toConfirm.putExtra("ca",time);
                     toConfirm.putExtra("sogiolam",gio1buoi);
                     toConfirm.putExtra("ghichu",ghichu);
+                    toConfirm.putExtra("latitude",getIntent().getDoubleExtra("latitude",0));
+                    toConfirm.putExtra("longitude",getIntent().getDoubleExtra("longitude",0));
                     if (select1thang == 1){
                         toConfirm.putExtra("endtime",endtime1thang);
                         toConfirm.putExtra("tongtien",totalGia1thang);
