@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.coosincustomer.Adapter.OrderPagerAdapter;
 import com.example.coosincustomer.HistoryActivity;
+import com.example.coosincustomer.LoadingDialog;
 import com.example.coosincustomer.R;
 import com.google.android.material.tabs.TabLayout;
 
@@ -69,6 +70,8 @@ public class OrderFragment extends Fragment {
         imgHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog = new LoadingDialog();
+                loadingDialog.loading(getActivity());
                 Intent intent = new Intent(getActivity(), HistoryActivity.class);
                 startActivity(intent);
             }

@@ -1,8 +1,10 @@
 package com.example.coosincustomer;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,6 +24,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
@@ -38,15 +43,21 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
     Connection connect;
     TextView txtOrderType,txtThu,txtNgay,txtCa,txtGioCa,txtAddress,txtSoBuoi,txtSoGio,txtTongTien,txtPaymentType,
             txtStaffName,txtStaffPhone,txtTimduocNV,txtDangtrongca,txtPayStatus,txtMDH,txtHoantat,txtSobuoicon,txtDientich,
-            txtStaffName2,txtStaffPhone2,txtStaffName3,txtStaffPhone3;
+            txtStaffName2,txtStaffPhone2,txtStaffName3,txtStaffPhone3,txtSoMon,txtTenMon,txtKhauVi,txtTraiCay,txtMaxMarket,labelSonguoi;
     String orderType,orderStatus,userSubmit,userSubmit2,userSubmit3,idOrderString;
-    RelativeLayout relStaffSubmit,relFindStaff,relLine,relSobuoicon,rel_staff2,rel_staff3,relDientich;
+    RelativeLayout relStaffSubmit,relFindStaff,relLine,relSobuoicon,rel_staff1,rel_staff2,rel_staff3,relDientich,relNauAn,relMaxMarket,relCancelTVS;
     LinearLayout linConfirmStaffCome,linCancelStaff,linConfirmSuccess,linCall,linChat;
     View line1,line2,line3;
-    ImageView node2,node3,node4,avatarCus2,avatarCus3;
+    ImageView node2,node3,node4,avatarCus1,avatarCus2,avatarCus3;
     Integer paymentStatus;
-    Button btnBaoNghi;
-    int sobuoiDalam;
+    Button btnBaoNghi,btnCloseTVS,btnConfirmTVS;
+    RadioButton rbtnNV1,rbtnNV2,rbtnNV3;
+    RadioGroup radioGroupTVS;
+    int cancel=1;
+    int sobuoiDalam,seeingStaff,areaType;
+    Dialog dialog;
+    String account;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +65,14 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
         setContentView(R.layout.activity_detail_order);
 
         anhXa();
-
-        relStaffSubmit.setVisibility(View.GONE);
-        linConfirmSuccess.setVisibility(View.GONE);
-        relSobuoicon.setVisibility(View.GONE);
-        rel_staff2.setVisibility(View.GONE);
-        rel_staff3.setVisibility(View.GONE);
-        relDientich.setVisibility(View.GONE);
+        swipeRefreshLayout = findViewById(R.id.swipe_detail);
 
         idOrder = getIntent().getIntExtra("idOrder",0);
         orderType = getIntent().getStringExtra("orderType");
+        Log.d("BBB",orderType);
+        //lay so dien thoai
+        SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
+        account = SP.getString("phone_num",null);
 
         //anh xa
         Toolbar toolbar = findViewById(R.id.toolbar_detail);
@@ -71,6 +80,37 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        todo();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                todo();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+
+    //toolbar back button
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void todo(){
+        relStaffSubmit.setVisibility(View.GONE);
+        linConfirmSuccess.setVisibility(View.GONE);
+        relSobuoicon.setVisibility(View.GONE);
+        rel_staff2.setVisibility(View.GONE);
+        rel_staff3.setVisibility(View.GONE);
+        relDientich.setVisibility(View.GONE);
+        relNauAn.setVisibility(View.GONE);
+        relMaxMarket.setVisibility(View.GONE);
+        relCancelTVS.setVisibility(View.GONE);
+        rbtnNV3.setVisibility(View.GONE);
+        dialog = new Dialog(this);
 
         checkOrderType();
 
@@ -186,10 +226,10 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                 txtDangtrongca.setTextColor(getResources().getColor(R.color.enable));
                 btnBaoNghi.setVisibility(View.GONE);
                 relLine.setVisibility(View.GONE);
+                com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                connect =conStr.CONN();
                 if (orderType.trim().equals("Dùng lẻ")){
                     try {
-                        com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
-                        connect =conStr.CONN();
                         // Connect to database
                         if (connect == null){checkConnectDialog();}
                         else {
@@ -204,12 +244,38 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                     }
                 }else if (orderType.trim().equals("Định kỳ")){
                     try {
-                        com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
-                        connect =conStr.CONN();
                         // Connect to database
                         if (connect == null){checkConnectDialog();}
                         else {
                             String query = "UPDATE ORDER_MULTI SET ORDER_STATUS=N'Đang trong ca làm' WHERE ID="+idOrder+"";
+                            Statement stmt = connect.createStatement();
+                            stmt.executeQuery(query);
+                            connect.close();
+                        }
+                    }
+                    catch (Exception ex){
+                        Toast.makeText(getApplicationContext(),"Xác nhận thành công", Toast.LENGTH_LONG).show();
+                    }
+                }else if (orderType.trim().equals("Tổng vệ sinh")){
+                    try {
+                        // Connect to database
+                        if (connect == null){checkConnectDialog();}
+                        else {
+                            String query = "UPDATE ORDER_OVERVIEW SET ORDER_STATUS=N'Đang trong ca làm' WHERE ID="+idOrder+"";
+                            Statement stmt = connect.createStatement();
+                            stmt.executeQuery(query);
+                            connect.close();
+                        }
+                    }
+                    catch (Exception ex){
+                        Toast.makeText(getApplicationContext(),"Xác nhận thành công", Toast.LENGTH_LONG).show();
+                    }
+                }else {
+                    try {
+                        // Connect to database
+                        if (connect == null){checkConnectDialog();}
+                        else {
+                            String query = "UPDATE ORDER_COOK SET ORDER_STATUS=N'Đang trong ca làm' WHERE ID="+idOrder+"";
                             Statement stmt = connect.createStatement();
                             stmt.executeQuery(query);
                             connect.close();
@@ -225,10 +291,10 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
         PushDownAnim.setPushDownAnimTo(linConfirmSuccess).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                connect =conStr.CONN();
                 if (orderType.trim().equals("Dùng lẻ")){
                     try {
-                        com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
-                        connect =conStr.CONN();
                         // Connect to database
                         if (connect == null){checkConnectDialog();}
                         else {
@@ -250,15 +316,11 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                             Statement stmt = connect.createStatement();
                             stmt.executeQuery(query);
                         }
-                        connect.close();
                     }
                     catch (Exception ex){
                     }
                 }else if (orderType.trim().equals("Định kỳ")){
                     try {
-                        com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
-                        connect =conStr.CONN();
-                        Log.d("BBB","aaaaaaa");
                         // Connect to database
                         if (connect == null){checkConnectDialog();}
                         else {
@@ -268,26 +330,164 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                             danhgiaDialog.show(getSupportFragmentManager(),"Danh gia dialog");
                             sobuoiDalam =sobuoiDalam+1;
                             String query = "UPDATE ORDER_MULTI SET ORDER_STATUS=N'Đã tìm được NV' ,TOTAL_WORKED="+sobuoiDalam+" WHERE ID="+idOrder+"";
-                            Log.d("BBB",query);
                             Statement stmt = connect.createStatement();
                             stmt.executeQuery(query);
-                            connect.close();
+                        }
+                    }
+                    catch (Exception ex){
+                    }
+                }else if (orderType.trim().equals("Tổng vệ sinh")){
+                    try {
+                        // Connect to database
+                        if (connect == null){checkConnectDialog();}
+                        else {
+                            String query = "select * from ORDER_OVERVIEW where ID= '" + idOrder  + "'";
+                            Statement stmt = connect.createStatement();
+                            ResultSet rs = stmt.executeQuery(query);
+                            if (rs.next()){
+                                paymentStatus = rs.getInt("PAYMENT_STATUS");
+                            }
+                        }
+                        if (paymentStatus == 0){
+                            checkPayment();
+                        }else {
+                            checkSuccess();
+                            DialogFragment danhgiaDialog = new DanhGiaDialog();
+                            danhgiaDialog.setCancelable(false);
+                            danhgiaDialog.show(getSupportFragmentManager(),"Danh gia dialog");
+                            sobuoiDalam =sobuoiDalam+1;
+                            String query = "UPDATE ORDER_OVERVEW SET ORDER_STATUS=N'Hoàn thành' WHERE ID="+idOrder+"";
+                            Statement stmt = connect.createStatement();
+                            stmt.executeQuery(query);
+                        }
+                    }
+                    catch (Exception ex){
+                    }
+                }else {
+                    try {
+                        // Connect to database
+                        if (connect == null){checkConnectDialog();}
+                        else {
+                            String query = "select * from ORDER_COOK where ID= '" + idOrder  + "'";
+                            Statement stmt = connect.createStatement();
+                            ResultSet rs = stmt.executeQuery(query);
+                            if (rs.next()){
+                                paymentStatus = rs.getInt("PAYMENT_STATUS");
+                            }
+                        }
+                        if (paymentStatus == 0){
+                            checkPayment();
+                        }else {
+                            checkSuccess();
+                            DialogFragment danhgiaDialog = new DanhGiaDialog();
+                            danhgiaDialog.setCancelable(false);
+                            danhgiaDialog.show(getSupportFragmentManager(),"Danh gia dialog");
+                            sobuoiDalam =sobuoiDalam+1;
+                            String query = "UPDATE ORDER_COOK SET ORDER_STATUS=N'Hoàn thành' WHERE ID="+idOrder+"";
+                            Statement stmt = connect.createStatement();
+                            stmt.executeQuery(query);
                         }
                     }
                     catch (Exception ex){
                     }
                 }
+                if (!orderType.trim().equals("Tổng vệ sinh")){
+                    try {
+                        int amount=0;
+                        String query = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+userSubmit+"'";
+                        Statement stmt = connect.createStatement();
+                        ResultSet rs = stmt.executeQuery(query);
+                        if (rs.next()){
+                            amount = rs.getInt("WORKED_AMOUNT")+1;
+                        }
+                        Log.d("BBB",amount+"");
+                        String query1 = "UPDATE EMPLOYEE SET WORKED_AMOUNT="+amount+" WHERE PHONE_NUM='"+userSubmit+"'";
+                        Statement stmt1 = connect.createStatement();
+                        stmt1.executeQuery(query1);
+                        connect.close();
+                    }
+                    catch (Exception ex){
+                    }
+                }else {
+                    try {
+                        int amountNV1=0;
+                        int amountNV2=0;
+                        int amountNV3=0;
+                        if (areaType==1){
+                            try {
+                                String query = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+userSubmit+"'";
+                                Statement stmt = connect.createStatement();
+                                ResultSet rs = stmt.executeQuery(query);
+                                if (rs.next()){
+                                    amountNV1 = rs.getInt("WORKED_AMOUNT")+1;
+                                }
+                                String query1 = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+userSubmit2+"'";
+                                Statement stmt1 = connect.createStatement();
+                                ResultSet rs1 = stmt1.executeQuery(query1);
+                                if (rs1.next()){
+                                    amountNV2 = rs1.getInt("WORKED_AMOUNT")+1;
+                                }
+                                String query2 = "UPDATE EMPLOYEE SET WORKED_AMOUNT="+amountNV1+" WHERE PHONE_NUM='"+userSubmit+"'";
+                                Statement stmt2 = connect.createStatement();
+                                stmt2.executeQuery(query2);
+                            }catch (Exception e){
+                                String query2 = "UPDATE EMPLOYEE SET WORKED_AMOUNT="+amountNV2+" WHERE PHONE_NUM='"+userSubmit2+"'";
+                                Statement stmt2 = connect.createStatement();
+                                stmt2.executeQuery(query2);
+                            }
+                        }else {
+                            try {
+                                String query = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+userSubmit+"'";
+                                Statement stmt = connect.createStatement();
+                                ResultSet rs = stmt.executeQuery(query);
+                                if (rs.next()){
+                                    amountNV1 = rs.getInt("WORKED_AMOUNT")+1;
+                                }
+                                String query1 = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+userSubmit2+"'";
+                                Statement stmt1 = connect.createStatement();
+                                ResultSet rs1 = stmt1.executeQuery(query1);
+                                if (rs1.next()){
+                                    amountNV2 = rs1.getInt("WORKED_AMOUNT")+1;
+                                }
+                                try {
+                                    String query3 = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+userSubmit3+"'";
+                                    Statement stmt3 = connect.createStatement();
+                                    ResultSet rs3 = stmt3.executeQuery(query3);
+                                    if (rs3.next()){
+                                        amountNV3 = rs1.getInt("WORKED_AMOUNT")+1;
+                                    }
+                                    String query4 = "UPDATE EMPLOYEE SET WORKED_AMOUNT="+amountNV3+" WHERE PHONE_NUM='"+userSubmit3+"'";
+                                    Statement stmt4 = connect.createStatement();
+                                    stmt4.executeQuery(query4);
+                                }catch (Exception e){
+                                    String query2 = "UPDATE EMPLOYEE SET WORKED_AMOUNT="+amountNV1+" WHERE PHONE_NUM='"+userSubmit+"'";
+                                    Statement stmt2 = connect.createStatement();
+                                    stmt2.executeQuery(query2);
+                                }
+                            }catch (Exception e){
+                                String query2 = "UPDATE EMPLOYEE SET WORKED_AMOUNT="+amountNV2+" WHERE PHONE_NUM='"+userSubmit2+"'";
+                                Statement stmt2 = connect.createStatement();
+                                stmt2.executeQuery(query2);
+                            }
+                        }
+                        connect.close();
+                    }
+                    catch (Exception ex){
+                    }
+                }
+
             }
         });
 
         PushDownAnim.setPushDownAnimTo(linCancelStaff).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d("BBB","aaaaaaaaa");
                 DateFormat formatter = new SimpleDateFormat("HH:mm dd/MM/yyyy");
                 Date date = new Date();
                 String today = formatter.format(date);
                 String timecancelString = today.substring(0,2);
-                String timeValidString = txtGioCa.getText().toString().substring(1,3);
+                String timeValidString = txtGioCa.getText().toString().substring(0,2);
                 if (timecancelString.substring(1,2).equals(":")){
                     timecancelString= timecancelString.substring(0,1);
                 }
@@ -296,15 +496,32 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                 }
                 Integer timecancel = Integer.valueOf(timecancelString);
                 Integer timeValid = Integer.valueOf(timeValidString);
-                if (orderType.trim().equals("Dùng lẻ")){
-                    if (txtNgay.getText().toString().substring(0,4).equals(today.substring(6,11))
+                if (orderType.trim().equals("Dùng lẻ") || orderType.trim().equals("Nấu ăn")){
+                    if (txtNgay.getText().toString().substring(0,5).equals(today.substring(6,11))
                             && timeValid-timecancel<3){
                         checkCancel();
                     }else {
                         cancelNVDialog();
                     }
-                }else if (orderType.trim().equals("Đinh kỳ")){
+                }else if (orderType.trim().equals("Định kỳ")){
                     cancelNVDialog();
+                }else if (orderType.trim().equals("Tổng vệ sinh")){
+                    if (txtNgay.getText().toString().substring(0,5).equals(today.substring(6,11))
+                            && timeValid-timecancel<3){
+                        checkCancel();
+                    }else {
+                        if (userSubmit2.trim().equals("")){
+                            cancelNVDialog();
+                        }else {
+                            relCancelTVS.setVisibility(View.VISIBLE);
+                            rbtnNV1.setText(txtStaffName.getText().toString());
+                            rbtnNV2.setText(txtStaffName2.getText().toString());
+                            if (!userSubmit3.trim().equals("")){
+                                rbtnNV3.setVisibility(View.VISIBLE);
+                                rbtnNV3.setText(txtStaffName3.getText().toString());
+                            }
+                        }
+                    }
                 }
             }
         });
@@ -343,20 +560,146 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
             @Override
             public void onClick(View view) {
                 String s = "tel:" + userSubmit;
-                Log.d("BBB",s);
                 Intent intent = new Intent(Intent.ACTION_CALL);
                 intent.setData(Uri.parse(s));
                 startActivity(intent);
             }
         });
 
-    }
+        radioGroupTVS.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if (i == R.id.btn_radio_nv1){
+                    cancel =1;
+                }
+                if (i == R.id.btn_radio_nv2){
+                    cancel=2;
+                }
+                if (i == R.id.btn_radio_nv3){
+                    cancel=3;
+                }
+            }
+        });
+        PushDownAnim.setPushDownAnimTo(btnCloseTVS).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                relCancelTVS.setVisibility(View.GONE);
+            }
+        });
+        PushDownAnim.setPushDownAnimTo(btnConfirmTVS).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TextView title = new TextView(DetailOrderActivity.this);
+                title.setText("THÔNG BÁO");
+                title.setPadding(10, 30, 10, 10);
+                title.setGravity(Gravity.CENTER);
+                title.setTextSize(20);
+                title.setTextColor(Color.RED);
 
-    //toolbar back button
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
+                AlertDialog.Builder builder = new AlertDialog.Builder(DetailOrderActivity.this);
+                builder.setCustomTitle(title);
+                builder.setMessage("Nếu hủy nhân viên này sẽ mất cơ hội việc làm. Bạn có muốn tiếp tục ?");
+                builder.setCancelable(false);
+                builder.setNegativeButton("Tiếp tục", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        if (cancel==1){
+                            try {
+                                com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                                connect =conStr.CONN();
+                                // Connect to database
+                                if (connect == null){checkConnectDialog();}
+                                else {
+                                    String query = "UPDATE ORDER_OVERVIEW SET USER_SUBMIT1='"+userSubmit2+"' ,USER_SUBMIT2='"+userSubmit3+"' ,USER_SUBMIT3=''  WHERE ID="+idOrder+"";
+                                    Log.d("BBB",query);
+                                    Statement stmt = connect.createStatement();
+                                    stmt.executeQuery(query);
+                                    connect.close();
+                                }
+                            }
+                            catch (Exception ex){
+                                Toast.makeText(getApplicationContext(),"Đã hủy thành công",Toast.LENGTH_LONG).show();
+                            }
+                        }else if (cancel==2){
+                            avatarCus2.setImageResource(R.drawable.ic_avatar_staff_disable);
+                            txtStaffName2.setText("Đang tìm");
+                            txtStaffName2.setTextColor(getResources().getColor(R.color.disable));
+                            try {
+                                com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                                connect =conStr.CONN();
+                                // Connect to database
+                                if (connect == null){checkConnectDialog();}
+                                else {
+                                    String query = "UPDATE ORDER_OVERVIEW SET USER_SUBMIT2='"+userSubmit3+"' ,USER_SUBMIT3=''  WHERE ID="+idOrder+"";
+                                    Statement stmt = connect.createStatement();
+                                    stmt.executeQuery(query);
+                                    connect.close();
+                                }
+                            }
+                            catch (Exception ex){
+                                Toast.makeText(getApplicationContext(),"Đã hủy thành công",Toast.LENGTH_LONG).show();
+                            }
+                        }else {
+                            avatarCus3.setImageResource(R.drawable.ic_avatar_staff_disable);
+                            txtStaffName3.setText("Đang tìm");
+                            txtStaffName3.setTextColor(getResources().getColor(R.color.disable));
+                            try {
+                                com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                                connect =conStr.CONN();
+                                // Connect to database
+                                if (connect == null){checkConnectDialog();}
+                                else {
+                                    String query = "UPDATE ORDER_OVERVIEW SET USER_SUBMIT3=''  WHERE ID="+idOrder+"";
+                                    Statement stmt = connect.createStatement();
+                                    stmt.executeQuery(query);
+                                    connect.close();
+                                }
+                            }
+                            catch (Exception ex){
+                                Toast.makeText(getApplicationContext(),"Đã hủy thành công",Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                    }
+                });
+                builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+
+                TextView messageText = alertDialog.findViewById(android.R.id.message);
+                messageText.setGravity(Gravity.CENTER);
+            }
+        });
+
+        PushDownAnim.setPushDownAnimTo(rel_staff1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ShowPopup(userSubmit);
+            }
+        });
+
+        PushDownAnim.setPushDownAnimTo(rel_staff2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!txtStaffName2.getText().toString().trim().equals("Đang tìm")) {
+                    ShowPopup(userSubmit2);
+                }
+            }
+        });
+
+        PushDownAnim.setPushDownAnimTo(rel_staff3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!txtStaffName3.getText().toString().trim().equals("Đang tìm")){
+                    ShowPopup(userSubmit3);
+                }
+            }
+        });
     }
 
     public void checkConnectDialog(){
@@ -436,6 +779,23 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
         relDientich = findViewById(R.id.rel_dientich);
         avatarCus2 = findViewById(R.id.avatar_customer2);
         avatarCus3 = findViewById(R.id.avatar_customer3);
+        relNauAn = findViewById(R.id.rel_nauan);
+        relMaxMarket =  findViewById(R.id.rel_max_market);
+        txtSoMon = findViewById(R.id.txt_somon);
+        txtTenMon = findViewById(R.id.txt_ten_mon);
+        txtKhauVi = findViewById(R.id.txt_khauvi);
+        txtTraiCay = findViewById(R.id.txt_traicay);
+        txtMaxMarket = findViewById(R.id.txt_max_market);
+        labelSonguoi = findViewById(R.id.labelGio_to_labelSonguoi);
+        relCancelTVS = findViewById(R.id.rel_cancelNV_TVS);
+        radioGroupTVS = findViewById(R.id.group_radio);
+        rbtnNV1 = findViewById(R.id.btn_radio_nv1);
+        rbtnNV2 = findViewById(R.id.btn_radio_nv2);
+        rbtnNV3 = findViewById(R.id.btn_radio_nv3);
+        btnCloseTVS = findViewById(R.id.btn_close_cancel);
+        btnConfirmTVS = findViewById(R.id.btn_confirm_cancel);
+        avatarCus1 = findViewById(R.id.avatar_customer);
+        rel_staff1 = findViewById(R.id.rel_staff1);
     }
 
     private void checkPayment(){
@@ -591,6 +951,7 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                         txtGioCa.setText(rs.getString("TIME_START"));
                         txtCa.setText("Giờ bắt đầu");
                         txtAddress.setText(rs.getString("ADDRESS_ORDER"));
+                        areaType = rs.getInt("AREA_TYPE");
                         if (rs.getInt("AREA_TYPE")==2){
                             txtSoGio.setText("3h");
                         }else txtSoGio.setText("4h");
@@ -625,6 +986,58 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
             catch (Exception ex)
             {
                 Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        }else {
+            try
+            {
+                relNauAn.setVisibility(View.VISIBLE);
+                idOrderString="NA"+idOrder;
+                // Connect to database
+                if (connect == null)
+                {
+                    checkConnectDialog();
+                }
+                else
+                {
+                    // Change below query according to your own database.
+                    String query = "select * from ORDER_COOK where ID= " + idOrder  + "";
+                    Statement stmt = connect.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+                    if (rs.next())
+                    {
+                        txtOrderType.setText(orderType);
+                        txtThu.setText(rs.getString("DATE_WORK").substring(0,rs.getString("DATE_WORK").length()-12));
+                        txtNgay.setText(rs.getString("DATE_WORK").substring(rs.getString("DATE_WORK").length()-10));
+                        txtCa.setText("Giờ ăn");
+                        txtGioCa.setText(rs.getString("TIME_WORK"));
+                        txtAddress.setText(rs.getString("ADDRESS_ORDER"));
+                        txtSoGio.setText(rs.getString("PEOPLE_AMOUNT")+" người");
+                        labelSonguoi.setText("Số người ăn");
+                        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+                        String totalGiaString = decimalFormat.format(rs.getInt("TOTAL_PRICE"));
+                        if (rs.getInt("MAX_MARKET_PRICE")!=0){
+                            String maxMarketString = decimalFormat.format(rs.getInt("MAX_MARKET_PRICE"));
+                            relMaxMarket.setVisibility(View.VISIBLE);
+                            txtMaxMarket.setText(maxMarketString+"đ");
+                        }
+                        txtTraiCay.setText(rs.getString("FRUIT"));
+                        txtKhauVi.setText(rs.getString("TASTE"));
+                        txtSoMon.setText(rs.getString("DISH_AMOUNT")+" món");
+                        txtTenMon.setText(rs.getString("DISH_NAME"));
+                        txtTongTien.setText(totalGiaString+"đ");
+                        txtPaymentType.setText(rs.getString("PAYMENT_TYPE"));
+                        orderStatus = rs.getString("ORDER_STATUS");
+                        userSubmit = rs.getString("USER_SUBMIT");
+                        txtOrderType.setText(orderType);
+                        paymentStatus=rs.getInt("PAYMENT_STATUS");
+                        txtMDH.setText("MĐH: NA"+idOrder);
+                        connect.close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.d("BBB",ex.getMessage());
             }
         }
     }
@@ -668,6 +1081,7 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                 Statement stmt = connect.createStatement();
                 stmt.executeQuery(query);
                 connect.close();
+                finish();
             }
         }
         catch (Exception ex){
@@ -786,13 +1200,30 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                     catch (Exception ex){
 
                     }
+                }else if (orderType.trim().equals("Tổng vệ sinh")){
+                    try {
+                        com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                        connect =conStr.CONN();
+                        // Connect to database
+                        if (connect == null){checkConnectDialog();}
+                        else {
+                            String query = "UPDATE ORDER_OVERVIEW SET ORDER_STATUS=N'Đang tìm kiếm NV', USER_SUBMIT1='' WHERE ID="+idOrder+"";
+                            Statement stmt = connect.createStatement();
+                            stmt.executeQuery(query);
+                            connect.close();
+                        }
+                    }
+                    catch (Exception ex){
+
+                    }
                 }
+
             }
         });
         builder.setPositiveButton("Không", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                dialogInterface.dismiss();
             }
         });
         AlertDialog alertDialog = builder.create();
@@ -801,4 +1232,197 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
         TextView messageText = alertDialog.findViewById(android.R.id.message);
         messageText.setGravity(Gravity.CENTER);
     }
+
+    public void ShowPopup(final String staffphone){
+        ImageView imgClosePopup;
+        final Button btnAddFavotite,btnRemoveFavorite;
+        LinearLayout linCalendarStaff;
+        final TextView txtIdStaff,txtStaffNameInfo,txtStaffType,txtStaffPhonePopup,txtDanhGia,txtYTAmount,txtSocadalam;
+        dialog.setContentView(R.layout.popup_menu);
+        imgClosePopup = dialog.findViewById(R.id.close_popup);
+        btnAddFavotite = dialog.findViewById(R.id.btn_add_favorite);
+        txtIdStaff = dialog.findViewById(R.id.txt_mnv);
+        txtStaffNameInfo = dialog.findViewById(R.id.staff_name);
+        txtStaffType = dialog.findViewById(R.id.txt_staff_type);
+        txtStaffPhonePopup = dialog.findViewById(R.id.txt_staff_phone_popup);
+        txtDanhGia = dialog.findViewById(R.id.txt_danhgia);
+        txtYTAmount = dialog.findViewById(R.id.txt_favorite_amount);
+        txtSocadalam = dialog.findViewById(R.id.worked_amount);
+        btnRemoveFavorite = dialog.findViewById(R.id.btn_remove_favorite);
+
+        try {
+            com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+            connect =conStr.CONN();
+            // Connect to database
+            if (connect == null){checkConnectDialog();}
+            else {
+                String query = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+staffphone+"'";
+                Statement stmt = connect.createStatement();
+                ResultSet rs =  stmt.executeQuery(query);
+                if (rs.next()){
+                    txtStaffNameInfo.setText(rs.getString("FULL_NAME"));
+                    txtYTAmount.setText(rs.getInt("FAVORITE")+"");
+                    txtSocadalam.setText(rs.getInt("WORKED_AMOUNT")+"");
+                    txtStaffPhonePopup.setText("SĐT: "+staffphone);
+                    if (rs.getInt("EMP_TYPE")==1){
+                        txtIdStaff.setText("NVVS"+rs.getString("ID"));
+                        txtStaffType.setText("Nhân viên vệ sinh");
+                    }else if (rs.getInt("EMP_TYPE")==2){
+                        txtIdStaff.setText("NVNA"+rs.getString("ID"));
+                        txtStaffType.setText("Nhân viên nấu ăn");
+                    }else {
+                        txtIdStaff.setText("NVDN"+rs.getString("ID"));
+                        txtStaffType.setText("Nhân viên đa năng");
+                    }
+                }
+                String query1 = "SELECT TOP 1 * FROM DANHGIA WHERE EMP_ID='"+staffphone+"' ORDER BY ID DESC";
+                Statement stmt1 = connect.createStatement();
+                ResultSet rs1 =  stmt1.executeQuery(query1);
+                if (rs1.next()){
+                    txtDanhGia.setText(rs1.getString("CONTENT"));
+                }else txtDanhGia.setText("Không có đánh giá nào");
+                connect.close();
+            }
+        }
+        catch (Exception ex){
+            Log.d("BBB",ex.getMessage());
+        }
+
+        PushDownAnim.setPushDownAnimTo(btnAddFavotite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DateFormat formatter = new SimpleDateFormat("HH:mm dd/MM/yyyy");
+                Date date = new Date();
+                String create_at = formatter.format(date);
+                try {
+                    com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                    connect =conStr.CONN();
+                    // Connect to database
+                    if (connect == null){checkConnectDialog();}
+                    else {
+                        String query = "INSERT INTO FAVORITE (CUS_PHONE,STAFF_PHONE,CREATE_AT) VALUES('"+account+"','"+staffphone+"','"+create_at+"')";
+                        Statement stmt = connect.createStatement();
+                        stmt.executeQuery(query);
+                        connect.close();
+                    }
+                }
+                catch (Exception ex){
+                    Toast.makeText(getApplicationContext(),"Đã thêm vào danh sách yêu tích",Toast.LENGTH_LONG).show();
+                }
+                try {
+                    com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                    connect =conStr.CONN();
+                    // Connect to database
+                    if (connect == null){checkConnectDialog();}
+                    else {
+                        int favorite=0;
+                        String query = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+staffphone+"'";
+                        Statement stmt = connect.createStatement();
+                        ResultSet rs = stmt.executeQuery(query);
+                        if (rs.next()){
+                            favorite = rs.getInt("FAVORITE")+1;
+                        }
+                        txtYTAmount.setText(favorite+"");
+                        String query1 = "UPDATE EMPLOYEE SET FAVORITE="+favorite+" WHERE PHONE_NUM='"+staffphone+"'";
+                        Statement stmt1 = connect.createStatement();
+                        stmt1.executeQuery(query1);
+                        connect.close();
+                    }
+                }
+                catch (Exception ex){
+
+                }
+                if (btnAddFavotite.getVisibility()==View.VISIBLE){
+                    btnAddFavotite.setVisibility(View.GONE);
+                }else btnAddFavotite.setVisibility(View.VISIBLE);
+                if (btnRemoveFavorite.getVisibility()==View.GONE){
+                    btnRemoveFavorite.setVisibility(View.VISIBLE);
+                }else btnRemoveFavorite.setVisibility(View.GONE);
+            }
+        });
+
+        //BO THICH
+        try {
+            com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+            connect =conStr.CONN();
+            // Connect to database
+            if (connect == null){checkConnectDialog();}
+            else {
+                String query = "SELECT * FROM FAVORITE WHERE CUS_PHONE='"+account+"' AND STAFF_PHONE='"+staffphone+"'";
+                Statement stmt = connect.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+                if (rs.next()){
+                    btnRemoveFavorite.setVisibility(View.VISIBLE);
+                    btnAddFavotite.setVisibility(View.GONE);
+                }else {
+                    btnRemoveFavorite.setVisibility(View.GONE);
+                    btnAddFavotite.setVisibility(View.VISIBLE);
+                }
+                connect.close();
+            }
+        }
+        catch (Exception ex){
+
+        }
+
+        PushDownAnim.setPushDownAnimTo(btnRemoveFavorite).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                    connect =conStr.CONN();
+                    // Connect to database
+                    if (connect == null){checkConnectDialog();}
+                    else {
+                        String query = "DELETE FROM FAVORITE WHERE CUS_PHONE='"+account+"' AND STAFF_PHONE='"+staffphone+"'";
+                        Statement stmt = connect.createStatement();
+                        stmt.executeQuery(query);
+                        connect.close();
+                    }
+                }
+                catch (Exception ex){
+
+                }
+                try {
+                    com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
+                    connect =conStr.CONN();
+                    // Connect to database
+                    if (connect == null){checkConnectDialog();}
+                    else {
+                        int favorite=0;
+                        String query = "SELECT * FROM EMPLOYEE WHERE PHONE_NUM='"+staffphone+"'";
+                        Statement stmt = connect.createStatement();
+                        ResultSet rs = stmt.executeQuery(query);
+                        if (rs.next()){
+                            favorite = rs.getInt("FAVORITE")-1;
+                        }
+                        txtYTAmount.setText(favorite+"");
+                        String query1 = "UPDATE EMPLOYEE SET FAVORITE="+favorite+" WHERE PHONE_NUM='"+staffphone+"'";
+                        Statement stmt1 = connect.createStatement();
+                        stmt1.executeQuery(query1);
+                        connect.close();
+                    }
+                }
+                catch (Exception ex){
+
+                }
+                if (btnAddFavotite.getVisibility()==View.VISIBLE){
+                    btnAddFavotite.setVisibility(View.GONE);
+                }else btnAddFavotite.setVisibility(View.VISIBLE);
+                if (btnRemoveFavorite.getVisibility()==View.GONE){
+                    btnRemoveFavorite.setVisibility(View.VISIBLE);
+                }else btnRemoveFavorite.setVisibility(View.GONE);
+            }
+        });
+
+        imgClosePopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setCancelable(false);
+        dialog.show();
+    }
+
 }

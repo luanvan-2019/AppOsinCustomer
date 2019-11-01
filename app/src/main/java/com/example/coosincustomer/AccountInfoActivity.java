@@ -89,6 +89,8 @@ public class AccountInfoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AccountInfoActivity.this,AccountUpdateInfoActivity.class);
+                intent.putExtra("hovaten",txtHoTen.getText().toString());
+                intent.putExtra("email",txtEmail.getText().toString());
                 startActivityForResult(intent,REQUEST_CODE_UPDATE);
             }
         });

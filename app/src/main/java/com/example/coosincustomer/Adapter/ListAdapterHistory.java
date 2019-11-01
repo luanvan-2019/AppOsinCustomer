@@ -1,6 +1,5 @@
 package com.example.coosincustomer.Adapter;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.coosincustomer.Model.ListHistory;
 import com.example.coosincustomer.Model.OnItemClickListener;
 import com.example.coosincustomer.R;
-import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;

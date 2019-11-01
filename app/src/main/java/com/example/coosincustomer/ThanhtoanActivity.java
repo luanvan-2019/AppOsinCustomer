@@ -53,8 +53,6 @@ public class ThanhtoanActivity extends AppCompatActivity {
 
         latitude = getIntent().getDoubleExtra("latitude",0);
         longitude = getIntent().getDoubleExtra("longitude",0);
-        Log.d("BBB",latitude+"");
-        Log.d("BBB",longitude+"");
 
         //lay so dien thoai da luu khi dang nhap
         SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
@@ -169,11 +167,11 @@ public class ThanhtoanActivity extends AppCompatActivity {
 
                             if (getIntent().getIntExtra("orderType",0) == 4){
                                 query = "INSERT INTO ORDER_COOK " +
-                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_WORK,PEOPLE_AMOUNT,DISH_AMOUNT,DISH_NAME,TASTE,FRUIT,MARKET,MAX_MARKET_PRICE,SALE_CODE,TOTAL_PRICE,NOTE_ORDER,CREATE_AT,PAYMENT_TYPE,LATITUDE,LONGITUDE" +
-                                        ",PAYMENT_STATUS,SEEN)" +
+                                        "(USER_ORDER,ADDRESS_ORDER,DATE_WORK,TIME_WORK,PEOPLE_AMOUNT,DISH_AMOUNT,DISH_NAME,TASTE,FRUIT,MARKET,MAX_MARKET_PRICE,SALE_CODE,TOTAL_PRICE,NOTE_ORDER,CREATE_AT,PAYMENT_TYPE" +
+                                        ",PAYMENT_STATUS,SEEN,LATITUDE,LONGITUDE)" +
                                         "VALUES('"+phone_num+"',N'"+getIntent().getStringExtra("address")+"',N'"+getIntent().getStringExtra("dateWork")+"'," +
                                         "'"+getIntent().getStringExtra("timeWork")+"','"+getIntent().getStringExtra("peopleAmount")+"','"+
-                                        getIntent().getStringExtra("dishAmount")+"','"+getIntent().getStringExtra("dishName")+"','"+getIntent().getStringExtra("taste")+"','"+
+                                        getIntent().getStringExtra("dishAmount")+"',N'"+getIntent().getStringExtra("dishName")+"',N'"+getIntent().getStringExtra("taste")+"','"+
                                         getIntent().getStringExtra("fruit")+"','"+getIntent().getStringExtra("market")+"','"+getIntent().getIntExtra("marketPrice",0)+"','','"+
                                         getIntent().getIntExtra("totalPrice",0)+"',N'"+getIntent().getStringExtra("note")+"','"+create_at+"',N'"+paymentType+"',"+0+","+0+","+latitude+","+longitude+")";
                             }

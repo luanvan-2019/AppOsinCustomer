@@ -44,6 +44,9 @@ public class OrderListAdapterDK extends RecyclerView.Adapter<OrderListAdapterDK.
     @Override
     public void onBindViewHolder(@NonNull OrderListAdapterDK.OrderListHolder holder, int position) {
         ListOrderDK listOrder = mangOrder.get(position);
+        if (listOrder.getStatus().trim().equals("Đang tìm kiếm NV")){
+            holder.txtStatus.setBackgroundResource(R.drawable.bg_text_orange);
+        }
         holder.txtStatus.setText(listOrder.getStatus());
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String totalGiaString = decimalFormat.format(listOrder.getGia());

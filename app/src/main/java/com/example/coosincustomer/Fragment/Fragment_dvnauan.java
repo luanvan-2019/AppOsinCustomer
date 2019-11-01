@@ -13,10 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.coosincustomer.Adapter.OrderListAdapter;
 import com.example.coosincustomer.Adapter.OrderListAdapterCOOK;
 import com.example.coosincustomer.DetailOrderActivity;
+import com.example.coosincustomer.LoadingDialog;
 import com.example.coosincustomer.Model.ListOrder;
 import com.example.coosincustomer.Model.ListOrderCOOK;
 import com.example.coosincustomer.Model.OnItemClickListener;
@@ -45,6 +47,8 @@ public class Fragment_dvnauan extends Fragment {
     String[] addressArr,dateArr,timeArr,statusArr;
     Integer[] priceArr,idArr;
 
+    SwipeRefreshLayout swipeRefreshLayout;
+
     public Fragment_dvnauan() {
     }
 
@@ -55,17 +59,33 @@ public class Fragment_dvnauan extends Fragment {
         view = inflater.inflate(R.layout.dvnauan_fragment,container,false);
 
         recyclerView = view.findViewById(R.id.recyclerview_cook);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_nauan);
 
         //lay so dien thoai
         SharedPreferences SP = getContext().getSharedPreferences("PHONE",0);
         phone_num = SP.getString("phone_num",null);
 
+        todo();
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                todo();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+        return view;
+    }
+
+    public void todo(){
         listOrders = new ArrayList<>();
         address.clear();
         date.clear();
         time.clear();
         price.clear();
         id.clear();
+        status.clear();
 
         try
         {
@@ -88,7 +108,7 @@ public class Fragment_dvnauan extends Fragment {
                     time.add(rs.getString("TIME_WORK"));
                     price.add(rs.getInt("TOTAL_PRICE"));
                     id.add(rs.getInt("ID"));
-                    status.add(rs.getString("STATUS_ORDER"));
+                    status.add(rs.getString("ORDER_STATUS"));
                 }
                 statusArr = new String[status.size()];
                 statusArr = status.toArray(statusArr);
@@ -120,6 +140,8 @@ public class Fragment_dvnauan extends Fragment {
             ((OrderListAdapterCOOK) recyclerView.getAdapter()).setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onClick(View v, @NonNull int position) {
+                    LoadingDialog loadingDialog = new LoadingDialog();
+                    loadingDialog.loading(getActivity());
                     Intent detail = new Intent(getActivity(), DetailOrderActivity.class);
                     detail.putExtra("idOrder",idArr[position]);
                     detail.putExtra("orderType","Nấu ăn");
@@ -132,8 +154,6 @@ public class Fragment_dvnauan extends Fragment {
                 }
             });
         }
-
-        return view;
     }
 }
 

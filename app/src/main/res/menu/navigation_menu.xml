@@ -4,7 +4,7 @@
     <item android:title="Home"
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_black_24dp" />
-    <item android:title="Đã đăng"
+    <item android:title="Đã đặt"
         android:id="@+id/nav_ordered"
         android:icon="@drawable/ic_list_black_24dp"/>
     <item android:title="Yêu Thích"

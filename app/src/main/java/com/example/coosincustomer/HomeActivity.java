@@ -1,12 +1,14 @@
 package com.example.coosincustomer;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -32,7 +34,6 @@ public class HomeActivity extends AppCompatActivity {
     private NotificationFragment notificationFragment;
     private DifferenceFragment differenceFragment;
     private FragmentManager mfragmentManager;
-    ProgressDialog loading;
 
 
     @Override
@@ -50,15 +51,14 @@ public class HomeActivity extends AppCompatActivity {
         notificationFragment = new NotificationFragment();
         differenceFragment = new DifferenceFragment();
 
-//        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.replace(R.id.main_frame, homeFragment);
-//        fragmentTransaction.addToBackStack("home").commit();
         setFragment(homeFragment);
 
         //nav action
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                LoadingDialog loadingDialog = new LoadingDialog();
+                loadingDialog.loading(HomeActivity.this);
                 switch (menuItem.getItemId()){
 
                     case R.id.nav_home :
@@ -114,31 +114,38 @@ public class HomeActivity extends AppCompatActivity {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-//    class MyTask extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//
-//            super.onPreExecute();
-//            loading = new ProgressDialog(HomeActivity.this);
-//            loading.setMessage("Vui lòng đợi...");
-//            loading.setCancelable(false);
-//            loading.show();
-//        }
-//
-//        @Override
-//        protected Void doInBackground(Void... arg0) {
-//
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Void result) {
-//
-//            super.onPostExecute(result);
-//
-//            loading.dismiss();
-//        }
-//    }
 
+//    public void loaddingDialog(){
+//
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage("Đang nạp dữ liệu...");
+//        builder.setCancelable(false);
+//        final AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
+//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+//        layoutParams.gravity = Gravity.CENTER;
+//        layoutParams.setMargins(20,20,20,20);
+//
+//        TextView messageText = alertDialog.findViewById(android.R.id.message);
+//        messageText.setGravity(Gravity.CENTER);
+//
+//        final Handler handler  = new Handler();
+//        final Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                if (alertDialog.isShowing()) {
+//                    alertDialog.dismiss();
+//                }
+//            }
+//        };
+//
+//        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//            @Override
+//            public void onDismiss(DialogInterface dialog) {
+//                handler.removeCallbacks(runnable);
+//            }
+//        });
+//
+//        handler.postDelayed(runnable, 500);
+//    }
 }

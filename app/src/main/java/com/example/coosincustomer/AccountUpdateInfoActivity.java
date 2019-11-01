@@ -46,6 +46,9 @@ public class AccountUpdateInfoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        edtUpdateFullname.setText(getIntent().getStringExtra("hovaten"));
+        edtUpdateEmail.setText(getIntent().getStringExtra("email"));
+
         //database
         StrictMode.ThreadPolicy policy= new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);

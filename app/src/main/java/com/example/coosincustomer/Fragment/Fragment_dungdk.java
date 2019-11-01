@@ -14,10 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.coosincustomer.Adapter.OrderListAdapter;
 import com.example.coosincustomer.Adapter.OrderListAdapterDK;
 import com.example.coosincustomer.DetailOrderActivity;
+import com.example.coosincustomer.LoadingDialog;
 import com.example.coosincustomer.Model.ListOrder;
 import com.example.coosincustomer.Model.ListOrderDK;
 import com.example.coosincustomer.Model.OnItemClickListener;
@@ -47,6 +49,7 @@ public class Fragment_dungdk extends Fragment {
     ArrayList<Integer> id = new ArrayList<Integer>();
     String[] addressArr,dateStartArr,dateEndArr,timeArr,scheduleArr,statusArr;
     Integer[] priceArr,idArr;
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public Fragment_dungdk() {
     }
@@ -58,11 +61,26 @@ public class Fragment_dungdk extends Fragment {
         view = inflater.inflate(R.layout.dungdk_fragment,container,false);
 
         recyclerView = view.findViewById(R.id.recyclerview_dk);
+        swipeRefreshLayout = view.findViewById(R.id.swipe_dinhky);
 
         //lay so dien thoai
         SharedPreferences SP = getContext().getSharedPreferences("PHONE",0);
         phone_num = SP.getString("phone_num",null);
 
+        todo();
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                todo();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
+        return view;
+    }
+
+    public void todo(){
         listOrders = new ArrayList<>();
         address.clear();
         dateStart.clear();
@@ -132,6 +150,8 @@ public class Fragment_dungdk extends Fragment {
             ((OrderListAdapterDK) recyclerView.getAdapter()).setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onClick(View v, @NonNull int position) {
+                    LoadingDialog loadingDialog = new LoadingDialog();
+                    loadingDialog.loading(getActivity());
                     Intent detail = new Intent(getActivity(), DetailOrderActivity.class);
                     detail.putExtra("idOrder",idArr[position]);
                     detail.putExtra("orderType","Định kỳ");
@@ -144,8 +164,6 @@ public class Fragment_dungdk extends Fragment {
                 }
             });
         }
-
-        return view;
     }
 }
 

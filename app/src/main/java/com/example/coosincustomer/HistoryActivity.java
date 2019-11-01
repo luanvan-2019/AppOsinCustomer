@@ -1,13 +1,13 @@
 package com.example.coosincustomer;
 
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.coosincustomer.Adapter.ListAdapterHistory;
 import com.example.coosincustomer.Model.ListHistory;
@@ -149,6 +149,87 @@ public class HistoryActivity extends AppCompatActivity {
                     empNameArr = new String[empName.size()];
                     empNameArr = empName.toArray(empNameArr);
                     listHistories.add(new ListHistory("Định kỳ",dateArr[i],timeArr[i],addressArr[i],
+                            idArr[i],priceArr[i],empNameArr[i],""));
+                }
+
+                // load tongvesinh
+                int b = address.size();
+                String query2 = "select * from ORDER_OVERVIEW where USER_ORDER= '" + account  + "' AND ORDER_STATUS='Hoàn thành'";
+                Statement stmt2 = connect.createStatement();
+                ResultSet rs2 = stmt2.executeQuery(query2);
+                while (rs2.next())
+                {
+                    address.add(rs2.getString("ADDRESS_ORDER"));
+                    date.add(rs2.getString("DATE_WORK"));
+                    time.add(rs2.getString("TIME_START"));
+                    price.add(rs2.getInt("TOTAL_PRICE"));
+                    id.add(rs2.getInt("ID"));
+                    userSubmit.add(rs2.getString("USER_SUBMIT1"));
+
+                }
+                addressArr = new String[address.size()];
+                addressArr = address.toArray(addressArr);
+                dateArr = new String[date.size()];
+                dateArr = date.toArray(dateArr);
+                timeArr = new String[time.size()];
+                timeArr = time.toArray(timeArr);
+                priceArr = new Integer[price.size()];
+                priceArr = price.toArray(priceArr);
+                idArr = new Integer[id.size()];
+                idArr = id.toArray(idArr);
+                userSubmitArr = new String[userSubmit.size()];
+                userSubmitArr = userSubmit.toArray(userSubmitArr);
+                for (int i = b; i < address.size();i++){
+                    // Change below query according to your own database.
+                    String query3 = "select * from EMPLOYEE where PHONE_NUM= '" + userSubmitArr[i]  + "'";
+                    Statement stmt3 = connect.createStatement();
+                    ResultSet rs3 = stmt3.executeQuery(query3);
+                    if (rs3.next()){
+                        empName.add(rs3.getString("FULL_NAME"));
+                    }
+                    empNameArr = new String[empName.size()];
+                    empNameArr = empName.toArray(empNameArr);
+                    listHistories.add(new ListHistory("Tổng vệ sinh",dateArr[i],timeArr[i],addressArr[i],
+                            idArr[i],priceArr[i],empNameArr[i],""));
+                }
+                // load tongvesinh
+                int c = address.size();
+                String query3 = "select * from ORDER_COOK where USER_ORDER= '" + account  + "' AND ORDER_STATUS='Hoàn thành'";
+                Statement stmt3 = connect.createStatement();
+                ResultSet rs3 = stmt3.executeQuery(query3);
+                while (rs3.next())
+                {
+                    address.add(rs3.getString("ADDRESS_ORDER"));
+                    date.add(rs3.getString("DATE_WORK"));
+                    time.add(rs3.getString("TIME_WORK"));
+                    price.add(rs3.getInt("TOTAL_PRICE"));
+                    id.add(rs3.getInt("ID"));
+                    userSubmit.add(rs3.getString("USER_SUBMIT"));
+
+                }
+                addressArr = new String[address.size()];
+                addressArr = address.toArray(addressArr);
+                dateArr = new String[date.size()];
+                dateArr = date.toArray(dateArr);
+                timeArr = new String[time.size()];
+                timeArr = time.toArray(timeArr);
+                priceArr = new Integer[price.size()];
+                priceArr = price.toArray(priceArr);
+                idArr = new Integer[id.size()];
+                idArr = id.toArray(idArr);
+                userSubmitArr = new String[userSubmit.size()];
+                userSubmitArr = userSubmit.toArray(userSubmitArr);
+                for (int i = c; i < address.size();i++){
+                    // Change below query according to your own database.
+                    String query4 = "select * from EMPLOYEE where PHONE_NUM= '" + userSubmitArr[i]  + "'";
+                    Statement stmt4 = connect.createStatement();
+                    ResultSet rs4 = stmt4.executeQuery(query4);
+                    if (rs4.next()){
+                        empName.add(rs4.getString("FULL_NAME"));
+                    }
+                    empNameArr = new String[empName.size()];
+                    empNameArr = empName.toArray(empNameArr);
+                    listHistories.add(new ListHistory("Nấu ăn",dateArr[i],timeArr[i],addressArr[i],
                             idArr[i],priceArr[i],empNameArr[i],""));
                 }
             }

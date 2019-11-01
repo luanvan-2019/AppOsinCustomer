@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:weightSum="10"
+        android:padding="10dp"
+        android:orientation="horizontal"
+        android:id="@+id/relative_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_weight="10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_avatar"
+                android:src="@drawable/ic_account_circle_black_24dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"/>
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/img_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/txt_staff_favorite_name"
+                    android:textSize="16sp"
+                    android:textColor="@color/enable"
+                    android:textAllCaps="true"
+                    android:textStyle="bold"
+                    android:text="ĐÀO MINH THÁIiii"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/txt_staff_type_favorite"
+                    android:layout_below="@+id/txt_staff_favorite_name"
+                    android:text="Nhân viên vệ sinh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/txt_staff_phone_favorite"
+                    android:text="0921895314"
+                    android:layout_below="@+id/txt_staff_type_favorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+                <Button
+                    android:id="@+id/btn_remove_favorite"
+                    android:drawableStart="@drawable/ic_favorite_red"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_btn_login"
+                    android:textAllCaps="false"
+                    android:textSize="14sp"
+                    android:text="Bỏ thích"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:drawableLeft="@drawable/ic_favorite_red" />
+                <Button
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@+id/btn_remove_favorite"
+                    android:id="@+id/btn_xem_lich"
+                    android:textColor="@color/white"
+                    android:background="@drawable/bg_btn_register"
+                    android:textAllCaps="false"
+                    android:text="Xem lịch"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/relative_item"
+        android:background="#DDF6FA"
+        android:layout_width="match_parent"
+        android:layout_height="15dp">
+
+    </RelativeLayout>
+
+</RelativeLayout>
