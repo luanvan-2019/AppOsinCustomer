@@ -1,15 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
-    android:background="@color/colorWhite"
-    tools:context=".Fragment.DifferenceFragment">
+    android:gravity="center">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/rel_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar_fragment_difference"
+            android:background="@drawable/bg_gradient"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+        </androidx.appcompat.widget.Toolbar>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:text="Khác"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/colorWhite"
+            android:gravity="center"
+            android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/rel_toolbar"
+        android:padding="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/rel_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_question"
+                android:src="@drawable/ic_question"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/quantum_black_100"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/img_question"
+                android:text="Câu hỏi thường gặp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <View
+            android:layout_margin="13dp"
+            android:background="#E9E9E9"
+            android:layout_below="@+id/rel_question"
+            android:id="@+id/line_khac_1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:id="@+id/rel_phaply"
+            android:layout_below="@+id/line_khac_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_phaply"
+                android:src="@drawable/ic_error_blue"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/quantum_black_100"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/img_phaply"
+                android:text="Pháp lý"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <View
+            android:layout_margin="13dp"
+            android:background="#E9E9E9"
+            android:layout_below="@+id/rel_phaply"
+            android:id="@+id/line_khac_2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:id="@+id/rel_chat"
+            android:layout_below="@+id/line_khac_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_chat"
+                android:src="@drawable/ic_chat"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/quantum_black_100"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/img_chat"
+                android:text="Nhắn tin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <View
+            android:layout_margin="13dp"
+            android:background="#E9E9E9"
+            android:layout_below="@+id/rel_chat"
+            android:id="@+id/line_khac_3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <RelativeLayout
+            android:layout_below="@+id/line_khac_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/img_contact"
+                android:src="@drawable/ic_contact"
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
+            <TextView
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/quantum_black_100"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toRightOf="@+id/img_contact"
+                android:text="Liên hệ tổng đài"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+    </RelativeLayout>
+    <FrameLayout
+        android:id="@+id/frame_chat"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="fragment khac" />
-
-</FrameLayout>
+        android:layout_alignParentLeft="true">
+    </FrameLayout>
+</RelativeLayout>

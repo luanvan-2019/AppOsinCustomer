@@ -2,6 +2,7 @@ package com.example.coosincustomer;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,17 +36,19 @@ public class HistoryActivity extends AppCompatActivity {
     String[] addressArr,dateArr,timeArr,empNameArr,userSubmitArr,dateEndArr;
     Integer[] priceArr,idArr;
     Connection connect;
+    TextView txtTotal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.activity_canceled);
 
         //lay so dien thoai
         SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
         account = SP.getString("phone_num",null);
 
         recyclerView = findViewById(R.id.recyclerview_history);
+        txtTotal = findViewById(R.id.txt_total_history);
 
         //back button
         Toolbar toolbar = findViewById(R.id.toolbar_history);
@@ -192,7 +195,7 @@ public class HistoryActivity extends AppCompatActivity {
                     listHistories.add(new ListHistory("Tổng vệ sinh",dateArr[i],timeArr[i],addressArr[i],
                             idArr[i],priceArr[i],empNameArr[i],""));
                 }
-                // load tongvesinh
+                // load nau an
                 int c = address.size();
                 String query3 = "select * from ORDER_COOK where USER_ORDER= '" + account  + "' AND ORDER_STATUS='Hoàn thành'";
                 Statement stmt3 = connect.createStatement();
@@ -239,6 +242,7 @@ public class HistoryActivity extends AppCompatActivity {
         {
 
         }
+        txtTotal.setText("Tổng: "+listHistories.size());
         adapterHistory = new ListAdapterHistory(listHistories);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterHistory);

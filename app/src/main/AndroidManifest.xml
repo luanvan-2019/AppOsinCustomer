@@ -12,7 +12,9 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StaffInfoActivity"></activity>
+        <activity android:name=".ListChatActivity"></activity>
+        <activity android:name=".ChatActivity" />
+        <activity android:name=".StaffInfoActivity" />
         <activity android:name=".CanceledActivity" />
         <activity android:name=".CancelOrderActivity" />
         <activity android:name=".HistoryActivity" />
@@ -21,7 +23,6 @@
             android:name=".ConfirmNauAnActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".OrderNauAnActivity" />
-        <activity android:name=".MoMoActivity" />
         <activity android:name=".ConfirmTongVeSinhActivity" />
         <activity android:name=".OrderTongVeSinhActivity" />
         <activity android:name=".ConfirmDinhKyActivity" />
@@ -74,12 +75,12 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/ApiKey" />
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
     <dist:module dist:instant="true" />
 
