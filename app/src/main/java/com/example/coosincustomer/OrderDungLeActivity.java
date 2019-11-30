@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +32,9 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -47,17 +51,39 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
     Double latitude = null;
     Double longitude = null;
 //    private Double totalGia;
-    private Integer dongia = 50000;
-    Integer dungcu = 15500,totalGia;
+    private Integer dongia;
+    Integer dungcu,totalGia,gap,tanggia=0;
     String buoi = "Sáng", startTime, endTime,datee;
     int REQUEST_CODE_MAP = 1997;
     DatePickerDialog datePickerDialog;
+    Connection connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_dung_le);
 
+        try {
+            ConnectionDB connectionDB = new ConnectionDB();
+            connect =connectionDB.CONN();
+            if (connect==null){
+                Toast.makeText(getApplicationContext(),"Không có kết nối mạng",Toast.LENGTH_LONG).show();
+                return;
+            }else {
+                String query = "SELECT * FROM PRICE";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()){
+                    dongia = rs.getInt("DONGIA");
+                    dungcu = rs.getInt("DUNGCU");
+                    gap = rs.getInt("GAP");
+                }
+                connect.close();
+            }
+        }
+        catch (Exception e){
+
+        }
         //anh xa
         spinner1 = findViewById(R.id.select_time_1);
         spinner2 = findViewById(R.id.select_time_2);
@@ -141,7 +167,7 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
             @Override
             public void onClick(View view) {
                 if (edtMap.getText().toString().trim().equals("")){
-                    edtMap.setError("Chưa chọn địa chỉ!");
+                    Toast.makeText(getApplicationContext(),"Bạn chưa chọn địa chỉ",Toast.LENGTH_LONG).show();
                 }
                 else {
                     startTime = spinner1.getSelectedItem().toString();
@@ -184,13 +210,18 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                         if (i1 == 12) i1 = 1;
                         else i1 = i1+1;
                         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-                        Date d_name = new Date(i,i1,i2-4);
+                        Date d_name = new Date(i,i1,i2+3);
                         String dayOfTheWeek = sdf.format(d_name);
                         datee = i2+"/"+i1+"/"+i;
                         if (day == i2){
-                            date.setText("Hôm nay"+", "+i2+"/"+i1+"/"+i);
-                            mTxtTangGia.setVisibility(View.VISIBLE);
-                            dongia = dongia + 10000;
+                            if (i2 == 1 || i2 == 2 || i2 == 3 || i2 == 4 || i2 == 5 || i2 == 6 || i2 == 7 || i2 == 8 || i2 == 9) {
+                                date.setText("Hôm nay"+", 0"+i2+"/"+i1+"/"+i);
+                            }else date.setText("Hôm nay"+", "+i2+"/"+i1+"/"+i);
+                            if (tanggia==0){
+                                mTxtTangGia.setVisibility(View.VISIBLE);
+                                dongia = dongia + gap;
+                                tanggia=1;
+                            }
                             String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
                             Integer currentTimeInt = Integer.valueOf(currentTime.substring(0,2));
                             if (currentTimeInt < 12){
@@ -235,17 +266,22 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                                 i2 = i2 +1;
                                 date.setText("Ngày mai"+", "+i2+"/"+i1+"/"+i);
                                 mTxtTangGia.setVisibility(View.GONE);
-                                dongia = dongia - 10000;
+                                dongia = dongia - gap;
                                 i2 = i2 -1;
                             }
                         }
                         if (day+1 == i2) {
-                            date.setText("Ngày mai"+", "+i2+"/"+i1+"/"+i);
-                            dongia = 50000;
+                            if (i2 == 2 || i2 == 3 || i2 == 4 || i2 == 5 || i2 == 6 || i2 == 7 || i2 == 8 || i2 == 9) {
+                                date.setText("Ngày mai"+", 0"+i2+"/"+i1+"/"+i);
+                            }else date.setText("Ngày mai"+", "+i2+"/"+i1+"/"+i);
+                            if (tanggia==1){
+                                dongia = dongia-gap;
+                                tanggia=0;
+                            }
                             mTxtChieu.setClickable(true);
                             mTxtSang.setClickable(true);
                             mTxtToi.setClickable(true);
-                            mTxtTangGia.setText("");
+                            mTxtTangGia.setVisibility(View.GONE);
                             mTxtSang.setBackgroundResource(R.drawable.bg_time_lamviec);
                             mTxtSang.setTextColor(Color.WHITE);
                             mTxtToi.setTextColor(Color.BLACK);
@@ -262,8 +298,14 @@ public class OrderDungLeActivity extends AppCompatActivity implements AdapterVie
                             spinner2.setOnItemSelectedListener(OrderDungLeActivity.this);
                         }
                         if (day != i2 && day+1 != i2) {
-                            date.setText(dayOfTheWeek+", "+i2+"/"+i1+"/"+i);
-                            mTxtTangGia.setText("");
+                            if (i2 == 1 || i2 == 2 || i2 == 3 || i2 == 4 || i2 == 5 || i2 == 6 || i2 == 7 || i2 == 8 || i2 == 9) {
+                                date.setText(dayOfTheWeek+", 0"+i2+"/"+i1+"/"+i);
+                            }else date.setText(dayOfTheWeek+", "+i2+"/"+i1+"/"+i);
+                            if (tanggia==1){
+                                dongia = dongia-gap;
+                                tanggia=0;
+                            }
+                            mTxtTangGia.setVisibility(View.GONE);
                             mTxtChieu.setClickable(true);
                             mTxtSang.setClickable(true);
                             mTxtToi.setClickable(true);

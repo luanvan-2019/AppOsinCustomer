@@ -29,25 +29,18 @@
             android:id="@+id/toolbar_name_receiver"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
     </RelativeLayout>
-    <ListView
-        android:divider="@null"
-        android:dividerHeight="0dp"
+    <androidx.recyclerview.widget.RecyclerView
         android:scrollbars="none"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
+        android:paddingBottom="10dp"
         android:layout_below="@+id/rel_toolbar"
         android:layout_above="@+id/fab"
-        android:layout_alignParentStart="true"
-        android:id="@+id/list_of_message"
+        android:id="@+id/recyclerview_chat"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true">
-    </ListView>
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -60,8 +53,6 @@
         app:fabSize="mini"/>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/fab"

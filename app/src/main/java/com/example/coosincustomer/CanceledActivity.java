@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,7 @@ public class CanceledActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerview_canceled);
 
         //back button
-        Toolbar toolbar = findViewById(R.id.toolbar_history);
+        Toolbar toolbar = findViewById(R.id.toolbar_canceled);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -72,7 +73,7 @@ public class CanceledActivity extends AppCompatActivity {
             else
             {
                 // load dung le
-                String query = "select * from ORDER_SINGLE where USER_ORDER= '" + account  + "' AND STATUS_ORDER='Đã hủy'";
+                String query = "select * from ORDER_SINGLE where USER_ORDER= '" + account  + "' AND STATUS_ORDER=N'Đã hủy'";
                 Statement stmt = connect.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next())
@@ -101,7 +102,7 @@ public class CanceledActivity extends AppCompatActivity {
 
                 // load dinh ky
                 int a = address.size();
-                String query1 = "select * from ORDER_MULTI where USER_ORDER= '" + account  + "' AND ORDER_STATUS='Đã hủy'";
+                String query1 = "select * from ORDER_MULTI where USER_ORDER= '" + account  + "' AND ORDER_STATUS=N'Đã hủy'";
                 Statement stmt1 = connect.createStatement();
                 ResultSet rs1 = stmt1.executeQuery(query1);
                 while (rs1.next())
@@ -130,7 +131,7 @@ public class CanceledActivity extends AppCompatActivity {
 
                 // load tongvesinh
                 int b = address.size();
-                String query2 = "select * from ORDER_OVERVIEW where USER_ORDER= '" + account  + "' AND ORDER_STATUS='Đã hủy'";
+                String query2 = "select * from ORDER_OVERVIEW where USER_ORDER= '" + account  + "' AND ORDER_STATUS=N'Đã hủy'";
                 Statement stmt2 = connect.createStatement();
                 ResultSet rs2 = stmt2.executeQuery(query2);
                 while (rs2.next())
@@ -158,7 +159,7 @@ public class CanceledActivity extends AppCompatActivity {
                 }
                 // load nau an
                 int c = address.size();
-                String query3 = "select * from ORDER_COOK where USER_ORDER= '" + account  + "' AND ORDER_STATUS='Đã hủy'";
+                String query3 = "select * from ORDER_COOK where USER_ORDER= '" + account  + "' AND ORDER_STATUS=N'Đã hủy'";
                 Statement stmt3 = connect.createStatement();
                 ResultSet rs3 = stmt3.executeQuery(query3);
                 while (rs3.next())
@@ -184,6 +185,8 @@ public class CanceledActivity extends AppCompatActivity {
                     listCanceleds.add(new ListCanceled("Nấu ăn",dateArr[i],timeArr[i],addressArr[i],
                             idArr[i],priceArr[i]));
                 }
+
+
             }
             connect.close();
         }

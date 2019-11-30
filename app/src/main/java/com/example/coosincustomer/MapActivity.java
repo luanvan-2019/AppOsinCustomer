@@ -1,5 +1,6 @@
 package com.example.coosincustomer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.location.Address;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.ApiException;
@@ -229,9 +231,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String address = materialSearchBar.getText();
                 if (address.trim().equals("")){
                     Toast.makeText(getApplicationContext(),"Bạn chưa chọn địa chỉ!",Toast.LENGTH_SHORT).show();
-                }else {
+                }else if (!address.trim().substring(address.length()-21,address.length()-10).trim().equals("Hồ Chí Minh")){
+                    dialog();
+                } else {
                     Intent intent = new Intent();
-                    intent.putExtra("address",address);
+                    intent.putExtra("address",address.substring(0,address.length()-10));
                     intent.putExtra("latitude",latitude);
                     intent.putExtra("longitude",longitude);
                     setResult(RESULT_OK, intent);
@@ -354,4 +358,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 });
 
     }
+
+    private void dialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thông báo");
+        builder.setMessage("Dịch vụ hiện chưa được triển khai ở nơi bạn chọn, rất tiếc vì điều này !!!");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Đóng", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
 }

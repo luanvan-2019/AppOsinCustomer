@@ -33,6 +33,9 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import com.thekhaeng.pushdownanim.PushDownAnim;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -50,8 +53,8 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
             lichLamViec,gio1buoi;
     Button btnContinueDinhKy;
     CheckBox checkBoxT2,checkBoxT3,checkBoxT4,checkBoxT5,checkBoxT6,checkBoxT7,checkBoxCN;
-    private Integer dongia = 50000;
-    Integer dungcu = 15500;
+    private Integer dongia ;
+    Integer dungcu,giam2thang,giam3thang,giam6thang,giam12thang;
     private Double totalGia;
     Double latitude = null;
     Double longitude = null;
@@ -61,6 +64,7 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
     SimpleDateFormat simpleDateFormat;
     int Year, Month, Day,T2=0,T3=0,T4=0,T5=0,T6=0,T7=0,CN=0,gia1buoi,totalGia1thang,totalGia2thang,totalGia3thang,totalGia6thang,totalGia12thang,
             tietkiem2thang,tietkiem3thang,tietkiem6thang,tietkiem12thang;
+    Connection connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +89,31 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
         checkBoxCN = findViewById(R.id.checkbox_chunhat);
         edtGhiChu = findViewById(R.id.txt_input_ghichu);
         simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            ConnectionDB connectionDB = new ConnectionDB();
+            connect =connectionDB.CONN();
+            if (connect==null){
+                Toast.makeText(getApplicationContext(),"Không có kết nối mạng",Toast.LENGTH_LONG).show();
+                return;
+            }else {
+                String query = "SELECT * FROM PRICE";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()){
+                    dongia = rs.getInt("DONGIA");
+                    dungcu = rs.getInt("DUNGCU");
+                    giam2thang = rs.getInt("GIAM2THANG");
+                    giam3thang = rs.getInt("GIAM3THANG");
+                    giam6thang = rs.getInt("GIAM3THANG");
+                    giam12thang = rs.getInt("GIAM3THANG");
+                }
+                connect.close();
+            }
+        }
+        catch (Exception e){
+
+        }
 
         calendar = Calendar.getInstance();
         Year = calendar.get(Calendar.YEAR) ;
@@ -119,14 +148,14 @@ public class OrderDinhKyActivity extends AppCompatActivity implements AdapterVie
                     buoi6Thang = buoi1Thang * 6;
                     buoi12Thang = buoi1Thang * 12;
                     totalGia1thang = buoi1Thang * gia1buoi;
-                    totalGia2thang = (int) (buoi2Thang * gia1buoi - (buoi2Thang * gia1buoi * 0.02));
-                    totalGia3thang = (int) (buoi3Thang * gia1buoi - (buoi3Thang * gia1buoi * 0.03));
-                    totalGia6thang = (int) (buoi6Thang * gia1buoi - (buoi6Thang * gia1buoi * 0.06));
-                    totalGia12thang = (int) (buoi12Thang * gia1buoi - (buoi12Thang * gia1buoi * 0.12));
-                    tietkiem2thang = (int) (buoi2Thang * gia1buoi * 0.02);
-                    tietkiem3thang = (int) (buoi3Thang * gia1buoi * 0.03);
-                    tietkiem6thang = (int) (buoi6Thang * gia1buoi * 0.06);
-                    tietkiem12thang = (int) (buoi12Thang * gia1buoi * 0.12);
+                    totalGia2thang = (int) (buoi2Thang * gia1buoi - (buoi2Thang * gia1buoi * giam2thang / 100));
+                    totalGia3thang = (int) (buoi3Thang * gia1buoi - (buoi3Thang * gia1buoi * giam3thang / 100));
+                    totalGia6thang = (int) (buoi6Thang * gia1buoi - (buoi6Thang * gia1buoi * giam6thang / 100));
+                    totalGia12thang = (int) (buoi12Thang * gia1buoi - (buoi12Thang * gia1buoi * giam12thang / 100));
+                    tietkiem2thang = (int) (buoi2Thang * gia1buoi * giam2thang / 100);
+                    tietkiem3thang = (int) (buoi3Thang * gia1buoi * giam3thang / 100);
+                    tietkiem6thang = (int) (buoi6Thang * gia1buoi * giam6thang / 100);
+                    tietkiem12thang = (int) (buoi12Thang * gia1buoi * giam12thang / 100);
                     String time = buoi + " (" + spinner1.getSelectedItem().toString() + " - " + spinner2.getSelectedItem().toString() + ")";
                     String ghichu = edtGhiChu.getText().toString();
                     Intent toChooseGoi = new Intent(OrderDinhKyActivity.this,OrderDinhKyGoiActivity.class);

@@ -61,6 +61,18 @@
             android:layout_width="280dp"
             android:layout_height="wrap_content"/>
         <TextView
+            android:id="@+id/txt_paypal"
+            android:textColor="#50D123"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Đã thanh toán"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/label_success"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"/>
+        <TextView
             android:id="@+id/txt_sotien_success"
             android:textStyle="bold"
             android:textSize="40sp"
@@ -94,21 +106,12 @@
             android:textAllCaps="false"
             android:text="Danh sách ca làm"
             android:background="@drawable/btn_round_coner"
-            android:layout_marginRight="30dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginBottom="50dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_alignParentBottom="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <TextView
-            android:textColor="@color/enable"
-            android:textSize="15sp"
-            android:layout_marginBottom="10dp"
-            android:text="Xem chi tiết ca làm"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
     </RelativeLayout>
 

@@ -26,6 +26,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.coosincustomer.AccountEditInfoActivity;
 import com.example.coosincustomer.AccountInfoActivity;
 import com.example.coosincustomer.Adapter.ViewPagerAdapter;
+import com.example.coosincustomer.LoadingDialog;
 import com.example.coosincustomer.OrderDinhKyActivity;
 import com.example.coosincustomer.OrderDungLeActivity;
 import com.example.coosincustomer.OrderNauAnActivity;
@@ -83,6 +84,8 @@ public class HomeFragment extends Fragment {
         PushDownAnim.setPushDownAnimTo(imgAccount).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog = new LoadingDialog();
+                loadingDialog.loading(getActivity());
                 Intent intent = new Intent(getActivity(), AccountInfoActivity.class);
                 startActivity(intent);
             }
@@ -144,6 +147,8 @@ public class HomeFragment extends Fragment {
         PushDownAnim.setPushDownAnimTo(cardViewDungLe).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog = new LoadingDialog();
+                loadingDialog.loading(getActivity());
                 Intent dungle = new Intent(getActivity(), OrderDungLeActivity.class);
                 startActivity(dungle);
             }
@@ -153,6 +158,8 @@ public class HomeFragment extends Fragment {
         PushDownAnim.setPushDownAnimTo(cardDinhKy).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog = new LoadingDialog();
+                loadingDialog.loading(getActivity());
                 Intent dinhky = new Intent(getActivity(), OrderDinhKyActivity.class);
                 startActivity(dinhky);
             }
@@ -162,6 +169,8 @@ public class HomeFragment extends Fragment {
         PushDownAnim.setPushDownAnimTo(cardTongVeSinh).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog = new LoadingDialog();
+                loadingDialog.loading(getActivity());
                 Intent tongvesinh = new Intent(getActivity(), OrderTongVeSinhActivity.class);
                 startActivity(tongvesinh);
             }
@@ -171,6 +180,8 @@ public class HomeFragment extends Fragment {
         PushDownAnim.setPushDownAnimTo(cardNauAn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoadingDialog loadingDialog = new LoadingDialog();
+                loadingDialog.loading(getActivity());
                 Intent nauan = new Intent(getActivity(), OrderNauAnActivity.class);
                 startActivity(nauan);
             }

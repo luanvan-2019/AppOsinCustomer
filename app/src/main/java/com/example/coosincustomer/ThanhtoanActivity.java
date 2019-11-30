@@ -2,6 +2,7 @@ package com.example.coosincustomer;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -14,7 +15,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.coosincustomer.notification.MySingleton;
 import com.thekhaeng.pushdownanim.PushDownAnim;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -22,6 +31,13 @@ import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public class ThanhtoanActivity extends AppCompatActivity {
 
@@ -34,6 +50,13 @@ public class ThanhtoanActivity extends AppCompatActivity {
     Integer i;
     Double latitude = null;
     Double longitude = null;
+    final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
+    final private String serverKey = "key=" + "AAAAZNB3xoU:APA91bGxISuo_YVJ7-142Aua8xMYvafuhaZvNIf01IeOzVrZ1hEypTqdP53X3pMZg_Mx3XkkVJOdiiDCMnHp00ytrTJxLDaozcdVpEXc1AsciThWq5ZkiDOHswqSHsLEskoVXOpC8SZC";
+    final private String contentType = "application/json";
+    final String TAG = "NOTIFICATION TAG";
+    String NOTIFICATION_TITLE;
+    String NOTIFICATION_MESSAGE;
+    String TOPIC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +112,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
         PushDownAnim.setPushDownAnimTo(relativeLayoutMoMo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = 1;
+                i = 2;
                 iconThanhtoanTienMat.setImageResource(R.drawable.ic_payment);
                 relavetiveTienMat.setBackgroundResource(R.drawable.bg_layout1);
                 iconThanhToanMoMo.setImageResource(R.drawable.ic_checked);
@@ -103,7 +126,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
         PushDownAnim.setPushDownAnimTo(relativeLayoutPaypal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                i = 1;
+                i = 3;
                 iconThanhToanPaypal.setImageResource(R.drawable.ic_checked);
                 relativeLayoutPaypal.setBackgroundResource(R.drawable.bg_layout_licked);
                 iconThanhtoanTienMat.setImageResource(R.drawable.ic_payment);
@@ -124,7 +147,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
                 if (i == 0){
                     Toast.makeText(getApplicationContext(),"Chưa chọn hình thức thanh toán",Toast.LENGTH_LONG).show();
                     return;
-                }else {
+                }else if (i == 1){
                     try
                     {
                         com.example.coosincustomer.ConnectionDB conStr=new com.example.coosincustomer.ConnectionDB();
@@ -145,6 +168,7 @@ public class ThanhtoanActivity extends AppCompatActivity {
                                         +"',N'"+getIntent().getStringExtra("ca")+"',N'"+getIntent().getStringExtra("ghichu")+"','"+
                                         getIntent().getStringExtra("makhuyenmai")+"',"+getIntent().getIntExtra("totalPrice",0)+",'"+
                                         create_at+"',N'"+paymentType+"',"+0+","+0+",'"+getIntent().getStringExtra("totalTime")+"',"+latitude+","+longitude+")";
+
                             }
 
 
@@ -184,9 +208,30 @@ public class ThanhtoanActivity extends AppCompatActivity {
                     }
                     catch (Exception ex)
                     {
+                        //notification
+                        TOPIC = "/topics/lich";
+                        NOTIFICATION_TITLE = "CoOsin khách hàng";
+                        NOTIFICATION_MESSAGE ="Có lịch mới";
+
+                        JSONObject notification = new JSONObject();
+                        JSONObject notifcationBody = new JSONObject();
+                        try {
+                            notifcationBody.put("title", NOTIFICATION_TITLE);
+                            notifcationBody.put("message", NOTIFICATION_MESSAGE);
+
+                            notification.put("to", TOPIC);
+
+                            notification.put("data", notifcationBody);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "onCreate: " + e.getMessage());
+                        }
+                        sendNotification(notification);
+
+
                         Intent  intent = new Intent(ThanhtoanActivity.this,OrderSuccessActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         intent.putExtra("tongtien",getIntent().getIntExtra("totalPrice",0));
+                        intent.putExtra("paymentType","Tiền mặt");
                         startActivity(intent);
                         try {
                             //cap nhat lai dia chi
@@ -197,6 +242,46 @@ public class ThanhtoanActivity extends AppCompatActivity {
 
                         }
                     }
+                }else if (i == 2){
+                    Toast.makeText(getApplicationContext(),"Phương thức thanh toán này đang được phát triển",Toast.LENGTH_LONG).show();
+                    return;
+                }else if (i==3){
+                    Intent intent = new Intent(ThanhtoanActivity.this,PayPalActivity.class);
+                    intent.putExtra("amount",getIntent().getIntExtra("totalPrice",0));
+                    intent.putExtra("orderType",getIntent().getIntExtra("orderType",0));
+
+                    //dung le
+                    intent.putExtra("address",getIntent().getStringExtra("address"));
+                    intent.putExtra("date",getIntent().getStringExtra("date"));
+                    intent.putExtra("ca",getIntent().getStringExtra("ca"));
+                    intent.putExtra("ghichu",getIntent().getStringExtra("ghichu"));
+                    intent.putExtra("makhuyenmai",getIntent().getStringExtra("makhuyenmai"));
+                    intent.putExtra("totalTime",getIntent().getStringExtra("totalTime"));
+                    intent.putExtra("latitude",getIntent().getDoubleExtra("latitude",0));
+                    intent.putExtra("longitude",getIntent().getDoubleExtra("longitude",0));
+
+                    //dinh ky
+                    intent.putExtra("schedule",getIntent().getStringExtra("schedule"));
+                    intent.putExtra("timeWork",getIntent().getStringExtra("timeWork"));
+                    intent.putExtra("dateStart",getIntent().getStringExtra("dateStart"));
+                    intent.putExtra("dateEnd",getIntent().getStringExtra("dateEnd"));
+                    intent.putExtra("totalBuoi",getIntent().getIntExtra("totalBuoi",0));
+
+                    //TVS
+                    intent.putExtra("dateWork",getIntent().getStringExtra("dateWork"));
+                    intent.putExtra("timeStart",getIntent().getStringExtra("timeStart"));
+                    intent.putExtra("areaType",getIntent().getIntExtra("areaType",0));
+                    //NAUAN
+                    intent.putExtra("peopleAmount",getIntent().getStringExtra("peopleAmount"));
+                    intent.putExtra("dishAmount",getIntent().getStringExtra("dishAmount"));
+                    intent.putExtra("dishName", getIntent().getStringExtra("dishName"));
+                    intent.putExtra("taste", getIntent().getStringExtra("taste"));
+                    intent.putExtra("fruit", getIntent().getStringExtra("fruit"));
+                    intent.putExtra("market", getIntent().getStringExtra("market"));
+                    intent.putExtra("marketPrice", getIntent().getIntExtra("marketPrice",0));
+                    intent.putExtra("note",  getIntent().getStringExtra("note"));
+
+                    startActivity(intent);
                 }
                 finish();
             }
@@ -209,4 +294,61 @@ public class ThanhtoanActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    private void sendNotification(JSONObject notification) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(FCM_API, notification,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ThanhtoanActivity.this, "Request error", Toast.LENGTH_LONG).show();
+                        Log.i(TAG, "onErrorResponse: Didn't work");
+                    }
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("Authorization", serverKey);
+                params.put("Content-Type", contentType);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+    }
+
+//    public static final MediaType JSON
+//            = MediaType.parse("application/json; charset=utf-8");
+//    private void sendNotification(final String regToken) {
+//        new AsyncTask<Void,Void,Void>(){
+//            @Override
+//            protected Void doInBackground(Void... params) {
+//                try {
+//                    OkHttpClient client = new OkHttpClient();
+//                    JSONObject json=new JSONObject();
+//                    JSONObject dataJson=new JSONObject();
+//                    dataJson.put("body","Hi this is sent from device to device");
+//                    dataJson.put("title","dummy title");
+//                    json.put("notification",dataJson);
+//                    json.put("to",regToken);
+//                    RequestBody body = RequestBody.create(JSON, json.toString());
+//                    Request request = new Request.Builder()
+//                            .header("Authorization",serverKey)
+//                            .url("https://fcm.googleapis.com/fcm/send")
+//                            .post(body)
+//                            .build();
+//                    okhttp3.Response response = client.newCall(request).execute();
+//                    String finalResponse = response.body().string();
+//                }catch (Exception e){
+//                    //Log.d(TAG,e+"");
+//                }
+//                return null;
+//            }
+////        }.execute();
+//
+//    }
 }

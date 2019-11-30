@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    tools:context=".HistoryActivity">
 
     <RelativeLayout
         android:id="@+id/relative_toolbar_login"
@@ -29,6 +30,7 @@
             android:id="@+id/toolbar_title"
             style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"/>
         <ImageView
+            android:id="@+id/_img_canceled"
             android:layout_marginEnd="20dp"
             android:layout_centerInParent="true"
             android:layout_alignParentEnd="true"

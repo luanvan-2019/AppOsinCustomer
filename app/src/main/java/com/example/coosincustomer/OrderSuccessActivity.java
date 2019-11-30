@@ -18,7 +18,7 @@ import java.text.DecimalFormat;
 
 public class OrderSuccessActivity extends AppCompatActivity {
 
-    TextView txtTongTien;
+    TextView txtTongTien,txtShowKhiTienMat,txtShowKhiPaypal;
     Button btnDanhSachCaLam;
     Integer tongtien;
 
@@ -31,12 +31,21 @@ public class OrderSuccessActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar_success);
         btnDanhSachCaLam = findViewById(R.id.btn_danhsach_calam);
         txtTongTien = findViewById(R.id.txt_sotien_success);
+        txtShowKhiTienMat = findViewById(R.id.txt_yeu_cau_tra_tien);
+        txtShowKhiPaypal = findViewById(R.id.txt_paypal);
+
+        txtShowKhiPaypal.setVisibility(View.GONE);
 
         //toolbar action
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        if (getIntent().getStringExtra("paymentType").trim().equals("paypal")){
+            txtShowKhiPaypal.setVisibility(View.VISIBLE);
+            txtShowKhiTienMat.setVisibility(View.GONE);
+        }
 
         //nhan du lieu tu thanhtoan activity
         Intent intent = getIntent();

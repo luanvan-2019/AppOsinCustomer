@@ -31,6 +31,9 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.Timepoint;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -52,9 +55,10 @@ public class OrderTongVeSinhActivity extends AppCompatActivity implements Adapte
     SimpleDateFormat simpleDateFormat;
     String address, day, time, dientich,tonggio,tongnguoi;
     Spinner spinner;
-    Integer totalGiaTongVS,totalTime,phiDungCu = 50000,gia80m2=650000, gia100m2=800000,gia150m2=1120000;
+    Integer totalGiaTongVS,totalTime,phiDungCu,gia80m2, gia100m2,gia150m2;
     Double latitude = null;
     Double longitude = null;
+    Connection connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +73,29 @@ public class OrderTongVeSinhActivity extends AppCompatActivity implements Adapte
         txtTotalGia = findViewById(R.id.id_tong_tien);
         btnToConfirm = findViewById(R.id.btn_continue_datTongVS);
         edtGhiChu= findViewById(R.id.txt_input_ghichu);
+
+        try {
+            ConnectionDB connectionDB = new ConnectionDB();
+            connect =connectionDB.CONN();
+            if (connect==null){
+                Toast.makeText(getApplicationContext(),"Không có kết nối mạng",Toast.LENGTH_LONG).show();
+                return;
+            }else {
+                String query = "SELECT * FROM PRICE";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()){
+                    gia80m2 = rs.getInt("GIA80M2");
+                    gia100m2 = rs.getInt("GIA100M2");
+                    gia150m2 = rs.getInt("GIA150M2");
+                    phiDungCu = rs.getInt("DUNGCU");
+                }
+                connect.close();
+            }
+        }
+        catch (Exception e){
+
+        }
 
         //tool bar action
         Toolbar toolbar = findViewById(R.id.toolbar_datTongVS);

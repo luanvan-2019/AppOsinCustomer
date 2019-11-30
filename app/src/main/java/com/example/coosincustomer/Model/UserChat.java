@@ -2,25 +2,27 @@ package com.example.coosincustomer.Model;
 
 public class UserChat {
 
-    private String id;
+    private String phone;
     private String username;
     private String imageUrl;
+    private String message;
 
-    public UserChat(String id, String username, String imageUrl) {
-        this.id = id;
+    public UserChat(String phone, String username, String imageUrl, String message) {
+        this.phone = phone;
         this.username = username;
         this.imageUrl = imageUrl;
+        this.message = message;
     }
 
     public UserChat() {
     }
 
-    public String getId() {
-        return id;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUsername() {
@@ -37,5 +39,13 @@ public class UserChat {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

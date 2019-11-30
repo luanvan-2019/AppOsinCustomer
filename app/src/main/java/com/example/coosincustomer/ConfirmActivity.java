@@ -54,8 +54,8 @@ public class ConfirmActivity extends AppCompatActivity {
             confirmGhiChu = intent.getStringExtra("ghichu");
             confirmTongTien = intent.getStringExtra("tongtien");
             confirmTotalTime = intent.getStringExtra("totaltime");
-            confirmDongia = intent.getStringExtra("dongia").substring(0,2) + "."+intent.getStringExtra("dongia").substring(2)+"đ";
-            confirmDungCu = intent.getStringExtra("phidungcu").substring(0,2) + "."+intent.getStringExtra("phidungcu").substring(2)+"đ";
+            confirmDongia = intent.getStringExtra("dongia")+"đ";
+            confirmDungCu = intent.getStringExtra("phidungcu")+"đ";
             txtConfirmDiaDiem.setText(confirmDiaDiem);
 
             txtConfirmDate.setText(confirmDate);
@@ -67,8 +67,6 @@ public class ConfirmActivity extends AppCompatActivity {
             txtConfirmTotalTime.setText(confirmTotalTime);
             txtConfirmPhiDC.setText(confirmDungCu);
         }
-        Log.d("BBB",getIntent().getDoubleExtra("latitude",0)+"");
-        Log.d("BBB",getIntent().getDoubleExtra("longitude",0)+"");
         //button xac nhan & thanh toan
         PushDownAnim.setPushDownAnimTo(btnXacNhanThanhToan).setOnClickListener(new View.OnClickListener() {
             @Override

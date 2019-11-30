@@ -550,6 +550,7 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                     baonghi.putExtra("idOrder",idOrder);
                     baonghi.putExtra("oldDate",txtNgay.getText().toString());
                     baonghi.putExtra("orderType",orderType);
+                    baonghi.putExtra("userSubmit",userSubmit);
                     startActivity(baonghi);
                 }
             }
@@ -698,6 +699,15 @@ public class DetailOrderActivity extends AppCompatActivity implements DanhGiaDia
                 if (!txtStaffName3.getText().toString().trim().equals("Đang tìm")){
                     ShowPopup(userSubmit3);
                 }
+            }
+        });
+
+        PushDownAnim.setPushDownAnimTo(linChat).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailOrderActivity.this,ChatActivity.class);
+                intent.putExtra("receiver",userSubmit);
+                startActivity(intent);
             }
         });
     }

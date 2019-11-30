@@ -1,7 +1,10 @@
 package com.example.coosincustomer;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.coosincustomer.Adapter.ListAdapterHistory;
 import com.example.coosincustomer.Model.ListHistory;
+import com.thekhaeng.pushdownanim.PushDownAnim;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -37,11 +41,12 @@ public class HistoryActivity extends AppCompatActivity {
     Integer[] priceArr,idArr;
     Connection connect;
     TextView txtTotal;
+    ImageView imgCanceled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_canceled);
+        setContentView(R.layout.activity_history);
 
         //lay so dien thoai
         SharedPreferences SP = getApplicationContext().getSharedPreferences("PHONE",0);
@@ -49,6 +54,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview_history);
         txtTotal = findViewById(R.id.txt_total_history);
+        imgCanceled = findViewById(R.id._img_canceled);
 
         //back button
         Toolbar toolbar = findViewById(R.id.toolbar_history);
@@ -246,6 +252,14 @@ public class HistoryActivity extends AppCompatActivity {
         adapterHistory = new ListAdapterHistory(listHistories);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapterHistory);
+
+        PushDownAnim.setPushDownAnimTo(imgCanceled).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HistoryActivity.this,CanceledActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //back button

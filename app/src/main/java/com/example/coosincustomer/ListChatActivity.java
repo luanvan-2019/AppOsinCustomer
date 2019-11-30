@@ -82,6 +82,9 @@ public class ListChatActivity extends AppCompatActivity {
                         }else type.add("Nhân viên đa năng");
                     }
                 }
+                name.add("ADMIN");
+                type.add("Quản trị viên");
+                phone.add("");
                 nameArr = new String[name.size()];
                 nameArr = name.toArray(nameArr);
                 typeArr = new String[type.size()];

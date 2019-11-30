@@ -2,13 +2,10 @@ package com.example.coosincustomer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -23,6 +20,7 @@ import com.example.coosincustomer.Fragment.HomeFragment;
 import com.example.coosincustomer.Fragment.NotificationFragment;
 import com.example.coosincustomer.Fragment.OrderFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -115,37 +113,4 @@ public class HomeActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-//    public void loaddingDialog(){
-//
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setMessage("Đang nạp dữ liệu...");
-//        builder.setCancelable(false);
-//        final AlertDialog alertDialog = builder.create();
-//        alertDialog.show();
-//        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//        layoutParams.gravity = Gravity.CENTER;
-//        layoutParams.setMargins(20,20,20,20);
-//
-//        TextView messageText = alertDialog.findViewById(android.R.id.message);
-//        messageText.setGravity(Gravity.CENTER);
-//
-//        final Handler handler  = new Handler();
-//        final Runnable runnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                if (alertDialog.isShowing()) {
-//                    alertDialog.dismiss();
-//                }
-//            }
-//        };
-//
-//        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-//            @Override
-//            public void onDismiss(DialogInterface dialog) {
-//                handler.removeCallbacks(runnable);
-//            }
-//        });
-//
-//        handler.postDelayed(runnable, 500);
-//    }
 }

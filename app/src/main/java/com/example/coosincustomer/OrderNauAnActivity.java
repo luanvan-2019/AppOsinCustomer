@@ -34,6 +34,9 @@ import com.thekhaeng.pushdownanim.PushDownAnim;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -49,7 +52,7 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
     RadioButton radioButton2mon,radioButton3mon,radioButton4mon;
     RadioGroup radioGroup,radioGroupKhauVi,radioGroupTraiCay,radioGroupDiCho;
     EditText edtMap,edtDate,edtTime,edtGhiChu,edtMon1,edtMon2,edtMon3,edtMon4,edtTienDiCho;
-    int Year, Month, Day, Hour, Minute,REQUEST_CODE_MAP = 1997,tienCongLamViec = 70000,tienCongDiCho=0,tongtien=0,songuoi=2,soMon=2,tien1nguoian=10000,tien1mon=10000;
+    int Year, Month, Day, Hour, Minute,REQUEST_CODE_MAP = 1997,tienCongLamViec,tienCongDiCho,tongtien=0,songuoi=2,soMon=2,tien1nguoian,tien1mon;
     DatePickerDialog datePickerDialog;
     TimePickerDialog timePickerDialog ;
     SimpleDateFormat simpleDateFormat;
@@ -58,6 +61,7 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
     Button btnToConfirm;
     Double latitude = null;
     Double longitude = null;
+    Connection connect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +69,29 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
         setContentView(R.layout.activity_order_nau_an);
 
         anhxa();
+
+        try {
+            ConnectionDB connectionDB = new ConnectionDB();
+            connect =connectionDB.CONN();
+            if (connect==null){
+                Toast.makeText(getApplicationContext(),"Không có kết nối mạng",Toast.LENGTH_LONG).show();
+                return;
+            }else {
+                String query = "SELECT * FROM PRICE";
+                Statement statement = connect.createStatement();
+                ResultSet rs = statement.executeQuery(query);
+                if (rs.next()){
+                    tienCongLamViec = rs.getInt("NAU");
+                    tienCongDiCho = rs.getInt("DICHO");
+                    tien1mon = rs.getInt("MON");
+                    tien1nguoian = rs.getInt("NGUOI");
+                }
+                connect.close();
+            }
+        }
+        catch (Exception e){
+
+        }
 
         linearLayoutMon3.setVisibility(View.GONE);
         linearLayoutMon4.setVisibility(View.GONE);
@@ -305,12 +332,10 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
                 if (i == R.id.btn_radio_dicho_khong){
                     diCho = "Không";
                     relativeLayoutTienDiCho.setVisibility(View.GONE);
-                    tienCongDiCho = 0;
                 }
                 if (i == R.id.btn_radio_dicho_co){
                     diCho = "Có";
                     relativeLayoutTienDiCho.setVisibility(View.VISIBLE);
-                    tienCongDiCho = 20000;
                 }
                 tinhtien();
             }
@@ -411,7 +436,9 @@ public class OrderNauAnActivity extends AppCompatActivity implements DatePickerD
 
     //tinh tien
     private void tinhtien(){
-        tongtien = tienCongLamViec + (tien1nguoian) * songuoi + (tien1mon * soMon) + tienCongDiCho;
+        if (diCho.trim().equals("Không")){
+            tongtien = tienCongLamViec + (tien1nguoian) * songuoi + (tien1mon * soMon);
+        }else  tongtien = tienCongLamViec + (tien1nguoian * songuoi) + (tien1mon * soMon) + tienCongDiCho;
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String totalGiaString = decimalFormat.format(tongtien);
         txtTongTien.setText(totalGiaString+"đ");

@@ -3,6 +3,16 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.example.coosincustomer">
 
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <dist:module dist:instant="true" />
+
     <application
         android:name=".SleepSplashScreen"
         android:allowBackup="true"
@@ -12,7 +22,18 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListChatActivity"></activity>
+        <service
+            android:name=".service.MyFirebaseMessagingService"
+            android:enabled="false"
+            android:exported="false"></service>
+        <service
+            android:name=".service.MyFirebaseInstanceIDService"
+            android:enabled="false"
+            android:exported="false" />
+
+        <activity android:name=".PaymentDetailsActivity" />
+        <activity android:name=".PayPalActivity" />
+        <activity android:name=".ListChatActivity" />
         <activity android:name=".ChatActivity" />
         <activity android:name=".StaffInfoActivity" />
         <activity android:name=".CanceledActivity" />
@@ -74,14 +95,21 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/ApiKey" />
+
+        <service android:name=".notification.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".notification.MyFirebaseMessagingService"
+            android:exported="false"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <dist:module dist:instant="true" />
 
 </manifest>

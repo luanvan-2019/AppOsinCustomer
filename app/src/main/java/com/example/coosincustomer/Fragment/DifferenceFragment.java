@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
-import com.example.coosincustomer.ChatActivity;
+import com.example.coosincustomer.Adapter.ListUserChatAdapter;
 import com.example.coosincustomer.ListChatActivity;
 import com.example.coosincustomer.LoadingDialog;
 import com.example.coosincustomer.R;

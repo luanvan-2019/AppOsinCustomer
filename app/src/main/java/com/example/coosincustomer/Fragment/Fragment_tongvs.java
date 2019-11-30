@@ -98,7 +98,8 @@ public class Fragment_tongvs extends Fragment {
             else
             {
                 // Change below query according to your own database.
-                String query = "select * from ORDER_OVERVIEW where USER_ORDER= '" + phone_num  + "'";
+                String query = "select * from ORDER_OVERVIEW where USER_ORDER= '" + phone_num  + "' and ORDER_STATUS!='Hoàn thành'" +
+                        "and ORDER_STATUS!=N'Đã hủy'";
                 Statement stmt = connect.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next())

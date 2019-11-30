@@ -1,54 +1,52 @@
 package com.example.coosincustomer.Model;
 
-import java.util.Date;
 
 public class ChatMessage {
 
-    private String messageText;
-    private String userSender;
-    private String userReceiver;
-    private long messageTime;
+    private String sender;
+    private String receiver;
+    private String message;
+    private long time;
 
-    public ChatMessage(String messageText,String userSender,String userReceiver) {
-        this.messageText = messageText;
-        this.userSender = userSender;
-        this.userReceiver = userReceiver;
-
-        messageTime = new Date().getTime();
+    public ChatMessage(String sender, String receiver, String message) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.message = message;
+//        time = new Date().getTime();
     }
 
     public ChatMessage() {
     }
 
-    public String getMessageText() {
-        return messageText;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMessageText(String messageText) {
-        this.messageText = messageText;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public long getMessageTime() {
-        return messageTime;
+    public long getTime() {
+        return time;
     }
 
-    public void setMessageTime(long messageTime) {
-        this.messageTime = messageTime;
+    public void setTime(long time) {
+        this.time = time;
     }
 
-    public String getUserSender() {
-        return userSender;
+    public String getSender() {
+        return sender;
     }
 
-    public void setUserSender(String userSender) {
-        this.userSender = userSender;
+    public void setSender(String sender) {
+        this.sender = sender;
     }
 
-    public String getUserReceiver() {
-        return userReceiver;
+    public String getReceiver() {
+        return receiver;
     }
 
-    public void setUserReceiver(String userReceiver) {
-        this.userReceiver = userReceiver;
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
     }
 }
